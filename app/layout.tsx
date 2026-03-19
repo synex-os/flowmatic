@@ -67,7 +67,7 @@ const orgJsonLd = {
   url: 'https://flowmatic.co.il',
   logo: 'https://flowmatic.co.il/logo.png',
   sameAs: [
-    'https://youtube.com/@flowmatic',
+    'https://youtube.com/@OpenClawIsrael',
   ],
   contactPoint: {
     '@type': 'ContactPoint',

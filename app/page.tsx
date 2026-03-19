@@ -65,26 +65,26 @@ export default function Home() {
                   <div className="mega-inner-wrap">
                   <div className="mega-col">
                     <div className="mega-col-title">הכלים שלנו</div>
-                    <div className="mega-item">
+                    <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
                         <img src="/avatar.png" alt="Gius" />
                       </div>
                       <div>
-                        <div className="mega-name">Gius.xyz</div>
+                        <div className="mega-name">Gius.xyz ↗</div>
                         <div className="mega-desc">חבילת כלים לעסקים קטנים</div>
                       </div>
                       <span className="mega-badge new">חדש</span>
-                    </div>
-                    <div className="mega-item">
+                    </a>
+                    <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
                       </div>
                       <div>
-                        <div className="mega-name">Kol Voice AI</div>
-                        <div className="mega-desc">סוכן קולי בעברית לעסק</div>
+                        <div className="mega-name">SyNexOS ↗</div>
+                        <div className="mega-desc">מערכת הפעלה AI לעסקים</div>
                       </div>
-                      <span className="mega-badge new">Beta</span>
-                    </div>
+                      <span className="mega-badge new">חדש</span>
+                    </a>
                   </div>
                   <div className="mega-col">
                     <div className="mega-col-title">סטאק מומלץ</div>
@@ -119,10 +119,10 @@ export default function Home() {
                     </div>
                     <div className="mega-item">
                       <div className="mega-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                       </div>
                       <div>
-                        <div className="mega-name">n8n</div>
+                        <div className="mega-name">Activepieces</div>
                         <div className="mega-desc">אוטומציות open-source, MIT</div>
                       </div>
                       <span className="mega-badge" style={{ background: '#EEF2FF', color: '#4338CA' }}>MIT</span>
@@ -149,7 +149,7 @@ export default function Home() {
             </ul>
 
             <div className="nav-right">
-              <a href="https://youtube.com/@flowmatic" target="_blank" rel="noopener noreferrer" className="yt-link">
+              <a href="https://youtube.com/@OpenClawIsrael" target="_blank" rel="noopener noreferrer" className="yt-link">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z" />
                 </svg>
@@ -299,28 +299,28 @@ export default function Home() {
                 <span>🛠</span> הכלים שלנו
               </div>
               <div className="tools-list">
-                <div className="tool-row">
+                <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
                     <img src="/avatar.png" alt="Gius" />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div className="tool-name">Gius.xyz</div>
+                    <div className="tool-name">Gius.xyz ↗</div>
                     <div className="tool-desc">חבילת כלים AI לעסקים קטנים ובינוניים</div>
                   </div>
                   <span className="tool-badge ours">שלנו</span>
-                  <a href="#" className="tool-cta">גלו עוד ←</a>
-                </div>
-                <div className="tool-row">
+                  <span className="tool-cta">גלו עוד ←</span>
+                </a>
+                <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div className="tool-name">Kol Voice AI</div>
-                    <div className="tool-desc">סוכן קולי בעברית — עונה לטלפון 24/7, מכשיר לידים</div>
+                    <div className="tool-name">SyNexOS ↗</div>
+                    <div className="tool-desc">מערכת הפעלה AI לעסקים — אוטומציה, סוכנים, אינטגרציות</div>
                   </div>
-                  <span className="tool-badge ours">Beta</span>
-                  <a href="#" className="tool-cta">פרטים ←</a>
-                </div>
+                  <span className="tool-badge ours">שלנו</span>
+                  <span className="tool-cta">גלו עוד ←</span>
+                </a>
               </div>
             </div>
             <div>
@@ -363,10 +363,10 @@ export default function Home() {
                 </div>
                 <div className="tool-row">
                   <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div className="tool-name">n8n</div>
+                    <div className="tool-name">Activepieces</div>
                     <div className="tool-desc">אוטומציות open-source לחיבור כלים — רישיון MIT</div>
                   </div>
                   <span className="tool-badge mit">MIT</span>
@@ -457,7 +457,6 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* FOOTER */}
       <footer>
         <div className="wrap">
@@ -471,18 +470,17 @@ export default function Home() {
             <div className="footer-col">
               <h5>תוכן</h5>
               <ul>
-                <li><a href="#">מדריכים</a></li>
-                <li><a href="https://youtube.com/@flowmatic" target="_blank" rel="noopener noreferrer">YouTube ↗</a></li>
-                <li><a href="#">ניוזלטר</a></li>
-                <li><a href="#">השוואות</a></li>
+                <li><a href="/blog/">בלוג</a></li>
+                <li><a href="https://youtube.com/@OpenClawIsrael" target="_blank" rel="noopener noreferrer">YouTube ↗</a></li>
+                <li><a href="#newsletter">ניוזלטר</a></li>
               </ul>
             </div>
             <div className="footer-col">
-              <h5>עזרה</h5>
+              <h5>כלים שלנו</h5>
               <ul>
-                <li><a href="#">Human as a Service</a></li>
-                <li><a href="#">Gius.xyz</a></li>
-                <li><a href="#">Kol Voice AI</a></li>
+                <li><a href="https://gius.xyz" target="_blank" rel="noopener noreferrer">Gius.xyz ↗</a></li>
+                <li><a href="https://synexos.io" target="_blank" rel="noopener noreferrer">SyNexOS ↗</a></li>
+                <li><a href="#has">Human as a Service</a></li>
               </ul>
             </div>
             <div className="footer-col">
@@ -491,7 +489,7 @@ export default function Home() {
                 <li><a href="#">Hostinger ↗</a></li>
                 <li><a href="#">Claude API ↗</a></li>
                 <li><a href="#">ElevenLabs ↗</a></li>
-                <li><a href="#">n8n ↗</a></li>
+                <li><a href="#">Activepieces ↗</a></li>
               </ul>
             </div>
           </div>
