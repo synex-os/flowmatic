@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 
 export default function Home() {
   const [megaOpen, setMegaOpen] = useState(false)
-  const [activeAmount, setActiveAmount] = useState('$10')
   const megaRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLSpanElement>(null)
 
@@ -156,12 +155,6 @@ export default function Home() {
                 </svg>
                 YouTube
               </a>
-              <button className="btn-donate" onClick={() => scrollTo('donate')}>
-                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M10 17s-7-4.5-7-9.5C3 4.5 5 3 7.5 3 8.9 3 10 3.8 10 3.8S11.1 3 12.5 3C15 3 17 4.5 17 7.5 17 12.5 10 17 10 17z" />
-                </svg>
-                Donate
-              </button>
             </div>
           </div>
         </div>
@@ -464,31 +457,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DONATE */}
-      <section className="donate-strip" id="donate">
-        <div className="wrap">
-          <div className="donate-inner">
-            <div className="donate-text">
-              <h3>התוכן הזה עוזר לכם?</h3>
-              <p>כל הכתיבה, המחקר, ועדכון המדריכים נעשה בזמן אישי. אם חסכתם שעות או כסף — תרומה קטנה עוזרת להמשיך.</p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start' }}>
-              <div className="donate-amounts">
-                {['$5', '$10', '$18', '$36', 'כמה שרוצים'].map((amt) => (
-                  <button
-                    key={amt}
-                    className={`donate-amt${activeAmount === amt ? ' on' : ''}`}
-                    onClick={() => setActiveAmount(amt)}
-                  >
-                    {amt}
-                  </button>
-                ))}
-              </div>
-              <button className="btn-donate-main">♥ תמכו בפרויקט</button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FOOTER */}
       <footer>
@@ -515,7 +483,6 @@ export default function Home() {
                 <li><a href="#">Human as a Service</a></li>
                 <li><a href="#">Gius.xyz</a></li>
                 <li><a href="#">Kol Voice AI</a></li>
-                <li><a href="#">Donate</a></li>
               </ul>
             </div>
             <div className="footer-col">
