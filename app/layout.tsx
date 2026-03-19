@@ -2,9 +2,78 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
-  description: 'תוכן חינמי ומקצועי על OpenClaw לעסקים ישראלים. מדריכים, כלים, וסרגיי — אם נתקעתם.',
   metadataBase: new URL('https://flowmatic.co.il'),
+  title: {
+    default: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
+    template: '%s | Flowmatic',
+  },
+  description: 'המשאב הישראלי הראשון ל-OpenClaw. מדריכים מעשיים, כלים מומלצים, ועזרה אישית — הכל חינמי, בעברית. סוכן AI לעסקים ישראלים.',
+  keywords: ['OpenClaw', 'OpenClaw ישראל', 'OpenClaw עברית', 'סוכן AI', 'AI agent', 'OpenClaw מדריך', 'OpenClaw הגדרה', 'בינה מלאכותית לעסקים', 'AI לעסקים ישראלים'],
+  authors: [{ name: 'Flowmatic', url: 'https://flowmatic.co.il' }],
+  creator: 'Flowmatic',
+  publisher: 'Flowmatic',
+  alternates: {
+    canonical: 'https://flowmatic.co.il/',
+  },
+  openGraph: {
+    title: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
+    description: 'המשאב הישראלי הראשון ל-OpenClaw. מדריכים מעשיים, כלים מומלצים, ועזרה אישית — הכל חינמי, בעברית.',
+    url: 'https://flowmatic.co.il',
+    siteName: 'Flowmatic',
+    locale: 'he_IL',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
+    description: 'מדריכים מעשיים ל-OpenClaw בעברית. חינמי, ללא paywall.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
+
+const siteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Flowmatic',
+  alternateName: 'פלומטיק',
+  url: 'https://flowmatic.co.il',
+  description: 'המשאב הישראלי הראשון ל-OpenClaw — מדריכים, כלים ועזרה אישית בעברית',
+  inLanguage: 'he',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Flowmatic',
+    url: 'https://flowmatic.co.il',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://flowmatic.co.il/logo.png',
+    },
+  },
+}
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Flowmatic',
+  url: 'https://flowmatic.co.il',
+  logo: 'https://flowmatic.co.il/logo.png',
+  sameAs: [
+    'https://youtube.com/@flowmatic',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    availableLanguage: ['Hebrew', 'English'],
+  },
 }
 
 export default function RootLayout({
@@ -19,6 +88,15 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap"
           rel="stylesheet"
+        />
+        <link rel="canonical" href="https://flowmatic.co.il/" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
       </head>
       <body>{children}</body>

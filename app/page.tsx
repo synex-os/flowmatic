@@ -52,6 +52,11 @@ export default function Home() {
 
             <ul className="nav-center">
               <li>
+                <a href="/blog/" className="nav-link">
+                  בלוג
+                </a>
+              </li>
+              <li>
                 <a href="#guides" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('guides') }}>
                   מדריכים
                 </a>
@@ -267,7 +272,7 @@ export default function Home() {
             <p className="sub">כל המדריכים מעשיים, מעודכנים ל-2026, ועם צילומי מסך מלאים.</p>
           </div>
           <div className="guides-grid reveal">
-            <div className="guide-card guide-featured">
+            <a href="/blog/openclaw-complete-guide-2026/" className="guide-card guide-featured" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="guide-tag">⭐ מומלץ להתחלה</div>
               <div className="guide-title" style={{ fontSize: '1.2rem' }}>המדריך המלא ל-OpenClaw 2026 — מאפס לסוכן AI עובד תוך שעה</div>
               <div className="guide-desc">הגדרת שרת, אבטחה, חיבור טלגרם, Google Workspace, זיכרון, אוטומציות, ניתוב מודלים, קול, וסאב-אגנטים. ללא שורת קוד אחת.</div>
@@ -275,7 +280,7 @@ export default function Home() {
                 <span>55 דקות קריאה · מלא</span>
                 <span className="guide-read">קראו ←</span>
               </div>
-            </div>
+            </a>
             <div className="guide-card">
               <div className="guide-tag">אבטחה</div>
               <div className="guide-title">NemoClaw — אבטחה מ-NVIDIA לסוכן שלכם</div>
