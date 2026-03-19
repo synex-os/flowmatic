@@ -46,7 +46,7 @@ nav{
   display:flex;align-items:center;justify-content:space-between;
   height:60px;gap:8px;
 }
-.logo{display:flex;align-items:center;}
+.logo{display:flex;align-items:center;margin-left:24px;}
 .logo img{height:28px;width:auto;filter:brightness(0) saturate(100%);}
 .nav-center{display:flex;align-items:center;gap:2px;list-style:none;}
 .nav-center > li{position:relative;}
@@ -350,6 +350,7 @@ h2{
 }
 .tool-badge.aff{background:var(--accent-bg);color:var(--accent);}
 .tool-badge.ours{background:var(--green-bg);color:var(--green);}
+.tool-badge.free{background:var(--green-bg);color:var(--green);}
 .tool-badge.mit{background:#EEF2FF;color:#4338CA;}
 
 /* ── TOOLS SECTION GRID ── */

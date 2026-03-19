@@ -77,13 +77,13 @@ export default function Home() {
                     </a>
                     <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
                       </div>
                       <div>
-                        <div className="mega-name">SyNexOS ↗</div>
-                        <div className="mega-desc">מערכת הפעלה AI לעסקים</div>
+                        <div className="mega-name">קול VoiceAI ↗</div>
+                        <div className="mega-desc">ה-AI שלך מתקשר ללידים ועונה בעברית</div>
                       </div>
-                      <span className="mega-badge new">חדש</span>
+                      <span className="mega-badge new">Beta</span>
                     </a>
                   </div>
                   <div className="mega-col">
@@ -307,19 +307,19 @@ export default function Home() {
                     <div className="tool-name">Gius.xyz ↗</div>
                     <div className="tool-desc">חבילת כלים AI לעסקים קטנים ובינוניים</div>
                   </div>
-                  <span className="tool-badge ours">שלנו</span>
+                  <span className="tool-badge free">יש גרסה חינמית</span>
                   <span className="tool-cta">גלו עוד ←</span>
                 </a>
                 <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div className="tool-name">SyNexOS ↗</div>
-                    <div className="tool-desc">מערכת הפעלה AI לעסקים — אוטומציה, סוכנים, אינטגרציות</div>
+                    <div className="tool-name">קול VoiceAI ↗</div>
+                    <div className="tool-desc">ה-AI שלך מתקשר ללידים, עונה בעברית טבעית, מזהה עניין — ומעביר רק את מי שרוצה לקנות</div>
                   </div>
-                  <span className="tool-badge ours">שלנו</span>
-                  <span className="tool-cta">גלו עוד ←</span>
+                  <span className="tool-badge free">יש גרסה חינמית</span>
+                  <span className="tool-cta">נסו בחינם ←</span>
                 </a>
               </div>
             </div>
@@ -479,7 +479,7 @@ export default function Home() {
               <h5>כלים שלנו</h5>
               <ul>
                 <li><a href="https://gius.xyz" target="_blank" rel="noopener noreferrer">Gius.xyz ↗</a></li>
-                <li><a href="https://synexos.io" target="_blank" rel="noopener noreferrer">SyNexOS ↗</a></li>
+                <li><a href="https://synexos.io" target="_blank" rel="noopener noreferrer">קול VoiceAI ↗</a></li>
                 <li><a href="#has">Human as a Service</a></li>
               </ul>
             </div>
