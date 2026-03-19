@@ -52,16 +52,6 @@ export default function Home() {
 
             <ul className="nav-center">
               <li>
-                <a href="/blog/" className="nav-link">
-                  בלוג
-                </a>
-              </li>
-              <li>
-                <a href="#guides" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('guides') }}>
-                  מדריכים
-                </a>
-              </li>
-              <li>
                 <span
                   ref={triggerRef}
                   className={`nav-link${megaOpen ? ' open' : ''}`}
@@ -73,6 +63,7 @@ export default function Home() {
                   </svg>
                 </span>
                 <div ref={megaRef} className={`mega${megaOpen ? ' open' : ''}`}>
+                  <div className="mega-inner-wrap">
                   <div className="mega-col">
                     <div className="mega-col-title">הכלים שלנו</div>
                     <div className="mega-item">
@@ -86,7 +77,9 @@ export default function Home() {
                       <span className="mega-badge new">חדש</span>
                     </div>
                     <div className="mega-item">
-                      <div className="mega-icon">📞</div>
+                      <div className="mega-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
+                      </div>
                       <div>
                         <div className="mega-name">Kol Voice AI</div>
                         <div className="mega-desc">סוכן קולי בעברית לעסק</div>
@@ -97,7 +90,9 @@ export default function Home() {
                   <div className="mega-col">
                     <div className="mega-col-title">סטאק מומלץ</div>
                     <div className="mega-item">
-                      <div className="mega-icon">🌐</div>
+                      <div className="mega-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                      </div>
                       <div>
                         <div className="mega-name">Hostinger VPS</div>
                         <div className="mega-desc">1-Click OpenClaw, NVMe מהיר</div>
@@ -105,14 +100,18 @@ export default function Home() {
                       <span className="mega-badge">10% הנחה</span>
                     </div>
                     <div className="mega-item">
-                      <div className="mega-icon">🤖</div>
+                      <div className="mega-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4z"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 12v4"/></svg>
+                      </div>
                       <div>
                         <div className="mega-name">Claude API</div>
                         <div className="mega-desc">מוח הסוכן — עברית מצוינת</div>
                       </div>
                     </div>
                     <div className="mega-item">
-                      <div className="mega-icon">🎙️</div>
+                      <div className="mega-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                      </div>
                       <div>
                         <div className="mega-name">ElevenLabs</div>
                         <div className="mega-desc">TTS קולי לסוכן — עברית</div>
@@ -120,7 +119,9 @@ export default function Home() {
                       <span className="mega-badge">אפיליאט</span>
                     </div>
                     <div className="mega-item">
-                      <div className="mega-icon">⚡</div>
+                      <div className="mega-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      </div>
                       <div>
                         <div className="mega-name">n8n</div>
                         <div className="mega-desc">אוטומציות open-source, MIT</div>
@@ -128,7 +129,13 @@ export default function Home() {
                       <span className="mega-badge" style={{ background: '#EEF2FF', color: '#4338CA' }}>MIT</span>
                     </div>
                   </div>
+                  </div>
                 </div>
+              </li>
+              <li>
+                <a href="/blog/" className="nav-link">
+                  בלוג
+                </a>
               </li>
               <li>
                 <a href="#has" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('has') }}>
@@ -150,8 +157,8 @@ export default function Home() {
                 YouTube
               </a>
               <button className="btn-donate" onClick={() => scrollTo('donate')}>
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M8 14s-6-4-6-8a4 4 0 0 1 8 0 4 4 0 0 1 8 0c0 4-6 8-6 8z" />
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M10 17s-7-4.5-7-9.5C3 4.5 5 3 7.5 3 8.9 3 10 3.8 10 3.8S11.1 3 12.5 3C15 3 17 4.5 17 7.5 17 12.5 10 17 10 17z" />
                 </svg>
                 Donate
               </button>
@@ -271,61 +278,16 @@ export default function Home() {
             <h2>למדו OpenClaw מאפס</h2>
             <p className="sub">כל המדריכים מעשיים, מעודכנים ל-2026, ועם צילומי מסך מלאים.</p>
           </div>
-          <div className="guides-grid reveal">
+          <div className="guides-grid guides-single reveal">
             <a href="/blog/openclaw-complete-guide-2026/" className="guide-card guide-featured" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="guide-tag">⭐ מומלץ להתחלה</div>
               <div className="guide-title" style={{ fontSize: '1.2rem' }}>המדריך המלא ל-OpenClaw 2026 — מאפס לסוכן AI עובד תוך שעה</div>
               <div className="guide-desc">הגדרת שרת, אבטחה, חיבור טלגרם, Google Workspace, זיכרון, אוטומציות, ניתוב מודלים, קול, וסאב-אגנטים. ללא שורת קוד אחת.</div>
               <div className="guide-foot">
-                <span>55 דקות קריאה · מלא</span>
-                <span className="guide-read">קראו ←</span>
+                <span>📗 הדרך הפשוטה · 55 דקות קריאה · עודכן 2026-03-19</span>
+                <span className="guide-read">קראו את המדריך ←</span>
               </div>
             </a>
-            <div className="guide-card">
-              <div className="guide-tag">אבטחה</div>
-              <div className="guide-title">NemoClaw — אבטחה מ-NVIDIA לסוכן שלכם</div>
-              <div className="guide-desc">Security Guardrails, sandbox מבודד, ניטור פעולות.</div>
-              <div className="guide-foot">
-                <span>7 דקות</span>
-                <span className="guide-read">קראו ←</span>
-              </div>
-            </div>
-            <div className="guide-card">
-              <div className="guide-tag">אינטגרציות</div>
-              <div className="guide-title">חיבור WhatsApp ו-Telegram — המדריך הישראלי</div>
-              <div className="guide-desc">הסוכן עונה ללקוחות שלכם בוואטסאפ, 24/7.</div>
-              <div className="guide-foot">
-                <span>10 דקות</span>
-                <span className="guide-read">קראו ←</span>
-              </div>
-            </div>
-            <div className="guide-card">
-              <div className="guide-tag">אוטומציה</div>
-              <div className="guide-title">Daily Briefing — הסוכן מדווח לכם כל בוקר</div>
-              <div className="guide-desc">Cron Jobs, אוטומציות מתוזמנות, ו-Daily Briefing.</div>
-              <div className="guide-foot">
-                <span>6 דקות</span>
-                <span className="guide-read">קראו ←</span>
-              </div>
-            </div>
-            <div className="guide-card">
-              <div className="guide-tag">השוואה</div>
-              <div className="guide-title">Hostinger vs DigitalOcean vs Hetzner — מה כדאי?</div>
-              <div className="guide-desc">השוואה ישרה עם מחירים ויתרונות לכל ספק.</div>
-              <div className="guide-foot">
-                <span>8 דקות</span>
-                <span className="guide-read">קראו ←</span>
-              </div>
-            </div>
-            <div className="guide-card">
-              <div className="guide-tag">Case Study</div>
-              <div className="guide-title">OpenClaw לסוכן נדל״ן ישראלי — מה קרה ב-48 שעות</div>
-              <div className="guide-desc">סוכן AI אמיתי שמטפל בלידים מוואטסאפ.</div>
-              <div className="guide-foot">
-                <span>9 דקות</span>
-                <span className="guide-read">קראו ←</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -356,7 +318,9 @@ export default function Home() {
                   <a href="#" className="tool-cta">גלו עוד ←</a>
                 </div>
                 <div className="tool-row">
-                  <div className="tool-icon">📞</div>
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">Kol Voice AI</div>
                     <div className="tool-desc">סוכן קולי בעברית — עונה לטלפון 24/7, מכשיר לידים</div>
@@ -372,7 +336,9 @@ export default function Home() {
               </div>
               <div className="tools-list">
                 <div className="tool-row">
-                  <div className="tool-icon">🌐</div>
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">Hostinger VPS</div>
                     <div className="tool-desc">1-Click OpenClaw — הכי פשוט להתחלה</div>
@@ -381,7 +347,9 @@ export default function Home() {
                   <a href="#" className="tool-cta">קבלו 10% ←</a>
                 </div>
                 <div className="tool-row">
-                  <div className="tool-icon">🤖</div>
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4z"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 12v4"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">Claude API</div>
                     <div className="tool-desc">מוח הסוכן — עברית מצוינת, היגיון עסקי</div>
@@ -390,7 +358,9 @@ export default function Home() {
                   <a href="#" className="tool-cta">פתחו חשבון ←</a>
                 </div>
                 <div className="tool-row">
-                  <div className="tool-icon">🎙️</div>
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">ElevenLabs</div>
                     <div className="tool-desc">TTS בעברית לסוכן קולי — קול טבעי</div>
@@ -399,7 +369,9 @@ export default function Home() {
                   <a href="#" className="tool-cta">נסו בחינם ←</a>
                 </div>
                 <div className="tool-row">
-                  <div className="tool-icon">⚡</div>
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">n8n</div>
                     <div className="tool-desc">אוטומציות open-source לחיבור כלים — רישיון MIT</div>
@@ -408,7 +380,9 @@ export default function Home() {
                   <a href="#" className="tool-cta">Self-host ←</a>
                 </div>
                 <div className="tool-row">
-                  <div className="tool-icon">🔍</div>
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#EA580C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">Brave Search API</div>
                     <div className="tool-desc">חיפוש לסאב-אגנטים — $5 חינמי לחודש</div>
