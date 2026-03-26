@@ -74,7 +74,7 @@ export default function Home() {
                         <div className="mega-desc">אירוח סוכני AI — מוכן תוך 3 דקות</div>
                       </div>
                     </a>
-                    <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="mega-item">
+                    <a href="https://kol-ai.xyz" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
                       </div>
@@ -86,7 +86,7 @@ export default function Home() {
                     </a>
                     <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
-                        <img src="/avatar.png" alt="Gius" />
+                        <svg viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" rx="8" fill="#4F46E5"/><text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fontFamily="system-ui" fontWeight="800" fontSize="18" fill="white">G</text></svg>
                       </div>
                       <div>
                         <div className="mega-name">Gius.xyz ↗</div>
@@ -324,7 +324,7 @@ export default function Home() {
                   <span className="tool-badge ours">שלנו</span>
                   <span className="tool-cta">התחילו ←</span>
                 </a>
-                <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="tool-row">
+                <a href="https://kol-ai.xyz" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
                   </div>
@@ -337,7 +337,7 @@ export default function Home() {
                 </a>
                 <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
-                    <img src="/avatar.png" alt="Gius" />
+                    <svg viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" rx="8" fill="#4F46E5"/><text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fontFamily="system-ui" fontWeight="800" fontSize="18" fill="white">G</text></svg>
                   </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">Gius.xyz ↗</div>
@@ -503,7 +503,7 @@ export default function Home() {
               <h5>כלים שלנו</h5>
               <ul>
                 <li><a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer">ClawFlow ↗</a></li>
-                <li><a href="https://synexos.io" target="_blank" rel="noopener noreferrer">קול VoiceAI ↗</a></li>
+                <li><a href="https://kol-ai.xyz" target="_blank" rel="noopener noreferrer">קול VoiceAI ↗</a></li>
                 <li><a href="https://gius.xyz" target="_blank" rel="noopener noreferrer">Gius.xyz ↗</a></li>
                 <li><a href="#has">Human as a Service</a></li>
               </ul>
