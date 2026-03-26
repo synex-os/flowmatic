@@ -65,15 +65,14 @@ export default function Home() {
                   <div className="mega-inner-wrap">
                   <div className="mega-col">
                     <div className="mega-col-title">הכלים שלנו</div>
-                    <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="mega-item">
+                    <a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
-                        <img src="/avatar.png" alt="Gius" />
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                       </div>
                       <div>
-                        <div className="mega-name">Gius.xyz ↗</div>
-                        <div className="mega-desc">חבילת כלים לעסקים קטנים</div>
+                        <div className="mega-name">ClawFlow ↗</div>
+                        <div className="mega-desc">אירוח סוכני AI — מוכן תוך 3 דקות</div>
                       </div>
-                      <span className="mega-badge new">חדש</span>
                     </a>
                     <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
@@ -85,19 +84,19 @@ export default function Home() {
                       </div>
                       <span className="mega-badge new">Beta</span>
                     </a>
+                    <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="mega-item">
+                      <div className="mega-icon">
+                        <img src="/avatar.png" alt="Gius" />
+                      </div>
+                      <div>
+                        <div className="mega-name">Gius.xyz ↗</div>
+                        <div className="mega-desc">חבילת כלים לעסקים קטנים</div>
+                      </div>
+                      <span className="mega-badge free">יש גרסה חינמית</span>
+                    </a>
                   </div>
                   <div className="mega-col">
                     <div className="mega-col-title">סטאק מומלץ</div>
-                    <div className="mega-item">
-                      <div className="mega-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                      </div>
-                      <div>
-                        <div className="mega-name">Hostinger VPS</div>
-                        <div className="mega-desc">1-Click OpenClaw, NVMe מהיר</div>
-                      </div>
-                      <span className="mega-badge">10% הנחה</span>
-                    </div>
                     <div className="mega-item">
                       <div className="mega-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4z"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 12v4"/></svg>
@@ -127,6 +126,15 @@ export default function Home() {
                       </div>
                       <span className="mega-badge" style={{ background: '#EEF2FF', color: '#4338CA' }}>MIT</span>
                     </div>
+                    <div className="mega-item">
+                      <div className="mega-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#EA580C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      </div>
+                      <div>
+                        <div className="mega-name">n8n</div>
+                        <div className="mega-desc">אוטומציות open-source, fair-code</div>
+                      </div>
+                    </div>
                   </div>
                   </div>
                 </div>
@@ -149,6 +157,12 @@ export default function Home() {
             </ul>
 
             <div className="nav-right">
+              <a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="yt-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16}}>
+                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+                </svg>
+                אירוח ClawFlow
+              </a>
               <a href="https://youtube.com/@OpenClawIsrael" target="_blank" rel="noopener noreferrer" className="yt-link">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z" />
@@ -299,6 +313,28 @@ export default function Home() {
                 <span>🛠</span> הכלים שלנו
               </div>
               <div className="tools-list">
+                <a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">ClawFlow ↗</div>
+                    <div className="tool-desc">אירוח סוכני AI — מוכן תוך 3 דקות, ללא הגדרות טכניות</div>
+                  </div>
+                  <span className="tool-badge ours">שלנו</span>
+                  <span className="tool-cta">התחילו ←</span>
+                </a>
+                <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">קול VoiceAI ↗</div>
+                    <div className="tool-desc">ה-AI שלך מתקשר ללידים, עונה בעברית טבעית</div>
+                  </div>
+                  <span className="tool-badge free">יש גרסה חינמית</span>
+                  <span className="tool-cta">נסו בחינם ←</span>
+                </a>
                 <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
                     <img src="/avatar.png" alt="Gius" />
@@ -310,17 +346,6 @@ export default function Home() {
                   <span className="tool-badge free">יש גרסה חינמית</span>
                   <span className="tool-cta">גלו עוד ←</span>
                 </a>
-                <a href="https://synexos.io" target="_blank" rel="noopener noreferrer" className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">קול VoiceAI ↗</div>
-                    <div className="tool-desc">ה-AI שלך מתקשר ללידים, עונה בעברית טבעית, מזהה עניין — ומעביר רק את מי שרוצה לקנות</div>
-                  </div>
-                  <span className="tool-badge free">יש גרסה חינמית</span>
-                  <span className="tool-cta">נסו בחינם ←</span>
-                </a>
               </div>
             </div>
             <div>
@@ -328,17 +353,6 @@ export default function Home() {
                 <span>⚡</span> סטאק מומלץ
               </div>
               <div className="tools-list">
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Hostinger VPS</div>
-                    <div className="tool-desc">1-Click OpenClaw — הכי פשוט להתחלה</div>
-                  </div>
-                  <span className="tool-badge aff">אפיליאט</span>
-                  <a href="#" className="tool-cta">קבלו 10% ←</a>
-                </div>
                 <div className="tool-row">
                   <div className="tool-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4z"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 12v4"/></svg>
@@ -370,6 +384,16 @@ export default function Home() {
                     <div className="tool-desc">אוטומציות open-source לחיבור כלים — רישיון MIT</div>
                   </div>
                   <span className="tool-badge mit">MIT</span>
+                  <a href="#" className="tool-cta">Self-host ←</a>
+                </div>
+                <div className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#EA580C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">n8n</div>
+                    <div className="tool-desc">אוטומציות open-source — 400+ אינטגרציות, fair-code</div>
+                  </div>
                   <a href="#" className="tool-cta">Self-host ←</a>
                 </div>
                 <div className="tool-row">
@@ -478,18 +502,19 @@ export default function Home() {
             <div className="footer-col">
               <h5>כלים שלנו</h5>
               <ul>
-                <li><a href="https://gius.xyz" target="_blank" rel="noopener noreferrer">Gius.xyz ↗</a></li>
+                <li><a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer">ClawFlow ↗</a></li>
                 <li><a href="https://synexos.io" target="_blank" rel="noopener noreferrer">קול VoiceAI ↗</a></li>
+                <li><a href="https://gius.xyz" target="_blank" rel="noopener noreferrer">Gius.xyz ↗</a></li>
                 <li><a href="#has">Human as a Service</a></li>
               </ul>
             </div>
             <div className="footer-col">
               <h5>סטאק</h5>
               <ul>
-                <li><a href="#">Hostinger ↗</a></li>
-                <li><a href="#">Claude API ↗</a></li>
-                <li><a href="#">ElevenLabs ↗</a></li>
-                <li><a href="#">Activepieces ↗</a></li>
+                <li><a href="https://console.anthropic.com" target="_blank" rel="noopener noreferrer">Claude API ↗</a></li>
+                <li><a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">ElevenLabs ↗</a></li>
+                <li><a href="https://www.activepieces.com" target="_blank" rel="noopener noreferrer">Activepieces ↗</a></li>
+                <li><a href="https://n8n.io" target="_blank" rel="noopener noreferrer">n8n ↗</a></li>
               </ul>
             </div>
           </div>
