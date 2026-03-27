@@ -84,16 +84,6 @@ export default function Home() {
                       </div>
                       <span className="mega-badge new">Beta</span>
                     </a>
-                    <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="mega-item">
-                      <div className="mega-icon">
-                        <svg viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" rx="8" fill="#4F46E5"/><text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fontFamily="system-ui" fontWeight="800" fontSize="18" fill="white">G</text></svg>
-                      </div>
-                      <div>
-                        <div className="mega-name">Gius.xyz ↗</div>
-                        <div className="mega-desc">חבילת כלים לעסקים קטנים</div>
-                      </div>
-                      <span className="mega-badge free">יש גרסה חינמית</span>
-                    </a>
                   </div>
                   <div className="mega-col">
                     <div className="mega-col-title">סטאק מומלץ</div>
@@ -335,17 +325,6 @@ export default function Home() {
                   <span className="tool-badge free">יש גרסה חינמית</span>
                   <span className="tool-cta">נסו בחינם ←</span>
                 </a>
-                <a href="https://gius.xyz" target="_blank" rel="noopener noreferrer" className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" rx="8" fill="#4F46E5"/><text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fontFamily="system-ui" fontWeight="800" fontSize="18" fill="white">G</text></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Gius.xyz ↗</div>
-                    <div className="tool-desc">חבילת כלים AI לעסקים קטנים ובינוניים</div>
-                  </div>
-                  <span className="tool-badge free">יש גרסה חינמית</span>
-                  <span className="tool-cta">גלו עוד ←</span>
-                </a>
               </div>
             </div>
             <div>
@@ -504,7 +483,6 @@ export default function Home() {
               <ul>
                 <li><a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer">ClawFlow ↗</a></li>
                 <li><a href="https://kol-ai.xyz" target="_blank" rel="noopener noreferrer">קול VoiceAI ↗</a></li>
-                <li><a href="https://gius.xyz" target="_blank" rel="noopener noreferrer">Gius.xyz ↗</a></li>
                 <li><a href="#has">Human as a Service</a></li>
               </ul>
             </div>
