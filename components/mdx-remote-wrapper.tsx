@@ -39,9 +39,19 @@ function markdownToHtml(md: string): string {
   // Inline code
   html = html.replace(/`([^`]+)`/g, '<code>$1</code>')
 
-  // Headers
+  // Headers (H2 gets id for anchor links)
   html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>')
-  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>')
+  html = html.replace(/^## (.+)$/gm, (_m, text) => {
+    const id = text
+      .replace(/\*\*/g, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/[^\u0590-\u05FFa-zA-Z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .toLowerCase()
+    return `<h2 id="${id}">${text}</h2>`
+  })
 
   // Bold
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')

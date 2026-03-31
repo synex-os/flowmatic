@@ -167,13 +167,42 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div className="wrap">
+      <div className="wrap post-layout">
+        <nav className="post-toc" aria-label="תוכן עניינים">
+          <div className="toc-title">תוכן המדריך</div>
+          <ul>
+            {extractTOC(content).map((item, i) => (
+              <li key={i}>
+                <a href={`#${item.id}`}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
         <article className="post-body">
           <MDXRemote source={content} />
         </article>
       </div>
     </>
   )
+}
+
+function extractTOC(content: string): { id: string; label: string }[] {
+  const toc: { id: string; label: string }[] = []
+  const lines = content.split('\n')
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith('## ') && !trimmed.startsWith('### ')) {
+      const label = trimmed.replace('## ', '').replace(/\*\*/g, '').replace(/<[^>]+>/g, '')
+      const id = label
+        .replace(/[^\u0590-\u05FFa-zA-Z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+        .toLowerCase()
+      if (label && id) toc.push({ id, label })
+    }
+  }
+  return toc
 }
 
 function extractSteps(content: string): { name: string; text: string }[] {
