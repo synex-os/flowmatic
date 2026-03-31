@@ -51,7 +51,7 @@ export default function Home() {
       {
         '@type': 'Question',
         name: 'למה התוכן חינמי?',
-        acceptedAnswer: { '@type': 'Answer', text: 'כל המדריכים ב-Flowmatic חינמיים ללא paywall. ההכנסות מגיעות מלינקי אפיליאט שקופים (מסומנים תמיד בגלוי) ומשירות Human as a Service — עזרה אישית בתשלום למי שצריך.' }
+        acceptedAnswer: { '@type': 'Answer', text: 'כל המדריכים ב-Flowmatic חינמיים ללא paywall. ההכנסות מגיעות מהמוצרים שבנינו — ClawFlow (אירוח סוכני AI), קול VoiceAI (סוכן קולי), ועזרה אישית. לינקי אפיליאט לכלים חיצוניים מסומנים תמיד בגלוי.' }
       },
       {
         '@type': 'Question',
@@ -267,28 +267,28 @@ export default function Home() {
         <div className="wrap">
           <div className="phil-inner">
             <div className="phil-label">
-              למה <em>הכל</em><br />חינמי?
+              איך זה<br /><em>עובד?</em>
             </div>
             <div className="phil-items">
               <div className="phil-item">
                 <div className="phil-num">01</div>
-                <div className="phil-title">תוכן טוב מדבר בעד עצמו</div>
-                <div className="phil-desc">אם המדריך עוזר — אנשים חוזרים, ממליצים, ותומכים. זה מספיק.</div>
+                <div className="phil-title">תוכן חינמי — המוצרים בתשלום</div>
+                <div className="phil-desc">כל המדריכים, הסרטונים והטיפים — חינמיים לגמרי. ההכנסות שלנו מגיעות מהמוצרים שבנינו: ClawFlow, קול VoiceAI, ועזרה אישית.</div>
               </div>
               <div className="phil-item">
                 <div className="phil-num">02</div>
-                <div className="phil-title">ישראל צריכה תוכן AI בעברית</div>
-                <div className="phil-desc">כל המשאבים הטובים באנגלית. אנחנו פה כדי לשנות את זה.</div>
+                <div className="phil-title">בנינו את מה שחיפשנו</div>
+                <div className="phil-desc">לא מצאנו פתרון פשוט לאירוח סוכני AI בעברית — אז בנינו אחד. ClawFlow נותן VPS מוכן תוך 3 דקות, בלי הגדרות טכניות.</div>
               </div>
               <div className="phil-item">
                 <div className="phil-num">03</div>
-                <div className="phil-title">אפיליאט שקוף</div>
-                <div className="phil-desc">כשממליצים על כלי — יש לינק אפיליאט. תמיד מסמנים אותו בגלוי.</div>
+                <div className="phil-title">שקיפות מלאה</div>
+                <div className="phil-desc">כשממליצים על כלי חיצוני — מסמנים אם יש לינק אפיליאט. כשממליצים על כלי שלנו — מסמנים שהוא שלנו. תמיד.</div>
               </div>
               <div className="phil-item">
                 <div className="phil-num">04</div>
-                <div className="phil-title">Human as a Service</div>
-                <div className="phil-desc">מי שלא מצליח לבד — יכול לבקש עזרה אישית. בתשלום, ללא מחיר קבוע.</div>
+                <div className="phil-title">נתקעתם? יש בן אדם</div>
+                <div className="phil-desc">Human as a Service — עזרה אישית בהגדרת סוכני AI, אינטגרציות ואוטומציות. בתשלום לפי מקרה, ללא מנוי.</div>
               </div>
             </div>
           </div>
