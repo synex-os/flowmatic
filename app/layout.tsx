@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import SiteNav from '../components/SiteNav'
+import SiteFooter from '../components/SiteFooter'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -118,7 +120,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <SiteNav />
         {children}
+        <SiteFooter />
       </body>
     </html>
   )
