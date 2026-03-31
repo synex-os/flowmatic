@@ -527,9 +527,9 @@ export default function Home() {
           <div className="footer-bottom">
             <span>© 2026 flowmatic.co.il · לינקי אפיליאט מסומנים בגלוי</span>
             <div className="footer-legal">
-              <a href="#">פרטיות</a>
-              <a href="#">גילוי נאות</a>
-              <a href="#">יצירת קשר</a>
+              <a href="/privacy">פרטיות</a>
+              <a href="/disclosure">גילוי נאות</a>
+              <a href="/contact">יצירת קשר</a>
             </div>
           </div>
         </div>
