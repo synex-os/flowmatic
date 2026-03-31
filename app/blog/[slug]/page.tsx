@@ -37,9 +37,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   if (!post) return {}
   const { meta } = post
 
+  const ogImage = `https://flowmatic.co.il/blog/og-${meta.slug}.png`
+  const postKeywords = [
+    ...(meta.tags || []),
+    'OpenClaw', 'סוכן AI', 'AI agent', 'OpenClaw מדריך',
+    'בינה מלאכותית', 'ClawFlow',
+  ]
+
   return {
     title: `${meta.title} | Flowmatic`,
     description: meta.description,
+    keywords: postKeywords,
     alternates: {
       canonical: `https://flowmatic.co.il/blog/${meta.slug}/`,
     },
@@ -55,7 +63,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       authors: ['Flowmatic'],
       tags: meta.tags,
       images: [{
-        url: 'https://flowmatic.co.il/og-image.png',
+        url: ogImage,
         width: 1200,
         height: 630,
         alt: meta.title,
@@ -65,7 +73,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      images: ['https://flowmatic.co.il/og-image.png'],
+      images: [ogImage],
     },
   }
 }
@@ -77,6 +85,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   const { meta, content } = post
   const level = LEVEL_LABELS[meta.level] || LEVEL_LABELS.base
 
+  const steps = extractSteps(content)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
@@ -95,10 +104,19 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       url: 'https://flowmatic.co.il',
     },
     inLanguage: 'he',
+    image: `https://flowmatic.co.il/blog/og-${meta.slug}.png`,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://flowmatic.co.il/blog/${meta.slug}/`,
     },
+    ...(steps.length > 0 ? {
+      step: steps.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: s.name,
+        text: s.text,
+      })),
+    } : {}),
   }
 
   const faqItems = extractFAQ(content)
@@ -156,6 +174,29 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </div>
     </>
   )
+}
+
+function extractSteps(content: string): { name: string; text: string }[] {
+  const steps: { name: string; text: string }[] = []
+  const lines = content.split('\n')
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim()
+    // Match H2 headings that look like steps: "## שלב 1 — ..."
+    if (line.startsWith('## ') && /שלב|step/i.test(line)) {
+      const name = line.replace('## ', '').replace(/\*\*/g, '')
+      let text = ''
+      for (let j = i + 1; j < lines.length; j++) {
+        const next = lines[j].trim()
+        if (next.startsWith('## ') || next.startsWith('# ')) break
+        if (next && !next.startsWith('<') && !next.startsWith('```') && !next.startsWith('---') && !next.startsWith('|')) {
+          text = next.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+          break
+        }
+      }
+      if (text) steps.push({ name, text })
+    }
+  }
+  return steps
 }
 
 function extractFAQ(content: string) {

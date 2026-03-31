@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #888; display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 40px; }
+.og {
+  width: 1200px;
+  height: 630px;
+  background: linear-gradient(135deg, #1C1B18 0%, #2A2924 50%, #1C1B18 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+.og::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,98,10,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,98,10,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.og::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212,98,10,0.12) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  border-radius: 50%;
+}
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 80px;
+}
+.topic-badge {
+  display: inline-block;
+  background: rgba(212,98,10,0.15);
+  border: 1px solid rgba(212,98,10,0.3);
+  color: #D4620A;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+.title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #FAFAF8;
+  line-height: 1.25;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  direction: rtl;
+}
+.subtitle {
+  font-size: 20px;
+  color: #AEACA7;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 700px;
+  margin: 0 auto;
+  direction: rtl;
+}
+.footer {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.logo-f {
+  width: 36px;
+  height: 36px;
+  background: #D4620A;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+}
+.url {
+  font-size: 16px;
+  color: #787672;
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+<!-- Post: openclaw-complete-guide-2026 -->
+<div class="og" id="openclaw-complete-guide-2026">
+  <div class="content">
+    <div class="topic-badge">📗 מדריך מלא · 2026</div>
+    <div class="title">המדריך המלא ל-OpenClaw<br/>מאפס לסוכן AI עובד</div>
+    <div class="subtitle">שרת VPS מוכן תוך 3 דקות · טלגרם · Google · Microsoft 365 · אוטומציות · קול · סאב-אגנטים</div>
+  </div>
+  <div class="footer">
+    <div class="logo-f">F</div>
+    <div class="url">flowmatic.co.il</div>
+  </div>
+</div>
+</body>
+</html>
