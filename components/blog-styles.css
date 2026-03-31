@@ -185,12 +185,13 @@
     position: static;
     width: 100%;
     order: -1;
-    padding: 16px 0 0;
+    padding: 16px 0;
     border-bottom: 1px solid var(--border);
     margin-bottom: 8px;
+    max-height: 50vh;
+    overflow-y: auto;
   }
-  .post-toc ul { display: flex; flex-wrap: wrap; gap: 4px 12px; }
-  .post-toc a { padding: 4px 0; border-right: none; }
+  .post-toc a { padding: 5px 0; border-right: none; font-size: 0.88rem; }
 }
 
 .post-body {
