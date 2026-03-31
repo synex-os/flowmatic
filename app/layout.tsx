@@ -5,11 +5,20 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://flowmatic.co.il'),
   title: {
-    default: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
+    default: 'Flowmatic — סוכן AI לעסקים | מדריכים ל-OpenClaw בעברית',
     template: '%s | Flowmatic',
   },
-  description: 'המשאב הישראלי הראשון ל-OpenClaw. מדריכים מעשיים, כלים מומלצים, ועזרה אישית — הכל חינמי, בעברית. סוכן AI לעסקים ישראלים.',
-  keywords: ['OpenClaw', 'OpenClaw ישראל', 'OpenClaw עברית', 'סוכן AI', 'AI agent', 'OpenClaw מדריך', 'OpenClaw הגדרה', 'בינה מלאכותית לעסקים', 'AI לעסקים ישראלים'],
+  description: 'סוכן AI לעסקים ישראלים — מדריכים מעשיים ל-OpenClaw בעברית, אוטומציה עם בינה מלאכותית, אירוח VPS מוכן תוך 3 דקות. הכל חינמי, ללא paywall.',
+  keywords: [
+    'סוכן AI', 'סוכן AI לעסקים', 'סוכן בינה מלאכותית',
+    'OpenClaw', 'OpenClaw ישראל', 'OpenClaw עברית', 'OpenClaw מדריך',
+    'בינה מלאכותית לעסקים', 'בינה מלאכותית לעסקים קטנים', 'AI לעסקים ישראלים',
+    'אוטומציה עם AI', 'אוטומציה עסקית', 'אוטומציה בינה מלאכותית',
+    'AI agent', 'AI agent Israel', 'AI assistant Hebrew',
+    'שיווק עם AI', 'סוכן שיווק אוטומטי', 'AI marketing agent',
+    'Claude API', 'Claude לעסקים',
+    'n8n', 'Activepieces', 'אוטומציות open source',
+  ],
   authors: [{ name: 'Flowmatic', url: 'https://flowmatic.co.il' }],
   creator: 'Flowmatic',
   publisher: 'Flowmatic',
@@ -17,8 +26,8 @@ export const metadata: Metadata = {
     canonical: 'https://flowmatic.co.il/',
   },
   openGraph: {
-    title: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
-    description: 'המשאב הישראלי הראשון ל-OpenClaw. מדריכים מעשיים, כלים מומלצים, ועזרה אישית — הכל חינמי, בעברית.',
+    title: 'Flowmatic — סוכן AI לעסקים | מדריכים ל-OpenClaw בעברית',
+    description: 'סוכן AI לעסקים ישראלים — מדריכים ל-OpenClaw, אוטומציה עם בינה מלאכותית, אירוח VPS מוכן תוך 3 דקות. חינמי, בעברית.',
     url: 'https://flowmatic.co.il',
     siteName: 'Flowmatic',
     locale: 'he_IL',
@@ -32,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
-    description: 'מדריכים מעשיים ל-OpenClaw בעברית. חינמי, ללא paywall.',
+    title: 'Flowmatic — סוכן AI לעסקים | OpenClaw בעברית',
+    description: 'סוכן AI לעסקים ישראלים — מדריכים, אוטומציה, אירוח VPS. חינמי, בעברית.',
     images: ['https://flowmatic.co.il/og-image.png'],
   },
   robots: {
@@ -55,7 +64,7 @@ const siteJsonLd = {
   name: 'Flowmatic',
   alternateName: 'פלומטיק',
   url: 'https://flowmatic.co.il',
-  description: 'המשאב הישראלי הראשון ל-OpenClaw — מדריכים, כלים ועזרה אישית בעברית',
+  description: 'סוכן AI לעסקים ישראלים — מדריכים ל-OpenClaw, אוטומציה עם בינה מלאכותית, כלים מומלצים ועזרה אישית בעברית',
   inLanguage: 'he',
   publisher: {
     '@type': 'Organization',

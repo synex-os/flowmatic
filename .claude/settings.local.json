@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for f:*)",
+      "Bash(do)",
+      "Bash(sed -i '/crisp/Id' \"/c/Users/Sergei Gofman/SyNexOS/openclaw-hosting/apps/web/public/$f.html\")",
+      "Bash(done)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -H \"Upgrade: websocket\" -H \"Connection: Upgrade\" \"https://api.openclaw.flowmatic.co.il/ws/chat\")"
+    ]
+  }
+}

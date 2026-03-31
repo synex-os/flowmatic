@@ -39,8 +39,36 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'מה זה OpenClaw?',
+        acceptedAnswer: { '@type': 'Answer', text: 'OpenClaw הוא סוכן בינה מלאכותית (AI Agent) בקוד פתוח שגר באפליקציות הודעות כמו טלגרם ו-WhatsApp. הוא יכול לנהל יומן, לכתוב מיילים, לחפש מידע, ולהריץ אוטומציות — כמו עוזר אישי שעובד 24/7.' }
+      },
+      {
+        '@type': 'Question',
+        name: 'למה התוכן חינמי?',
+        acceptedAnswer: { '@type': 'Answer', text: 'כל המדריכים ב-Flowmatic חינמיים ללא paywall. ההכנסות מגיעות מלינקי אפיליאט שקופים (מסומנים תמיד בגלוי) ומשירות Human as a Service — עזרה אישית בתשלום למי שצריך.' }
+      },
+      {
+        '@type': 'Question',
+        name: 'איך מקימים סוכן AI לעסק?',
+        acceptedAnswer: { '@type': 'Answer', text: 'דרך ClawFlow — בוחרים סוכנים בקונפיגורטור, משלמים, ותוך 3 דקות מקבלים שרת VPS מוכן עם OpenClaw, מנוע אוטומציה (n8n/Activepieces), וחיבור לטלגרם. ללא הגדרות טכניות.' }
+      },
+      {
+        '@type': 'Question',
+        name: 'כמה עולה סוכן AI?',
+        acceptedAnswer: { '@type': 'Answer', text: 'התוכניות מתחילות מ-₪79 לחודש (תוכנית אישית) ועד ₪599 לחודש (תוכנית מפתח). המחיר כולל שרת VPS, SSL, גיבויים, ותמיכה. עלות מודל ה-AI (Claude/GPT) נפרדת — משלמים ישירות לספק לפי שימוש.' }
+      },
+    ],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       {/* NAV */}
       <nav>
         <div className="wrap">
@@ -171,7 +199,7 @@ export default function Home() {
             <div>
               <div className="hero-kicker">
                 <span className="kicker-line"></span>
-                המשאב הישראלי הראשון ל-OpenClaw
+                סוכן AI לעסקים — המדריך הישראלי ל-OpenClaw
               </div>
               <h1>
                 הכל כאן.<br />
@@ -179,7 +207,7 @@ export default function Home() {
                 בעברית.
               </h1>
               <p className="hero-lead">
-                מדריכים מעשיים על OpenClaw לעסקים ישראלים. ללא paywall, ללא שטויות — רק תוכן שעוזר. אם נתקעתם, יש גם בן אדם מאחורה.
+                מדריכים מעשיים ל-OpenClaw — סוכן בינה מלאכותית לעסקים ישראלים. אוטומציה, שיווק עם AI, אירוח VPS מוכן תוך 3 דקות. ללא paywall — ואם נתקעתם, יש בן אדם מאחורה.
               </p>
               <div className="hero-btns">
                 <a href="#guides" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('guides') }}>
@@ -468,7 +496,7 @@ export default function Home() {
               <a href="/" className="footer-logo">
                 <img src="/logo.png" alt="Flowmatic" />
               </a>
-              <p>המשאב הישראלי הראשון ל-OpenClaw — תוכן חינמי, כלים, ועזרה אישית לעסקים בעברית.</p>
+              <p>סוכן AI לעסקים ישראלים — מדריכים ל-OpenClaw, אוטומציה עם בינה מלאכותית, כלים מומלצים ועזרה אישית. הכל חינמי, בעברית.</p>
             </div>
             <div className="footer-col">
               <h5>תוכן</h5>
