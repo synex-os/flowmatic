@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #888; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.og {
+  width: 1200px;
+  height: 630px;
+  background: linear-gradient(135deg, #1C1B18 0%, #2A2924 50%, #1C1B18 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+/* Subtle grid pattern */
+.og::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,98,10,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,98,10,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* Glow */
+.og::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212,98,10,0.12) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  border-radius: 50%;
+}
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 80px;
+}
+.logo-f {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: #D4620A;
+  border-radius: 18px;
+  font-size: 48px;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 32px;
+}
+.title {
+  font-size: 56px;
+  font-weight: 800;
+  color: #FAFAF8;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+.title span {
+  color: #D4620A;
+}
+.subtitle {
+  font-size: 24px;
+  color: #AEACA7;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.url {
+  position: absolute;
+  bottom: 36px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 18px;
+  color: #787672;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+}
+.badge {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid rgba(212,98,10,0.3);
+  color: #D4620A;
+  background: rgba(212,98,10,0.08);
+}
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="content">
+    <div class="logo-f">F</div>
+    <div class="title">המדריך הישראלי ל-<span>OpenClaw</span></div>
+    <div class="subtitle">מדריכים מעשיים, כלים מומלצים, ועזרה אישית — הכל חינמי, בעברית</div>
+    <div class="badges">
+      <div class="badge">🤖 סוכן AI</div>
+      <div class="badge">📗 מדריכים חינמיים</div>
+      <div class="badge">🇮🇱 עברית</div>
+    </div>
+  </div>
+  <div class="url">flowmatic.co.il</div>
+</div>
+</body>
+</html>

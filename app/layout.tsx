@@ -23,11 +23,18 @@ export const metadata: Metadata = {
     siteName: 'Flowmatic',
     locale: 'he_IL',
     type: 'website',
+    images: [{
+      url: 'https://flowmatic.co.il/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
+    }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Flowmatic — המדריך הישראלי ל-OpenClaw',
     description: 'מדריכים מעשיים ל-OpenClaw בעברית. חינמי, ללא paywall.',
+    images: ['https://flowmatic.co.il/og-image.png'],
   },
   robots: {
     index: true,

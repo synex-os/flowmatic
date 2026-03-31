@@ -54,11 +54,18 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       modifiedTime: meta.date_updated,
       authors: ['Flowmatic'],
       tags: meta.tags,
+      images: [{
+        url: 'https://flowmatic.co.il/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: meta.title,
+      }],
     },
     twitter: {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
+      images: ['https://flowmatic.co.il/og-image.png'],
     },
   }
 }
