@@ -107,7 +107,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link rel="canonical" href="https://flowmatic.co.il/" />
-        <script defer data-domain="flowmatic.co.il" src="https://plausible.io/js/pa-aAqBMAznLkSKHIgdDIawd.js"></script>
+        <script defer data-domain="flowmatic.co.il" src="https://plausible.io/js/script.js"></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
