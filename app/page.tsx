@@ -65,7 +65,7 @@ export default function Home() {
                   <div className="mega-inner-wrap">
                   <div className="mega-col">
                     <div className="mega-col-title">הכלים שלנו</div>
-                    <a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="mega-item">
+                    <a href="https://clawflow.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="mega-item">
                       <div className="mega-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                       </div>
@@ -147,7 +147,7 @@ export default function Home() {
             </ul>
 
             <div className="nav-right">
-              <a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="yt-link">
+              <a href="https://clawflow.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="yt-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16}}>
                   <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
                 </svg>
@@ -303,7 +303,7 @@ export default function Home() {
                 <span>🛠</span> הכלים שלנו
               </div>
               <div className="tools-list">
-                <a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="tool-row">
+                <a href="https://clawflow.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="tool-row">
                   <div className="tool-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                   </div>
@@ -481,7 +481,7 @@ export default function Home() {
             <div className="footer-col">
               <h5>כלים שלנו</h5>
               <ul>
-                <li><a href="https://openclaw.flowmatic.co.il" target="_blank" rel="noopener noreferrer">ClawFlow ↗</a></li>
+                <li><a href="https://clawflow.flowmatic.co.il" target="_blank" rel="noopener noreferrer">ClawFlow ↗</a></li>
                 <li><a href="https://kol-ai.xyz" target="_blank" rel="noopener noreferrer">קול VoiceAI ↗</a></li>
                 <li><a href="#has">Human as a Service</a></li>
               </ul>
