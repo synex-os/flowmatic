@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flowmatic — המדריך הישראלי ל-OpenClaw</title>
+<meta name="description" content="תוכן חינמי ומקצועי על OpenClaw לעסקים ישראלים. מדריכים, כלים, וסרגיי — אם נתקעתם.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #FAFAF8;
+  --bg-2:     #F4F3EF;
+  --bg-3:     #ECEAE4;
+  --ink:      #1C1B18;
+  --ink-2:    #3D3C38;
+  --ink-3:    #787672;
+  --ink-4:    #AEACA7;
+  --border:   #E2E0DA;
+  --border-h: #C8C5BE;
+  --accent:   #D4620A;
+  --accent-l: #F28C3E;
+  --accent-bg:#FDF3EC;
+  --green:    #2A7A4B;
+  --green-bg: #EDF7F1;
+  --ff:       'Heebo', system-ui, sans-serif;
+  --ff-mono:  'DM Mono', monospace;
+  --r:        8px;
+  --r-lg:     14px;
+  --ease:     cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--ff);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px;}
+
+/* ── NAV ── */
+nav{
+  background:rgba(250,250,248,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;gap:8px;
+}
+.logo{display:flex;align-items:center;}
+.logo img{height:28px;width:auto;}
+.nav-center{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-center > li{position:relative;}
+.nav-link{
+  font-size:0.875rem;color:var(--ink-3);
+  padding:6px 12px;border-radius:6px;
+  transition:color 0.15s,background 0.15s;
+  display:flex;align-items:center;gap:4px;
+  cursor:pointer;
+}
+.nav-link:hover,.nav-link.open{color:var(--ink);background:var(--bg-2);}
+.nav-link svg{width:12px;height:12px;transition:transform 0.2s;}
+.nav-link.open svg{transform:rotate(180deg);}
+
+/* MEGA MENU */
+.mega{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:0 8px 32px rgba(0,0,0,0.09);
+  padding:20px;
+  display:none;
+  min-width:520px;
+  z-index:300;
+}
+.mega.open{display:flex;gap:24px;}
+.mega-col{flex:1;}
+.mega-col-title{
+  font-size:0.68rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ink-4);
+  margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.mega-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:var(--r);
+  transition:background 0.15s;
+  cursor:pointer;
+}
+.mega-item:hover{background:var(--bg-2);}
+.mega-icon{
+  width:34px;height:34px;border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--bg-2);
+  display:grid;place-items:center;
+  font-size:16px;flex-shrink:0;
+  overflow:hidden;
+}
+.mega-icon img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
+.mega-name{font-size:0.875rem;font-weight:500;color:var(--ink);}
+.mega-desc{font-size:0.78rem;color:var(--ink-3);margin-top:1px;}
+.mega-badge{
+  margin-right:auto;flex-shrink:0;
+  font-size:0.65rem;font-weight:600;letter-spacing:0.4px;
+  padding:2px 7px;border-radius:8px;
+  background:var(--accent-bg);color:var(--accent);
+  text-transform:uppercase;
+}
+.mega-badge.new{background:var(--green-bg);color:var(--green);}
+
+/* Nav right */
+.nav-right{display:flex;align-items:center;gap:10px;margin-right:auto;}
+.yt-link{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.825rem;color:var(--ink-3);
+  padding:5px 10px;border-radius:6px;
+  transition:all 0.15s;
+}
+.yt-link:hover{background:var(--bg-2);color:#FF0000;}
+.yt-link svg{width:16px;height:16px;}
+.btn-donate{
+  display:flex;align-items:center;gap:6px;
+  background:var(--accent-bg);
+  border:1px solid rgba(212,98,10,0.2);
+  color:var(--accent);
+  font-size:0.825rem;font-weight:500;
+  padding:6px 14px;border-radius:20px;
+  transition:all 0.15s;
+}
+.btn-donate:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn-donate svg{width:13px;height:13px;}
+
+/* ── HERO ── */
+.hero{
+  padding:72px 0 64px;
+  border-bottom:1px solid var(--border);
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 380px;
+  gap:80px;align-items:start;
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.78rem;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.8px;
+  text-transform:uppercase;margin-bottom:20px;
+}
+.kicker-line{width:24px;height:1px;background:var(--ink-4);}
+h1{
+  font-family:var(--ff);
+  font-size:clamp(2.6rem,4.5vw,3.8rem);
+  font-weight:900;
+  line-height:1.08;
+  letter-spacing:-2px;
+  color:var(--ink);
+  margin-bottom:20px;
+}
+h1 .accent{color:var(--accent);}
+.hero-lead{
+  font-size:1.05rem;color:var(--ink-2);
+  line-height:1.75;max-width:500px;
+  margin-bottom:32px;
+}
+.hero-btns{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.btn-main{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--ink);color:#fff;
+  font-size:0.9rem;font-weight:500;
+  padding:11px 24px;border-radius:var(--r);
+  transition:all 0.18s;
+}
+.btn-main:hover{background:var(--ink-2);transform:translateY(-1px);}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--border-h);
+  color:var(--ink-2);font-size:0.9rem;
+  padding:11px 20px;border-radius:var(--r);
+  background:var(--bg);transition:all 0.18s;
+}
+.btn-outline:hover{border-color:var(--ink-3);color:var(--ink);}
+.hero-footnote{
+  margin-top:40px;padding-top:28px;
+  border-top:1px solid var(--border);
+  display:flex;gap:36px;
+}
+.fn-item{font-size:0.82rem;color:var(--ink-3);}
+.fn-num{
+  font-family:var(--ff);font-size:1.5rem;font-weight:700;
+  color:var(--ink);display:block;line-height:1;margin-bottom:3px;
+}
+
+/* ── NEWSLETTER CARD ── */
+.nl-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:32px 28px;
+  position:sticky;top:80px;
+}
+.nl-badge{
+  display:inline-block;
+  background:var(--green-bg);color:var(--green);
+  font-size:0.7rem;font-weight:500;
+  padding:2px 9px;border-radius:10px;
+  margin-bottom:10px;
+}
+.nl-card h3{
+  font-family:var(--ff);
+  font-size:1.3rem;font-weight:700;
+  line-height:1.3;color:var(--ink);margin-bottom:10px;
+}
+.nl-card p{font-size:0.875rem;color:var(--ink-3);line-height:1.6;margin-bottom:20px;}
+.nl-perks{margin-bottom:20px;display:flex;flex-direction:column;gap:8px;}
+.nl-perk{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.83rem;color:var(--ink-2);
+}
+.nl-perk-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.nl-field{
+  width:100%;background:var(--bg-2);
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:10px 14px;color:var(--ink);
+  font-family:var(--ff);font-size:0.9rem;
+  margin-bottom:10px;direction:rtl;
+  transition:border-color 0.18s,background 0.18s;
+}
+.nl-field::placeholder{color:var(--ink-4);}
+.nl-field:focus{outline:none;border-color:var(--ink-3);background:#fff;}
+.nl-submit{
+  width:100%;background:var(--ink);color:#fff;
+  font-size:0.9rem;font-weight:500;
+  padding:11px;border-radius:var(--r);
+  transition:all 0.18s;
+}
+.nl-submit:hover{background:var(--accent);}
+.nl-micro{font-size:0.74rem;color:var(--ink-4);text-align:center;margin-top:10px;}
+.nl-proof{
+  display:flex;align-items:center;gap:10px;
+  margin-top:18px;padding-top:16px;
+  border-top:1px solid var(--border);
+}
+.nl-faces{display:flex;}
+.nl-face{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid #fff;background:var(--bg-3);
+  margin-right:-8px;display:grid;place-items:center;
+  font-size:10px;font-weight:500;color:var(--ink-3);
+}
+.nl-count{font-size:0.8rem;color:var(--ink-3);margin-right:14px;}
+.nl-count strong{color:var(--ink);}
+
+/* ── SECTIONS ── */
+.section{padding:64px 0;border-bottom:1px solid var(--border);}
+.eyebrow{
+  font-size:0.75rem;font-weight:500;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ink-3);
+  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--ink-4);}
+h2{
+  font-family:var(--ff);
+  font-size:clamp(1.6rem,3vw,2.2rem);
+  font-weight:700;letter-spacing:-0.8px;
+  line-height:1.2;color:var(--ink);margin-bottom:12px;
+}
+.sub{font-size:1rem;color:var(--ink-3);max-width:520px;line-height:1.7;}
+.sh{margin-bottom:44px;}
+
+/* ── PHILOSOPHY ── */
+.phil-strip{
+  background:var(--ink);
+  padding:52px 0;border-bottom:1px solid var(--border);
+}
+.phil-inner{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start;}
+.phil-label{
+  font-family:var(--ff);
+  font-size:1.8rem;font-weight:700;
+  color:#fff;letter-spacing:-0.5px;line-height:1.2;
+}
+.phil-label em{font-style:normal;color:var(--accent-l);}
+.phil-items{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.phil-num{font-family:var(--ff-mono);font-size:0.75rem;color:rgba(255,255,255,0.3);margin-bottom:6px;}
+.phil-title{font-size:0.95rem;font-weight:500;color:#fff;margin-bottom:4px;}
+.phil-desc{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6;}
+
+/* ── GUIDES ── */
+.guides-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+}
+.guide-card{
+  background:var(--bg);padding:28px 24px;
+  transition:background 0.18s;cursor:pointer;
+}
+.guide-card:hover{background:#fff;}
+.guide-tag{
+  font-size:0.7rem;font-weight:500;letter-spacing:0.8px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:10px;
+}
+.guide-title{
+  font-family:var(--ff);font-size:1rem;font-weight:600;
+  line-height:1.35;color:var(--ink);margin-bottom:8px;
+}
+.guide-desc{font-size:0.83rem;color:var(--ink-3);line-height:1.55;margin-bottom:16px;}
+.guide-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:0.76rem;color:var(--ink-4);
+  padding-top:14px;border-top:1px solid var(--border);
+}
+.guide-read{color:var(--accent);font-weight:500;}
+.guide-featured{background:#fff;grid-column:span 2;}
+.guide-featured:hover{background:var(--accent-bg);}
+
+/* ── TOOLS ── */
+.tools-list{
+  display:flex;flex-direction:column;gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+}
+.tool-row{
+  display:flex;align-items:center;gap:20px;
+  background:var(--bg);padding:18px 24px;
+  transition:background 0.18s;
+}
+.tool-row:hover{background:#fff;}
+.tool-icon{
+  width:40px;height:40px;border-radius:var(--r);
+  border:1px solid var(--border);background:#fff;
+  display:grid;place-items:center;
+  font-size:18px;flex-shrink:0;overflow:hidden;
+}
+.tool-icon img{width:100%;height:100%;object-fit:cover;border-radius:var(--r);}
+.tool-name{font-weight:500;font-size:0.9rem;color:var(--ink);}
+.tool-desc{font-size:0.825rem;color:var(--ink-3);margin-top:1px;}
+.tool-cta{
+  margin-right:auto;flex-shrink:0;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.8rem;font-weight:500;color:var(--accent);
+  padding:5px 12px;border-radius:var(--r);
+  border:1px solid rgba(212,98,10,0.2);
+  background:var(--accent-bg);transition:all 0.18s;
+}
+.tool-cta:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.tool-badge{
+  flex-shrink:0;font-size:0.7rem;font-weight:500;
+  padding:3px 8px;border-radius:10px;
+  background:var(--bg-3);color:var(--ink-3);
+}
+.tool-badge.aff{background:var(--accent-bg);color:var(--accent);}
+.tool-badge.ours{background:var(--green-bg);color:var(--green);}
+.tool-badge.mit{background:#EEF2FF;color:#4338CA;}
+
+/* ── TOOLS SECTION GRID ── */
+.tools-section-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.tools-section-title{
+  font-size:0.72rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ink-3);
+  margin-bottom:14px;padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ── HAS ── */
+.has-section{
+  background:var(--bg-2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:72px 0;
+}
+.has-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.has-text h2{margin-bottom:16px;}
+.has-text p{font-size:1rem;color:var(--ink-2);line-height:1.75;margin-bottom:16px;}
+.has-price-note{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--r);padding:10px 16px;
+  font-size:0.85rem;color:var(--ink-2);margin-bottom:24px;
+}
+.has-price-note strong{color:var(--accent);}
+.has-steps{margin-top:28px;display:flex;flex-direction:column;gap:12px;}
+.has-step{display:flex;align-items:flex-start;gap:14px;}
+.has-step-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--bg-3);border:1px solid var(--border);
+  display:grid;place-items:center;
+  font-size:0.72rem;font-weight:500;color:var(--ink-3);
+  flex-shrink:0;margin-top:1px;
+}
+.has-step-text{font-size:0.875rem;color:var(--ink-2);line-height:1.5;}
+.has-step-text strong{color:var(--ink);font-weight:500;}
+.has-form-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+}
+.has-form-head{background:var(--ink);padding:20px 24px;}
+.has-form-head p{font-size:0.8rem;color:rgba(255,255,255,0.45);font-family:var(--ff-mono);letter-spacing:0.5px;}
+.has-form-head h4{
+  font-family:var(--ff);font-size:1.1rem;font-weight:600;
+  color:#fff;margin-bottom:4px;
+}
+.has-form-body{padding:24px;}
+.form-row{margin-bottom:14px;}
+.form-label{
+  display:block;font-size:0.78rem;font-weight:500;
+  color:var(--ink-3);margin-bottom:5px;letter-spacing:0.3px;
+}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--bg-2);
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:9px 12px;color:var(--ink);
+  font-family:var(--ff);font-size:0.875rem;direction:rtl;
+  transition:border-color 0.18s,background 0.18s;
+}
+.form-textarea{resize:vertical;min-height:80px;}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--ink-4);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  outline:none;border-color:var(--ink-3);background:#fff;
+}
+.form-submit{
+  width:100%;background:var(--ink);color:#fff;
+  font-size:0.875rem;font-weight:500;
+  padding:11px;border-radius:var(--r);transition:all 0.18s;
+}
+.form-submit:hover{background:var(--accent);}
+.form-note{font-size:0.76rem;color:var(--ink-4);text-align:center;margin-top:8px;}
+
+/* ── DONATE ── */
+.donate-strip{padding:52px 0;border-bottom:1px solid var(--border);}
+.donate-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:40px;flex-wrap:wrap;
+}
+.donate-text h3{
+  font-family:var(--ff);font-size:1.4rem;font-weight:700;
+  color:var(--ink);margin-bottom:6px;
+}
+.donate-text p{font-size:0.9rem;color:var(--ink-3);max-width:420px;line-height:1.6;}
+.donate-amounts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.donate-amt{
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:8px 16px;font-size:0.875rem;font-weight:500;
+  color:var(--ink-2);background:var(--bg);cursor:pointer;transition:all 0.18s;
+}
+.donate-amt:hover,.donate-amt.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+.btn-donate-main{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);color:#fff;
+  font-size:0.9rem;font-weight:500;
+  padding:10px 22px;border-radius:var(--r);transition:all 0.18s;
+}
+.btn-donate-main:hover{background:#B8540A;}
+
+/* ── FOOTER ── */
+footer{
+  background:#fff;border-top:1px solid var(--border);
+  padding:48px 0 28px;
+}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;margin-bottom:40px;
+}
+.footer-about p{
+  font-size:0.85rem;color:var(--ink-3);
+  line-height:1.65;margin-top:12px;max-width:260px;
+}
+.footer-logo img{height:24px;width:auto;}
+.footer-col h5{
+  font-size:0.72rem;font-weight:500;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ink-4);margin-bottom:14px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.footer-col li a{font-size:0.875rem;color:var(--ink-3);transition:color 0.15s;}
+.footer-col li a:hover{color:var(--accent);}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:24px;border-top:1px solid var(--border);
+  font-size:0.79rem;color:var(--ink-4);
+}
+.footer-legal{display:flex;gap:20px;}
+.footer-legal a{color:var(--ink-4);transition:color 0.15s;}
+.footer-legal a:hover{color:var(--accent);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;}
+  .nl-card{position:static;display:none;}
+  .has-inner{grid-template-columns:1fr;}
+  .guides-grid{grid-template-columns:1fr 1fr;}
+  .guide-featured{grid-column:span 1;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .phil-inner{grid-template-columns:1fr;}
+  .tools-section-grid{grid-template-columns:1fr;}
+  .mega{min-width:320px;flex-direction:column;}
+}
+@media(max-width:600px){
+  .guides-grid{grid-template-columns:1fr;}
+  .nav-center{display:none;}
+  .footer-top{grid-template-columns:1fr;}
+  .donate-inner{flex-direction:column;align-items:flex-start;}
+}
+
+/* ── ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.55s var(--ease),transform 0.55s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="public/logo.png" alt="Flowmatic" />
+      </a>
+
+      <ul class="nav-center">
+        <li>
+          <a href="https://clawflow.flowmatic.co.il" class="nav-link" style="color:#2563EB;font-weight:600">אירוח ClawFlow</a>
+        </li>
+        <li>
+          <a href="#guides" class="nav-link">מדריכים</a>
+        </li>
+        <li>
+          <!-- MEGA MENU TRIGGER -->
+          <span class="nav-link" id="tools-trigger">
+            כלים
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 4l4 4 4-4"/>
+            </svg>
+          </span>
+          <div class="mega" id="tools-mega">
+            <!-- COL 1: OUR TOOLS -->
+            <div class="mega-col">
+              <div class="mega-col-title">הכלים שלנו</div>
+              <div class="mega-item" onclick="location.href='https://clawflow.flowmatic.co.il'">
+                <div class="mega-icon">🤖</div>
+                <div>
+                  <div class="mega-name">ClawFlow</div>
+                  <div class="mega-desc">אירוח סוכני AI — מוכן ב-3 דקות</div>
+                </div>
+                <span class="mega-badge new">חדש</span>
+              </div>
+              <div class="mega-item" onclick="location.href='#'">
+                <div class="mega-icon">
+                  <img src="public/avatar.png" alt="Gius">
+                </div>
+                <div>
+                  <div class="mega-name">Gius.xyz</div>
+                  <div class="mega-desc">חבילת כלים לעסקים קטנים</div>
+                </div>
+              </div>
+              <div class="mega-item" onclick="location.href='#'">
+                <div class="mega-icon">📞</div>
+                <div>
+                  <div class="mega-name">Kol Voice AI</div>
+                  <div class="mega-desc">סוכן קולי בעברית לעסק</div>
+                </div>
+                <span class="mega-badge new">Beta</span>
+              </div>
+            </div>
+            <!-- COL 2: RECOMMENDED STACK -->
+            <div class="mega-col">
+              <div class="mega-col-title">סטאק מומלץ</div>
+              <div class="mega-item" onclick="location.href='#'">
+                <div class="mega-icon">🌐</div>
+                <div>
+                  <div class="mega-name">Hostinger VPS</div>
+                  <div class="mega-desc">1-Click OpenClaw, NVMe מהיר</div>
+                </div>
+                <span class="mega-badge">10% הנחה</span>
+              </div>
+              <div class="mega-item" onclick="location.href='#'">
+                <div class="mega-icon">🤖</div>
+                <div>
+                  <div class="mega-name">Claude API</div>
+                  <div class="mega-desc">מוח הסוכן — עברית מצוינת</div>
+                </div>
+              </div>
+              <div class="mega-item" onclick="location.href='#'">
+                <div class="mega-icon">🎙️</div>
+                <div>
+                  <div class="mega-name">ElevenLabs</div>
+                  <div class="mega-desc">TTS קולי לסוכן — עברית</div>
+                </div>
+                <span class="mega-badge">אפיליאט</span>
+              </div>
+              <div class="mega-item" onclick="location.href='#'">
+                <div class="mega-icon">⚡</div>
+                <div>
+                  <div class="mega-name">n8n</div>
+                  <div class="mega-desc">אוטומציות open-source, MIT</div>
+                </div>
+                <span class="mega-badge" style="background:#EEF2FF;color:#4338CA;">MIT</span>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a href="#has" class="nav-link">עזרה אישית</a></li>
+        <li><a href="#newsletter" class="nav-link">ניוזלטר</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="https://youtube.com/@flowmatic" target="_blank" class="yt-link">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+          </svg>
+          YouTube
+        </a>
+        <button class="btn-donate" id="donate-nav">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 14s-6-4-6-8a4 4 0 0 1 8 0 4 4 0 0 1 8 0c0 4-6 8-6 8z"/>
+          </svg>
+          Donate
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-kicker">
+          <span class="kicker-line"></span>
+          המשאב הישראלי הראשון ל-OpenClaw
+        </div>
+        <h1>
+          הכל כאן.<br>
+          הכל <span class="accent">חינמי.</span><br>
+          בעברית.
+        </h1>
+        <p class="hero-lead">
+          מדריכים מעשיים על OpenClaw לעסקים ישראלים. ללא paywall, ללא שטויות — רק תוכן שעוזר. אם נתקעתם, יש גם בן אדם מאחורה.
+        </p>
+        <div class="hero-btns">
+          <a href="#guides" class="btn-main">התחילו לקרוא ←</a>
+          <a href="#has" class="btn-outline">צריכים עזרה אישית?</a>
+        </div>
+        <div class="hero-footnote">
+          <div class="fn-item">
+            <span class="fn-num">15+</span>
+            מדריכים חינמיים
+          </div>
+          <div class="fn-item">
+            <span class="fn-num">0₪</span>
+            עלות הגישה לתוכן
+          </div>
+          <div class="fn-item">
+            <span class="fn-num">2026</span>
+            עדכני לחלוטין
+          </div>
+        </div>
+      </div>
+
+      <!-- NEWSLETTER CARD -->
+      <div class="nl-card" id="newsletter">
+        <span class="nl-badge">חינמי</span>
+        <h3>קבלו מדריך PDF + עדכונים שבועיים</h3>
+        <p>טיפים מעשיים, כלים חדשים, ועדכוני OpenClaw — ישירות למייל. ללא ספאם.</p>
+        <div class="nl-perks">
+          <div class="nl-perk"><span class="nl-perk-dot"></span>מדריך PDF מלא לנרשמים חדשים</div>
+          <div class="nl-perk"><span class="nl-perk-dot"></span>עדכונים לפני כולם</div>
+          <div class="nl-perk"><span class="nl-perk-dot"></span>תוכן ישראלי — לא תרגום</div>
+        </div>
+        <input type="email" class="nl-field" placeholder="האימייל שלכם">
+        <button class="nl-submit">קבלו גישה חינמית ←</button>
+        <p class="nl-micro">ביטול בכל עת · ללא ספאם</p>
+        <div class="nl-proof">
+          <div class="nl-faces">
+            <div class="nl-face">א</div>
+            <div class="nl-face">ד</div>
+            <div class="nl-face">מ</div>
+            <div class="nl-face">י</div>
+          </div>
+          <div class="nl-count" style="margin-right:14px">
+            <strong>+400</strong> בעלי עסקים
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<div class="phil-strip">
+  <div class="wrap">
+    <div class="phil-inner">
+      <div class="phil-label">
+        למה <em>הכל</em><br>חינמי?
+      </div>
+      <div class="phil-items">
+        <div class="phil-item">
+          <div class="phil-num">01</div>
+          <div class="phil-title">תוכן טוב מדבר בעד עצמו</div>
+          <div class="phil-desc">אם המדריך עוזר — אנשים חוזרים, ממליצים, ותומכים. זה מספיק.</div>
+        </div>
+        <div class="phil-item">
+          <div class="phil-num">02</div>
+          <div class="phil-title">ישראל צריכה תוכן AI בעברית</div>
+          <div class="phil-desc">כל המשאבים הטובים באנגלית. אנחנו פה כדי לשנות את זה.</div>
+        </div>
+        <div class="phil-item">
+          <div class="phil-num">03</div>
+          <div class="phil-title">אפיליאט שקוף</div>
+          <div class="phil-desc">כשממליצים על כלי — יש לינק אפיליאט. תמיד מסמנים אותו בגלוי.</div>
+        </div>
+        <div class="phil-item">
+          <div class="phil-num">04</div>
+          <div class="phil-title">Human as a Service</div>
+          <div class="phil-desc">מי שלא מצליח לבד — יכול לבקש עזרה אישית. בתשלום, ללא מחיר קבוע.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDES -->
+<section class="section" id="guides">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="eyebrow">מדריכים</div>
+      <h2>למדו OpenClaw מאפס</h2>
+      <p class="sub">כל המדריכים מעשיים, מעודכנים ל-2026, ועם צילומי מסך מלאים.</p>
+    </div>
+    <div class="guides-grid reveal">
+      <div class="guide-card guide-featured">
+        <div class="guide-tag">⭐ מומלץ להתחלה</div>
+        <div class="guide-title" style="font-size:1.2rem">המדריך המלא ל-OpenClaw 2026 — מאפס לסוכן AI עובד תוך שעה</div>
+        <div class="guide-desc">הגדרת שרת, אבטחה, חיבור טלגרם, Google Workspace, זיכרון, אוטומציות, ניתוב מודלים, קול, וסאב-אגנטים. ללא שורת קוד אחת.</div>
+        <div class="guide-foot">
+          <span>55 דקות קריאה · מלא</span>
+          <span class="guide-read">קראו ←</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-tag">אבטחה</div>
+        <div class="guide-title">NemoClaw — אבטחה מ-NVIDIA לסוכן שלכם</div>
+        <div class="guide-desc">Security Guardrails, sandbox מבודד, ניטור פעולות.</div>
+        <div class="guide-foot">
+          <span>7 דקות</span>
+          <span class="guide-read">קראו ←</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-tag">אינטגרציות</div>
+        <div class="guide-title">חיבור WhatsApp ו-Telegram — המדריך הישראלי</div>
+        <div class="guide-desc">הסוכן עונה ללקוחות שלכם בוואטסאפ, 24/7.</div>
+        <div class="guide-foot">
+          <span>10 דקות</span>
+          <span class="guide-read">קראו ←</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-tag">אוטומציה</div>
+        <div class="guide-title">Daily Briefing — הסוכן מדווח לכם כל בוקר</div>
+        <div class="guide-desc">Cron Jobs, אוטומציות מתוזמנות, ו-Daily Briefing.</div>
+        <div class="guide-foot">
+          <span>6 דקות</span>
+          <span class="guide-read">קראו ←</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-tag">השוואה</div>
+        <div class="guide-title">Hostinger vs DigitalOcean vs Hetzner — מה כדאי?</div>
+        <div class="guide-desc">השוואה ישרה עם מחירים ויתרונות לכל ספק.</div>
+        <div class="guide-foot">
+          <span>8 דקות</span>
+          <span class="guide-read">קראו ←</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-tag">Case Study</div>
+        <div class="guide-title">OpenClaw לסוכן נדל״ן ישראלי — מה קרה ב-48 שעות</div>
+        <div class="guide-desc">סוכן AI אמיתי שמטפל בלידים מוואטסאפ.</div>
+        <div class="guide-foot">
+          <span>9 דקות</span>
+          <span class="guide-read">קראו ←</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <div class="wrap">
+    <div class="sh reveal">
+      <div class="eyebrow">כלים</div>
+      <h2>הסטאק שעובד</h2>
+      <p class="sub">כלים שנבדקו אישית — הכלים שלנו ורשימת ספקים מומלצים. לינקי אפיליאט מסומנים תמיד בגלוי.</p>
+    </div>
+    <div class="tools-section-grid reveal">
+      <!-- OUR TOOLS -->
+      <div>
+        <div class="tools-section-title">
+          <span>🛠</span> הכלים שלנו
+        </div>
+        <div class="tools-list">
+          <div class="tool-row">
+            <div class="tool-icon">
+              <img src="public/avatar.png" alt="Gius">
+            </div>
+            <div style="flex:1">
+              <div class="tool-name">Gius.xyz</div>
+              <div class="tool-desc">חבילת כלים AI לעסקים קטנים ובינוניים</div>
+            </div>
+            <span class="tool-badge ours">שלנו</span>
+            <a href="#" class="tool-cta">גלו עוד ←</a>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">📞</div>
+            <div style="flex:1">
+              <div class="tool-name">Kol Voice AI</div>
+              <div class="tool-desc">סוכן קולי בעברית — עונה לטלפון 24/7, מכשיר לידים</div>
+            </div>
+            <span class="tool-badge ours">Beta</span>
+            <a href="#" class="tool-cta">פרטים ←</a>
+          </div>
+        </div>
+      </div>
+      <!-- RECOMMENDED STACK -->
+      <div>
+        <div class="tools-section-title">
+          <span>⚡</span> סטאק מומלץ
+        </div>
+        <div class="tools-list">
+          <div class="tool-row">
+            <div class="tool-icon">🌐</div>
+            <div style="flex:1">
+              <div class="tool-name">Hostinger VPS</div>
+              <div class="tool-desc">1-Click OpenClaw — הכי פשוט להתחלה</div>
+            </div>
+            <span class="tool-badge aff">אפיליאט</span>
+            <a href="#" class="tool-cta">קבלו 10% ←</a>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🤖</div>
+            <div style="flex:1">
+              <div class="tool-name">Claude API</div>
+              <div class="tool-desc">מוח הסוכן — עברית מצוינת, היגיון עסקי</div>
+            </div>
+            <span class="tool-badge">מומלץ</span>
+            <a href="#" class="tool-cta">פתחו חשבון ←</a>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🎙️</div>
+            <div style="flex:1">
+              <div class="tool-name">ElevenLabs</div>
+              <div class="tool-desc">TTS בעברית לסוכן קולי — קול טבעי</div>
+            </div>
+            <span class="tool-badge aff">אפיליאט</span>
+            <a href="#" class="tool-cta">נסו בחינם ←</a>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">⚡</div>
+            <div style="flex:1">
+              <div class="tool-name">n8n</div>
+              <div class="tool-desc">אוטומציות open-source לחיבור כלים — רישיון MIT</div>
+            </div>
+            <span class="tool-badge mit">MIT</span>
+            <a href="#" class="tool-cta">Self-host ←</a>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🔍</div>
+            <div style="flex:1">
+              <div class="tool-name">Brave Search API</div>
+              <div class="tool-desc">חיפוש לסאב-אגנטים — $5 חינמי לחודש</div>
+            </div>
+            <span class="tool-badge">חינמי</span>
+            <a href="#" class="tool-cta">הגדירו ←</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HUMAN AS A SERVICE -->
+<section class="has-section" id="has">
+  <div class="wrap">
+    <div class="has-inner">
+      <div class="has-text reveal">
+        <div class="eyebrow">עזרה אישית</div>
+        <h2>כשהמדריך לא מספיק — יש בן אדם מאחורה</h2>
+        <p>
+          כל התוכן כאן חינמי ומפורט ככל האפשר. אבל לפעמים — נתקעים. הגדרה שלא עובדת, שגיאה שלא מובנת, או שפשוט רוצים שמישהו יעשה את זה בשבילכם.
+        </p>
+        <p>
+          שלחו טופס, ספרו מה צריכים — ואחזור עם הצעה מותאמת אישית. ללא מחיר קבוע, כי כל מקרה שונה.
+        </p>
+        <div class="has-price-note">
+          💡 אין מחירון קבוע — <strong>הכל לפי הצורך</strong>
+        </div>
+        <div class="has-steps">
+          <div class="has-step">
+            <div class="has-step-num">1</div>
+            <div class="has-step-text"><strong>שולחים טופס</strong> — מספרים מה הבעיה, מה כבר ניסיתם</div>
+          </div>
+          <div class="has-step">
+            <div class="has-step-num">2</div>
+            <div class="has-step-text"><strong>מקבלים הצעה</strong> — היקף, זמן, ועלות מוצעת</div>
+          </div>
+          <div class="has-step">
+            <div class="has-step-num">3</div>
+            <div class="has-step-text"><strong>מחליטים</strong> — ללא לחץ, ללא התחייבות</div>
+          </div>
+        </div>
+      </div>
+      <div class="has-form-card reveal">
+        <div class="has-form-head">
+          <p>HUMAN AS A SERVICE</p>
+          <h4>שלחו בקשה לעזרה</h4>
+        </div>
+        <div class="has-form-body">
+          <div class="form-row">
+            <label class="form-label">שם</label>
+            <input type="text" class="form-input" placeholder="השם שלכם">
+          </div>
+          <div class="form-row">
+            <label class="form-label">אימייל / וואטסאפ</label>
+            <input type="text" class="form-input" placeholder="איך ניצור קשר?">
+          </div>
+          <div class="form-row">
+            <label class="form-label">מה אתם צריכים?</label>
+            <select class="form-select">
+              <option value="">בחרו סוג עזרה...</option>
+              <option>הקמת OpenClaw מאפס</option>
+              <option>פתרון בעיה ספציפית</option>
+              <option>חיבור אינטגרציה</option>
+              <option>בניית אוטומציה</option>
+              <option>אחר</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">ספרו בקצרה</label>
+            <textarea class="form-textarea" placeholder="מה ניסיתם? איפה נתקעתם? מה המטרה?"></textarea>
+          </div>
+          <button class="form-submit">שלחו בקשה ←</button>
+          <p class="form-note">אחזור תוך 24 שעות · ללא התחייבות</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE -->
+<section class="donate-strip" id="donate">
+  <div class="wrap">
+    <div class="donate-inner">
+      <div class="donate-text">
+        <h3>התוכן הזה עוזר לכם?</h3>
+        <p>כל הכתיבה, המחקר, ועדכון המדריכים נעשה בזמן אישי. אם חסכתם שעות או כסף — תרומה קטנה עוזרת להמשיך.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+        <div class="donate-amounts">
+          <button class="donate-amt">$5</button>
+          <button class="donate-amt on">$10</button>
+          <button class="donate-amt">$18</button>
+          <button class="donate-amt">$36</button>
+          <button class="donate-amt">כמה שרוצים</button>
+        </div>
+        <button class="btn-donate-main">♥ תמכו בפרויקט</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a href="/" class="footer-logo">
+          <img src="public/logo.png" alt="Flowmatic">
+        </a>
+        <p>המשאב הישראלי הראשון ל-OpenClaw — תוכן חינמי, כלים, ועזרה אישית לעסקים בעברית.</p>
+      </div>
+      <div class="footer-col">
+        <h5>תוכן</h5>
+        <ul>
+          <li><a href="#">מדריכים</a></li>
+          <li><a href="https://youtube.com/@flowmatic" target="_blank">YouTube ↗</a></li>
+          <li><a href="#">ניוזלטר</a></li>
+          <li><a href="#">השוואות</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>עזרה</h5>
+        <ul>
+          <li><a href="#">Human as a Service</a></li>
+          <li><a href="#">Gius.xyz</a></li>
+          <li><a href="#">Kol Voice AI</a></li>
+          <li><a href="#">Donate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>סטאק</h5>
+        <ul>
+          <li><a href="#">Hostinger ↗</a></li>
+          <li><a href="#">Claude API ↗</a></li>
+          <li><a href="#">ElevenLabs ↗</a></li>
+          <li><a href="#">n8n ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 flowmatic.co.il · לינקי אפיליאט מסומנים בגלוי</span>
+      <div class="footer-legal">
+        <a href="#">פרטיות</a>
+        <a href="#">גילוי נאות</a>
+        <a href="#">יצירת קשר</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mega menu
+const trigger = document.getElementById('tools-trigger');
+const mega = document.getElementById('tools-mega');
+let open = false;
+trigger.addEventListener('click', e => {
+  e.stopPropagation();
+  open = !open;
+  mega.classList.toggle('open', open);
+  trigger.classList.toggle('open', open);
+});
+document.addEventListener('click', () => {
+  open = false;
+  mega.classList.remove('open');
+  trigger.classList.remove('open');
+});
+mega.addEventListener('click', e => e.stopPropagation());
+
+// Donate amounts
+document.querySelectorAll('.donate-amt').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.donate-amt').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+  });
+});
+
+// Scroll animations
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+document.getElementById('donate-nav').addEventListener('click', () => {
+  document.getElementById('donate').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
