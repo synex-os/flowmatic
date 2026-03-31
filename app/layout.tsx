@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -108,6 +107,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link rel="canonical" href="https://flowmatic.co.il/" />
+        <script defer data-domain="flowmatic.co.il" src="https://plausible.io/js/pa-aAqBMAznLkSKHIgdDIawd.js"></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
@@ -119,15 +119,6 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        <Script
-          defer
-          data-domain="flowmatic.co.il"
-          src="https://plausible.io/js/pa-aAqBMAznLkSKHIgdDIawd.js"
-          strategy="afterInteractive"
-        />
-        <Script id="plausible-init" strategy="afterInteractive">
-          {`window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)};`}
-        </Script>
       </body>
     </html>
   )
