@@ -1,158 +1,138 @@
-# Step 8: Security Hardening — от 6/10 до 9/10
+# Step 8: Security Hardening — практичный план
 
-> Приоритет: Параллельно с основной разработкой · Влияние: Trust + Compliance
+> Реальное усилие: 3-4 часа · Не отдельный спринт — делаем параллельно
+> Пересмотрено через призму нашей архитектуры (изолированные VPS, минимальный API)
 
-## Текущий уровень: 6/10
+## Контекст
 
-### Что уже реализовано ✅
+Оригинальный анализ на базе VIBE_CODING_SECURITY.md дал 12 пробелов.
+После сопоставления с нашей моделью (management API + SSH к изолированным VPS,
+agent data живёт на client VPS) — 7 из 12 оказались нерелевантными или уже
+реализованными.
+
+## Что уже реализовано ✅
 - OAuth scopes (read+send, no delete)
 - Approval Queue (human-in-the-loop)
 - SOUL.md security rules
-- 2FA в Dashboard (TOTP)
-- JWT auth (HMAC-SHA256)
-- CORS middleware
-- AllPay webhook HMAC verification
-- UFW firewall + SSL + non-root user
+- 2FA, JWT HMAC, OTP
+- UFW, SSL, non-root user
 - Qdrant localhost-only
-- Command injection sanitization (memoryId)
+- Command injection sanitization
+- AllPay webhook HMAC + orderId dedup (idempotency)
+- Self-Healing Agent (10 checks, auto-fix, Telegram alerts)
 - Cloud-init hardened defaults
-- Auto-updates at 4am
-- Daily backups (7-day retention)
-- Graceful degradation (Mem0 gracefulDegradation: true)
-- Self-Healing Ops Agent (auto-fix + alerts)
+- Auto-updates, daily backups
+- VPS isolation (каждый клиент — свой сервер)
+- GDPR deletion (VPS удаляется при отмене, 7-day grace)
+- Graceful degradation (Mem0 gracefulDegradation)
 
-### Критичные пробелы — HIGH PRIORITY
+## Что НЕ релевантно ❌
+- CSV/export sanitization — нет CSV export в системе
+- Data retention policy для agent data — живёт на client VPS, не наше
+- Global kill switch — overkill при < 50 клиентах, SSH stop per VPS достаточно
+- Full audit logging — console.log + journalctl достаточно на текущем этапе
+- Row-level security — нет multi-tenant DB для agent data
 
-#### 1. Secrets Rotation
-**Проблема:** SSH keys, JWT secret, DB password — никогда не ротируются.
-**Решение:**
-- Документировать процедуру ротации для каждого секрета
-- JWT secret: ротация каждые 90 дней, поддержка двух ключей одновременно (old + new)
-- SSH master key: ротация каждые 6 месяцев, deploy новый на все VPS
-- DB password: ротация при подозрении на компрометацию
-- Cron job reminder в Telegram каждые 90 дней
+## Реальный TODO (3-4 часа)
 
-#### 2. API Rate Limiting
-**Проблема:** Нет лимитов на API вызовы. DDoS или abuse = down.
-**Решение:**
-```typescript
-// Hono middleware
-app.use('*', rateLimiter({
-  windowMs: 60000,      // 1 минута
-  max: 100,             // 100 запросов
-  keyGenerator: (c) => c.req.header('Authorization') || c.req.header('x-real-ip'),
-  message: { error: 'Too many requests' }
-}))
+### 1. Документация secrets rotation (30 мин)
 
-// Отдельные лимиты для тяжёлых endpoints
-app.use('/hosting/instances/*/setup/*', rateLimiter({ max: 10, windowMs: 60000 }))
-app.use('/hosting/checkout', rateLimiter({ max: 5, windowMs: 60000 }))
+Создать файл `docs/secrets-rotation.md`:
+```
+## SSH Master Key
+- Где: /root/.ssh/openclaw_master на management VPS
+- Ротация: при подозрении на компрометацию
+- Процедура: генерировать новый → deploy на все client VPS → удалить старый
+
+## JWT Secret
+- Где: .env на management VPS (JWT_SECRET)
+- Ротация: при подозрении на компрометацию
+- Процедура: обновить .env → restart API → все сессии invalidated
+
+## DB Password
+- Где: docker-compose.yml + .env на management VPS
+- Риск: низкий (PostgreSQL не exposed, localhost only)
+- Ротация: при перестройке management VPS
+
+## AllPay Webhook Secret
+- Где: .env (ALLPAY_WEBHOOK_SECRET)
+- Ротация: при обновлении AllPay integration
 ```
 
-#### 3. Audit Logging
-**Проблема:** Нет записи кто что делал. При инциденте — слепые.
-**Решение:**
-```sql
-CREATE TABLE audit_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  instance_id TEXT,
-  user_id UUID,
-  action VARCHAR(100),    -- login|checkout|deploy|restart|delete|oauth_connect|memory_clear
-  resource VARCHAR(100),  -- instance|output|integration|memory
-  details JSONB,
-  ip_address INET,
-  user_agent TEXT,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
-CREATE INDEX idx_audit_instance ON audit_log(instance_id, created_at DESC);
-```
-Middleware логирует: auth, billing, provisioning, integration changes, agent restarts.
+### 2. Rate limiter middleware (1 час)
 
-#### 4. Security Monitoring & Alerting
-**Проблема:** Не знаем о подозрительной активности.
-**Решение:**
-- Telegram алерт на: 5+ failed auth за 5 мин, unusual API pattern, SSH brute force
-- Интеграция с Self-Healing Agent: добавить security checks
-- Daily security digest: failed logins, new integrations, memory access patterns
-
-#### 5. Kill Switch
-**Проблема:** Нет способа экстренно остановить все агенты.
-**Решение:**
 ```typescript
-// POST /admin/kill-switch
-// Останавливает ВСЕ OpenClaw gateway на всех client VPS
-async function killSwitch() {
-  const allInstances = await db.select().from(instances).where(eq(instances.status, 'running'))
-  for (const inst of allInstances) {
-    await sshExec(inst.ip, 'systemctl stop openclaw-gateway', inst.rootPassword)
-    await db.update(instances).set({ status: 'emergency_stop' }).where(eq(instances.id, inst.id))
+// apps/api/src/middleware/rateLimiter.ts
+const rateLimits = new Map<string, { count: number; resetAt: number }>()
+
+export function rateLimiter(max = 100, windowMs = 60000) {
+  return async (c, next) => {
+    const key = c.req.header('Authorization')?.slice(0, 20) || c.req.header('x-real-ip') || 'anon'
+    const now = Date.now()
+    const entry = rateLimits.get(key)
+
+    if (entry && entry.resetAt > now) {
+      if (entry.count >= max) {
+        return c.json({ success: false, message: 'Too many requests' }, 429)
+      }
+      entry.count++
+    } else {
+      rateLimits.set(key, { count: 1, resetAt: now + windowMs })
+    }
+
+    await next()
   }
-  await telegram.alertAdmin('🚨 KILL SWITCH ACTIVATED — all agents stopped')
 }
 ```
-Кнопка в Admin panel + Telegram command.
 
-#### 6. Error Information Leakage
-**Проблема:** Error responses могут содержать file paths, stack traces.
-**Решение:**
+Применить:
+- Global: 100 req/min
+- `/hosting/checkout`: 5 req/min
+- `/hosting/auth/*`: 10 req/min
+
+### 3. Error response audit (30 мин)
+
+Проверить все `catch` блоки в controllers:
+- `console.error` для внутреннего лога ✅ (уже делаем)
+- `fail(c, 'generic message', 500)` для клиента ✅ (уже делаем)
+- Убедиться что нигде нет `fail(c, err.message, 500)` — err.message может содержать paths
+
+### 4. Failed login alerting (1 час)
+
+В `apps/api/src/controllers/hosting/auth.ts`:
 ```typescript
-// Global error handler
-app.onError((err, c) => {
-  console.error('API Error:', err)  // log full error internally
-  // Return generic error to client
-  return c.json({
-    success: false,
-    message: 'An error occurred',
-    code: err.status || 500
-  }, err.status || 500)
-})
+const failedLogins = new Map<string, number>()
+
+// При failed OTP verify:
+const email = body.email
+failedLogins.set(email, (failedLogins.get(email) || 0) + 1)
+
+if (failedLogins.get(email) >= 5) {
+  await telegram.alertAdmin(`⚠️ 5+ failed login attempts: ${email}`)
+  failedLogins.delete(email)
+}
 ```
-Никогда не возвращать `err.message` или `err.stack` клиенту.
 
-### Средние пробелы — MEDIUM PRIORITY
+### 5. Privacy Policy update (30 мин)
 
-#### 7. Data Retention Policy
-- Agent outputs: 90 дней, потом архив
-- Activity logs: 1 год
-- Backups: 7 дней (уже реализовано)
-- Audit log: 2 года
-- Mem0 memories: 365 дней TTL (уже реализовано)
-- Документировать в Privacy Policy
-
-#### 8. GDPR Right to Erasure
-- Endpoint: `DELETE /hosting/instances/:id/gdpr-delete`
-- Удаляет: instance data, outputs, memories, activity logs, audit logs, backups
-- Уведомляет клиента по email
-- Логирует в audit (без PII)
-
-#### 9. Webhook Replay Prevention
-- AllPay webhook: добавить timestamp check (±5 мин)
-- Idempotency: проверять `orderId` на дубликат (уже есть частично)
-
-#### 10. Database Row-Level Security
-- Verify: каждый query фильтрует по `userId` или `instanceId`
-- Добавить PostgreSQL RLS policies как дополнительный слой
+Добавить в `apps/web/public/privacy.html`:
+- "При ביטול מנוי — השרת נמחק תוך 7 ימים. כל הנתונים נמחקים לצמיתות."
+- "ניתן לבקש מחיקת כל המידע: support@flowmatic.co.il"
 
 ## Файлы для создания/изменения
 
-| Файл | Действие |
-|------|----------|
-| `apps/api/src/middleware/rateLimiter.ts` | Создать |
-| `apps/api/src/middleware/auditLog.ts` | Создать |
-| `apps/api/src/middleware/errorHandler.ts` | Создать |
-| `apps/api/src/controllers/hosting/admin.ts` | Добавить kill switch |
-| `apps/api/src/db/schema.ts` | audit_log table |
-| `apps/api/src/app.ts` | Подключить middleware |
-| `docs/security-rotation.md` | Создать — процедура ротации |
-| DB migration | CREATE TABLE audit_log |
+| Файл | Усилие |
+|------|--------|
+| `docs/secrets-rotation.md` | 30 мин — создать |
+| `apps/api/src/middleware/rateLimiter.ts` | 30 мин — создать |
+| `apps/api/src/app.ts` | 10 мин — подключить middleware |
+| `apps/api/src/controllers/hosting/auth.ts` | 30 мин — failed login alert |
+| Controllers audit (grep for err.message) | 30 мин — проверить |
+| `apps/web/public/privacy.html` | 10 мин — обновить |
 
-## Порядок реализации
+## При масштабировании (10+ клиентов)
 
-1. Error handler (быстро, критично)
-2. Rate limiting middleware
-3. Audit log table + middleware
-4. Kill switch endpoint
-5. Security monitoring alerts (в Self-Healing)
-6. Secrets rotation documentation
-7. GDPR delete endpoint
-8. Data retention policy документ
+- Audit log table + middleware
+- Structured JSON logging
+- Global kill switch endpoint
+- Secrets rotation automation
