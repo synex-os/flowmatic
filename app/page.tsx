@@ -61,9 +61,8 @@ export default function Home() {
                 סוכן AI לעסקים — המדריך הישראלי ל-OpenClaw
               </div>
               <h1>
-                הכל כאן.<br />
-                הכל <span className="accent">חינמי.</span><br />
-                בעברית.
+                שימוש <span className="accent">חכם</span><br />
+                ומסחרי ב-AI.
               </h1>
               <p className="hero-lead">
                 מדריכים מעשיים ל-OpenClaw — סוכן בינה מלאכותית לעסקים ישראלים. אוטומציה, שיווק עם AI, אירוח VPS מוכן תוך 3 דקות. ללא paywall — ואם נתקעתם, יש בן אדם מאחורה.
