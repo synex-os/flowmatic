@@ -61,7 +61,7 @@ export default function Home() {
                 סוכן AI לעסקים — המדריך הישראלי ל-OpenClaw
               </div>
               <h1>
-                שימוש <span className="accent">חכם</span><br />
+                שימוש <span className="accent">חיסכוני</span><br />
                 ומסחרי ב-AI.
               </h1>
               <p className="hero-lead">
