@@ -101,8 +101,32 @@ export default function Home() {
                 <div className="nl-perk"><span className="nl-perk-dot"></span>סקרים והצבעות אינטראקטיביות</div>
                 <div className="nl-perk"><span className="nl-perk-dot"></span>טיפים, כלים חדשים ועדכוני OpenClaw</div>
               </div>
-              <input type="email" className="nl-field" placeholder="האימייל שלכם" />
-              <button className="nl-submit">הרשמה ←</button>
+              <input type="email" id="nl-email" className="nl-field" placeholder="האימייל שלכם" />
+              <div id="nl-success" style={{ display: 'none', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 8, padding: 12, textAlign: 'center', color: '#166534', fontWeight: 600, marginBottom: 8 }}>
+                ✅ נרשמת בהצלחה! נשלח לך עדכונים בקרוב.
+              </div>
+              <button className="nl-submit" id="nl-submit" onClick={() => {
+                const email = (document.getElementById('nl-email') as HTMLInputElement)?.value?.trim()
+                if (!email || !email.includes('@')) { alert('נא להזין אימייל תקין'); return }
+                const btn = document.getElementById('nl-submit') as HTMLButtonElement
+                btn.disabled = true; btn.textContent = 'נרשם...'
+                fetch('https://api.clawflow.flowmatic.co.il/hosting/newsletter', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email })
+                }).then(r => r.json()).then(d => {
+                  if (d.success) {
+                    document.getElementById('nl-success')!.style.display = ''
+                    btn.style.display = 'none'
+                  } else {
+                    btn.disabled = false; btn.textContent = 'הרשמה ←'
+                    alert(d.message || 'שגיאה, נסו שוב')
+                  }
+                }).catch(() => {
+                  btn.disabled = false; btn.textContent = 'הרשמה ←'
+                  alert('שגיאה, נסו שוב')
+                })
+              }}>הרשמה ←</button>
               <p className="nl-micro">ביטול בכל עת · ללא ספאם</p>
               <div className="nl-proof">
                 <div className="nl-faces">
