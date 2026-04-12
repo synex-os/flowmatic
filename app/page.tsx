@@ -13,6 +13,53 @@ export default function Home() {
       { threshold: 0.08 }
     )
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+
+    // Newsletter form
+    document.getElementById('nl-submit')?.addEventListener('click', () => {
+      const email = (document.getElementById('nl-email') as HTMLInputElement)?.value?.trim()
+      if (!email || !email.includes('@')) { alert('נא להזין אימייל תקין'); return }
+      const btn = document.getElementById('nl-submit') as HTMLButtonElement
+      btn.disabled = true; btn.textContent = 'נרשם...'
+      fetch('https://api.clawflow.flowmatic.co.il/hosting/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      }).then(r => r.json()).then(d => {
+        if (d.success) {
+          document.getElementById('nl-success')!.style.display = ''
+          btn.style.display = 'none'
+        } else {
+          btn.disabled = false; btn.textContent = 'הרשמה ←'
+          alert(d.message || 'שגיאה, נסו שוב')
+        }
+      }).catch(() => {
+        btn.disabled = false; btn.textContent = 'הרשמה ←'
+        alert('שגיאה, נסו שוב')
+      })
+    })
+
+    // Contact form
+    document.getElementById('has-submit')?.addEventListener('click', () => {
+      const name = (document.getElementById('has-name') as HTMLInputElement)?.value?.trim()
+      const phone = (document.getElementById('has-phone') as HTMLInputElement)?.value?.trim()
+      const type = (document.getElementById('has-type') as HTMLSelectElement)?.value
+      const message = (document.getElementById('has-message') as HTMLTextAreaElement)?.value?.trim()
+      if (!name || !phone) { alert('נא למלא שם וטלפון'); return }
+      const btn = document.getElementById('has-submit') as HTMLButtonElement
+      btn.disabled = true; btn.textContent = 'שולח...'
+      fetch('https://api.clawflow.flowmatic.co.il/hosting/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, type, message })
+      }).then(r => r.json()).then(() => {
+        document.getElementById('has-success')!.style.display = ''
+        btn.style.display = 'none'
+      }).catch(() => {
+        btn.disabled = false; btn.textContent = 'שלחו בקשה ←'
+        alert('שגיאה בשליחה, נסו שוב')
+      })
+    })
+
     return () => io.disconnect()
   }, [])
 
@@ -105,28 +152,7 @@ export default function Home() {
               <div id="nl-success" style={{ display: 'none', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 8, padding: 12, textAlign: 'center', color: '#166534', fontWeight: 600, marginBottom: 8 }}>
                 ✅ נרשמת בהצלחה! נשלח לך עדכונים בקרוב.
               </div>
-              <button className="nl-submit" id="nl-submit" onClick={() => {
-                const email = (document.getElementById('nl-email') as HTMLInputElement)?.value?.trim()
-                if (!email || !email.includes('@')) { alert('נא להזין אימייל תקין'); return }
-                const btn = document.getElementById('nl-submit') as HTMLButtonElement
-                btn.disabled = true; btn.textContent = 'נרשם...'
-                fetch('https://api.clawflow.flowmatic.co.il/hosting/newsletter', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ email })
-                }).then(r => r.json()).then(d => {
-                  if (d.success) {
-                    document.getElementById('nl-success')!.style.display = ''
-                    btn.style.display = 'none'
-                  } else {
-                    btn.disabled = false; btn.textContent = 'הרשמה ←'
-                    alert(d.message || 'שגיאה, נסו שוב')
-                  }
-                }).catch(() => {
-                  btn.disabled = false; btn.textContent = 'הרשמה ←'
-                  alert('שגיאה, נסו שוב')
-                })
-              }}>הרשמה ←</button>
+              <button className="nl-submit" id="nl-submit">הרשמה ←</button>
               <p className="nl-micro">ביטול בכל עת · ללא ספאם</p>
               <div className="nl-proof">
                 <div className="nl-faces">
@@ -375,26 +401,7 @@ export default function Home() {
                 <div id="has-success" style={{ display: 'none', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: 16, textAlign: 'center', color: '#166534', fontWeight: 600 }}>
                   ✅ הפנייה נשלחה! ניצור איתכם קשר בהקדם.
                 </div>
-                <button className="form-submit" id="has-submit" onClick={() => {
-                  const name = (document.getElementById('has-name') as HTMLInputElement)?.value?.trim()
-                  const phone = (document.getElementById('has-phone') as HTMLInputElement)?.value?.trim()
-                  const type = (document.getElementById('has-type') as HTMLSelectElement)?.value
-                  const message = (document.getElementById('has-message') as HTMLTextAreaElement)?.value?.trim()
-                  if (!name || !phone) { alert('נא למלא שם וטלפון'); return }
-                  const btn = document.getElementById('has-submit') as HTMLButtonElement
-                  btn.disabled = true; btn.textContent = 'שולח...'
-                  fetch('https://api.clawflow.flowmatic.co.il/hosting/contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, phone, type, message })
-                  }).then(r => r.json()).then(() => {
-                    document.getElementById('has-success')!.style.display = '';
-                    btn.style.display = 'none'
-                  }).catch(() => {
-                    btn.disabled = false; btn.textContent = 'שלחו בקשה ←'
-                    alert('שגיאה בשליחה, נסו שוב')
-                  })
-                }}>שלחו בקשה ←</button>
+                <button className="form-submit" id="has-submit">שלחו בקשה ←</button>
                 <p className="form-note">אחזור תוך 24 שעות · ללא התחייבות</p>
               </div>
             </div>
