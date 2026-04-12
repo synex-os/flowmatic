@@ -94,15 +94,15 @@ export default function Home() {
             {/* NEWSLETTER CARD */}
             <div className="nl-card" id="newsletter">
               <span className="nl-badge">חינמי</span>
-              <h3>קבלו מדריך PDF + עדכונים שבועיים</h3>
-              <p>טיפים מעשיים, כלים חדשים, ועדכוני OpenClaw — ישירות למייל. ללא ספאם.</p>
+              <h3>ניוזלטר שבועי</h3>
+              <p>כל מה שקורה בעולם סוכני ה-AI — פעם בשבוע, ישירות למייל.</p>
               <div className="nl-perks">
-                <div className="nl-perk"><span className="nl-perk-dot"></span>מדריך PDF מלא לנרשמים חדשים</div>
-                <div className="nl-perk"><span className="nl-perk-dot"></span>עדכונים לפני כולם</div>
-                <div className="nl-perk"><span className="nl-perk-dot"></span>תוכן ישראלי — לא תרגום</div>
+                <div className="nl-perk"><span className="nl-perk-dot"></span>עדכונים על סרטונים חדשים בערוץ</div>
+                <div className="nl-perk"><span className="nl-perk-dot"></span>סקרים והצבעות אינטראקטיביות</div>
+                <div className="nl-perk"><span className="nl-perk-dot"></span>טיפים, כלים חדשים ועדכוני OpenClaw</div>
               </div>
               <input type="email" className="nl-field" placeholder="האימייל שלכם" />
-              <button className="nl-submit">קבלו גישה חינמית ←</button>
+              <button className="nl-submit">הרשמה ←</button>
               <p className="nl-micro">ביטול בכל עת · ללא ספאם</p>
               <div className="nl-proof">
                 <div className="nl-faces">
