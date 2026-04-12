@@ -327,15 +327,15 @@ export default function Home() {
               <div className="has-form-body">
                 <div className="form-row">
                   <label className="form-label">שם</label>
-                  <input type="text" className="form-input" placeholder="השם שלכם" />
+                  <input type="text" id="has-name" className="form-input" placeholder="השם שלכם" />
                 </div>
                 <div className="form-row">
-                  <label className="form-label">אימייל / וואטסאפ</label>
-                  <input type="text" className="form-input" placeholder="איך ניצור קשר?" />
+                  <label className="form-label">טלפון</label>
+                  <input type="tel" id="has-phone" className="form-input" placeholder="05X-XXXXXXX" dir="ltr" />
                 </div>
                 <div className="form-row">
                   <label className="form-label">מה אתם צריכים?</label>
-                  <select className="form-select" defaultValue="">
+                  <select id="has-type" className="form-select" defaultValue="">
                     <option value="">בחרו סוג עזרה...</option>
                     <option>הקמת OpenClaw מאפס</option>
                     <option>פתרון בעיה ספציפית</option>
@@ -346,9 +346,31 @@ export default function Home() {
                 </div>
                 <div className="form-row">
                   <label className="form-label">ספרו בקצרה</label>
-                  <textarea className="form-textarea" placeholder="מה ניסיתם? איפה נתקעתם? מה המטרה?"></textarea>
+                  <textarea id="has-message" className="form-textarea" placeholder="מה ניסיתם? איפה נתקעתם? מה המטרה?"></textarea>
                 </div>
-                <button className="form-submit">שלחו בקשה ←</button>
+                <div id="has-success" style={{ display: 'none', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: 16, textAlign: 'center', color: '#166534', fontWeight: 600 }}>
+                  ✅ הפנייה נשלחה! ניצור איתכם קשר בהקדם.
+                </div>
+                <button className="form-submit" id="has-submit" onClick={() => {
+                  const name = (document.getElementById('has-name') as HTMLInputElement)?.value?.trim()
+                  const phone = (document.getElementById('has-phone') as HTMLInputElement)?.value?.trim()
+                  const type = (document.getElementById('has-type') as HTMLSelectElement)?.value
+                  const message = (document.getElementById('has-message') as HTMLTextAreaElement)?.value?.trim()
+                  if (!name || !phone) { alert('נא למלא שם וטלפון'); return }
+                  const btn = document.getElementById('has-submit') as HTMLButtonElement
+                  btn.disabled = true; btn.textContent = 'שולח...'
+                  fetch('https://api.clawflow.flowmatic.co.il/hosting/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, type, message })
+                  }).then(r => r.json()).then(() => {
+                    document.getElementById('has-success')!.style.display = '';
+                    btn.style.display = 'none'
+                  }).catch(() => {
+                    btn.disabled = false; btn.textContent = 'שלחו בקשה ←'
+                    alert('שגיאה בשליחה, נסו שוב')
+                  })
+                }}>שלחו בקשה ←</button>
                 <p className="form-note">אחזור תוך 24 שעות · ללא התחייבות</p>
               </div>
             </div>
