@@ -31,6 +31,10 @@ function markdownToHtml(md: string): string {
       `<div class="callout callout-israel"><span class="callout-icon">🇮🇱</span><div class="callout-body"><strong>ישראל</strong>${processInline(c.trim())}</div></div>`)
     .replace(/<ScreenPlaceholder\s+alt="([^"]*)"\s+description="([^"]*)"\s*\/>/g, (_m, alt, desc) =>
       `<div class="screen-placeholder"><div class="screen-placeholder-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div class="screen-placeholder-alt">${alt}</div><div class="screen-placeholder-desc">${desc}</div></div></div>`)
+    .replace(/<YouTubeEmbed\s+videoId="([^"]+)"(?:\s+timestamp="([^"]*)")?\s*\/>/g, (_m, id, ts) => {
+      const src = `https://www.youtube-nocookie.com/embed/${id}${ts ? `?start=${ts}` : ''}`
+      return `<div class="yt-embed"><iframe src="${src}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"></iframe></div>`
+    })
 
   // Code blocks
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, _lang, code) =>
