@@ -276,7 +276,7 @@ export default function Home() {
             </div>
             <div>
               <div className="tools-section-title">
-                <span>🔗</span> אינטגרציות מובנות
+                <span>🔗</span> אינטגרציות
               </div>
               <div className="tools-list">
                 <div className="tool-row">
