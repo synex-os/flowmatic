@@ -1,671 +1,399 @@
-# Step 10: SEO/AEO Automation Pipeline
+# Step 10: SEO/AEO/GEO Automation Engine
 
-> Приоритет: СЛЕДУЮЩИЙ · Влияние: Product Value · Тип клиента: MATEH
-> Зависимости: MCP Migration (09) завершён, Activepieces API доступен
-
----
-
-## Принцип
-
-Агенты MATEH (סייר, מאתר, מגדלור) получают доступ к SEO/AEO данным
-**без прямых API calls** — через Activepieces workflows, которые собирают
-данные по расписанию и складывают в файлы на VPS. Агенты читают готовые
-данные через `read` tool (500 tokens вместо 5-10K при прямом API call).
-
-**Пользователь** подключает GSC через одну кнопку в Dashboard — всё остальное
-создаётся автоматически.
+> Приоритет: СЛЕДУЮЩИЙ · Влияние: Core Product Value · Тип: MATEH + Personal
+> Зависимости: MCP Migration (09) завершён
 
 ---
 
-## Архитектура
+## Контекст — что изменилось в индустрии (апрель 2026)
 
+### Новая реальность
+SEO больше не про "ключевые слова и бэклинки". В 2026 году три поля битвы:
+
+1. **SEO** — классический поиск Google (по-прежнему ~60% трафика)
+2. **GEO** (Generative Engine Optimization) — видимость в AI Overviews Google
+3. **AEO** (Answer Engine Optimization) — цитирование в ChatGPT, Perplexity, Claude, Gemini
+
+**Ключевые цифры:**
+- 74.2% всех AI цитат приходят из контента, который также ранжируется в традиционном поиске
+- Страницы с SEO + AEO оптимизацией получают 2.3x больше видимости
+- 40-60% цитат в AI меняются ежемесячно — нужен постоянный мониторинг
+- ChatGPT = 87.4% всего AI referral traffic на сайты
+
+### Инструменты нового поколения
+
+| Инструмент | Что изменилось | Статус |
+|---|---|---|
+| **DataForSEO MCP** | Pay-per-query вместо $99/мес подписки. SERP, keywords, backlinks, AI visibility — всё через MCP | Production-ready |
+| **Frase.io** | Единственный инструмент покрывающий все 6 стадий: Research → Strategy → Write → Audit → Monitor → Fix. Read-write MCP | Production-ready |
+| **claude-seo skill** | Open-source SEO skill: 19 sub-skills, 12 subagents, DataForSEO + Firecrawl + image gen | MIT, production |
+| **SEObuild** | AI agent пишет страницы которые Google ранжирует И LLM цитируют. Entity consensus, 500-token chunks | Open-source |
+| **llms.txt** | Новый стандарт — файл для AI crawler'ов. Аналог robots.txt для LLM | Early adoption |
+| **Firecrawl MCP** | Full-site crawling через MCP. Агент сам может сканировать любой сайт | Production-ready |
+
+### Сдвиг парадигмы: от "данные → отчёт" к "research → publish → monitor → fix"
+
+**Старый подход (мой первый roadmap):**
 ```
-┌─────────────────────────────────────────────────┐
-│                  Dashboard UI                    │
-│  [Google Search Console]  [Ahrefs]  [Semrush]   │
-│        ✅ מחובר          🔒 בקרוב   🔒 בקרוב    │
-└──────────┬──────────────────────────────────────┘
-           │ OAuth + API setup
-           ▼
-┌─────────────────────────────────────────────────┐
-│              ClawFlow API (backend)              │
-│                                                  │
-│  1. OAuth token → DB                            │
-│  2. Activepieces API → create workflows         │
-│  3. VPS → create /workspace/seo-data/ dir       │
-└──────────┬──────────────────────────────────────┘
-           │
-           ▼
-┌─────────────────────────────────────────────────┐
-│           Activepieces (on client VPS)           │
-│                                                  │
-│  ┌──────────┐  ┌──────────┐  ┌───────────────┐ │
-│  │ Daily    │  │ Weekly   │  │ Monthly       │ │
-│  │ GSC Pull │  │ SEO      │  │ AEO Audit     │ │
-│  │ 06:00    │  │ Report   │  │ 1st of month  │ │
-│  │          │  │ Sun 05:00│  │ 04:00         │ │
-│  └────┬─────┘  └────┬─────┘  └──────┬────────┘ │
-│       │             │               │           │
-│       ▼             ▼               ▼           │
-│  gsc-daily.json  weekly.json   aeo-monthly.json │
-│       │             │               │           │
-│       └─────────────┼───────────────┘           │
-│                     │                           │
-│           /workspace/seo-data/                  │
-└─────────────────────┬───────────────────────────┘
-                      │ read tool (файлы)
-                      ▼
-┌─────────────────────────────────────────────────┐
-│              OpenClaw Agents (MATEH)             │
-│                                                  │
-│  סייר ← gsc-daily.json (тренды, аномалии)      │
-│  מאתר ← weekly.json (keyword opportunities)     │
-│  מגדלור ← aeo-monthly.json (AI citations)       │
-│  מנתח ← all files (стратегический анализ)       │
-│  עט ← insights от מנתח (контент-план)           │
-│                                                  │
-│  מטה (orchestrator) → Telegram отчёт            │
-└─────────────────────────────────────────────────┘
+Activepieces cron → GSC API → JSON file → агент читает → отчёт
 ```
+Проблема: агент **только анализирует**, не **действует**.
+
+**Новый подход (индустрия 2026):**
+```
+Агент автономно: находит gaps → пишет контент → оптимизирует schema → публикует → мониторит ранжирование → чинит если упало
+```
+Полный цикл. Human-in-the-loop только на этапе approve.
 
 ---
 
-## Данные которые собираем
+## Архитектура — 6-Stage Pipeline
 
-### Daily (Activepieces → GSC API, каждый день 06:00)
-
-```json
-{
-  "date": "2026-04-13",
-  "top_queries": [
-    {
-      "query": "סוכן AI לעסקים",
-      "clicks": 45,
-      "impressions": 1200,
-      "ctr": 0.0375,
-      "position": 4.2,
-      "change_vs_yesterday": { "clicks": +5, "position": -0.3 }
-    }
-  ],
-  "top_pages": [
-    {
-      "page": "/blog/openclaw-complete-guide-2026",
-      "clicks": 120,
-      "impressions": 3400,
-      "position": 2.1
-    }
-  ],
-  "index_coverage": {
-    "valid": 42,
-    "errors": 0,
-    "warnings": 2,
-    "new_issues": []
-  },
-  "alerts": [
-    { "type": "traffic_drop", "page": "/pricing", "drop_pct": -25, "period": "24h" }
-  ]
-}
+```
+┌──────────────────────────────────────────────────────────────┐
+│                     MATEH SEO/AEO Engine                     │
+│                                                              │
+│  ┌─────────┐   ┌─────────┐   ┌─────────┐                   │
+│  │ RESEARCH│──▸│STRATEGY │──▸│  WRITE  │                   │
+│  │ סייר    │   │ מנתח    │   │ עט      │                   │
+│  └─────────┘   └─────────┘   └────┬────┘                   │
+│       │                           │                          │
+│       │    ┌──────────────────────┘                          │
+│       │    │                                                 │
+│  ┌────▼────▼──┐   ┌─────────┐   ┌─────────┐               │
+│  │   AUDIT   │──▸│ MONITOR │──▸│   FIX   │               │
+│  │ מאתר     │   │ מגדלור  │   │ עט+שליח │               │
+│  └───────────┘   └─────────┘   └─────────┘               │
+│                                                              │
+│  Data Layer:                                                 │
+│  ┌─────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐        │
+│  │DataForSEO│ │ GSC API  │ │Firecrawl │ │Brave    │        │
+│  │  MCP     │ │  MCP     │ │  MCP     │ │Search   │        │
+│  └─────────┘ └──────────┘ └──────────┘ └─────────┘        │
+│                                                              │
+│  Output Layer:                                               │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐       │
+│  │WordPress │ │Schema.org│ │llms.txt  │ │Telegram │       │
+│  │  MCP     │ │ auto-gen │ │ auto-gen │ │ reports │       │
+│  └──────────┘ └──────────┘ └──────────┘ └─────────┘       │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### Weekly (Activepieces, воскресенье 05:00)
+### Stage 1: RESEARCH (סייר)
+**Что делает:** Находит что писать и по каким ключевым словам.
+**Как:**
+- DataForSEO MCP → keyword gaps vs конкуренты
+- DataForSEO MCP → SERP analysis (кто ранжируется, какой контент)
+- Firecrawl MCP → crawl конкурентов, извлечь структуру контента
+- Brave Search → Reddit/HN мнения, реальные вопросы аудитории
+- GSC MCP → impressions без кликов = opportunities (видят но не кликают)
 
-```json
-{
-  "period": "2026-04-06 to 2026-04-12",
-  "summary": {
-    "total_clicks": 890,
-    "total_impressions": 24500,
-    "avg_ctr": 0.036,
-    "avg_position": 5.8,
-    "vs_prev_week": { "clicks": "+12%", "impressions": "+8%", "position": "-0.4" }
-  },
-  "keyword_opportunities": [
-    {
-      "query": "openclaw הגדרה",
-      "impressions": 450,
-      "clicks": 8,
-      "position": 12.3,
-      "opportunity": "high — high impressions, low position, can improve"
-    }
-  ],
-  "competitor_check": [
-    {
-      "query": "סוכן AI ישראל",
-      "our_position": 4,
-      "competitor_positions": {
-        "competitor-a.co.il": 1,
-        "competitor-b.com": 3
-      }
-    }
-  ],
-  "content_performance": {
-    "best": { "page": "/blog/guide", "clicks": 320 },
-    "worst": { "page": "/pricing", "clicks": 5 },
-    "declining": ["/blog/old-post"]
-  }
-}
-```
+**Output:** `workspace/seo-data/research-brief.json`
 
-### Monthly AEO (Activepieces, 1-е число 04:00)
+### Stage 2: STRATEGY (מנתח)
+**Что делает:** Анализирует данные, приоритизирует, создаёт контент-план.
+**Как:**
+- Читает research-brief.json
+- Entity consensus analysis (какие факты подтверждаются 2+ источниками)
+- Gap analysis: что есть у конкурентов и нет у нас
+- Keyword clustering по intent (informational, transactional, navigational)
+- ROI scoring: estimated traffic × conversion potential
 
-```json
-{
-  "month": "2026-04",
-  "brand_mentions_in_ai": {
-    "chatgpt": {
-      "query": "מהו OpenClaw?",
-      "mentioned": true,
-      "citation_url": "flowmatic.co.il/blog/...",
-      "position_in_answer": "first_paragraph"
-    },
-    "perplexity": {
-      "query": "best AI agent hosting Israel",
-      "mentioned": true,
-      "citation_url": "flowmatic.co.il"
-    },
-    "claude": {
-      "query": "OpenClaw hosting",
-      "mentioned": false,
-      "note": "not cited, competitor cited instead"
-    },
-    "gemini": {
-      "query": "סוכן AI אישי",
-      "mentioned": false
-    }
-  },
-  "competitor_ai_presence": {
-    "competitor-a.co.il": { "cited_in": ["chatgpt", "perplexity"], "total": 2 },
-    "our_brand": { "cited_in": ["chatgpt", "perplexity"], "total": 2 }
-  },
-  "recommendations": [
-    "Add FAQ schema to /pricing page — ChatGPT prefers structured answers",
-    "Competitor-A ranks for 'AI agent for business' in Perplexity — create dedicated page"
-  ]
-}
-```
+**Output:** `workspace/seo-data/content-plan.json` + summary в Telegram
+
+### Stage 3: WRITE (עט)
+**Что делает:** Пишет контент оптимизированный для Google И AI цитирования.
+**Как:**
+- 200-char AI Summary Nugget в начале (для Perplexity/ChatGPT цитирования)
+- 500-token chunk architecture (совпадает с Google AI retrieval window)
+- Entity consensus — каждый факт верифицирован 2+ источниками
+- Schema.org автогенерация (FAQ, HowTo, Article)
+- De-AI-ify: не звучать как AI (MATEH правило #4)
+- Internal linking strategy
+
+**Output:** Markdown draft → Telegram для approve → WordPress publish
+
+### Stage 4: AUDIT (מאתר)
+**Что делает:** Технический SEO аудит сайта клиента.
+**Как:**
+- Firecrawl MCP → full-site crawl
+- Проверка: битые ссылки, дубли title/meta, медленные страницы
+- Schema.org validation
+- Core Web Vitals (DataForSEO PageSpeed API)
+- llms.txt генерация и обновление
+- Mobile-friendliness
+
+**Output:** `workspace/seo-data/audit-report.json` + приоритизированный список fixes
+
+### Stage 5: MONITOR (מגדלור)
+**Что делает:** Мониторинг ранжирования в Google И видимости в AI.
+**Как:**
+- GSC MCP → daily position tracking
+- DataForSEO MCP → SERP tracking ключевых запросов
+- DataForSEO AI Visibility → проверка LLM citations (ChatGPT, Perplexity, Claude)
+- Brave Search → brand mention monitoring
+- Alert система: ранжирование упало >3 позиции → alert в Telegram
+
+**Output:** Weekly digest + instant alerts
+
+### Stage 6: FIX (עט + שליח)
+**Что делает:** Автоматическое восстановление упавших позиций.
+**Как:**
+- Detect: מגדלור нашёл падение → trigger
+- Diagnose: מנתח анализирует причину (конкурент обновил? алгоритм? контент устарел?)
+- Fix: עט обновляет контент, добавляет свежие данные, усиливает E-E-A-T
+- Publish: שליח публикует обновлённую версию через WordPress MCP
+- Verify: מגדלור проверяет через 7 дней — позиция восстановилась?
+
+**Output:** Updated content + Telegram report
 
 ---
 
-## Activepieces Workflow Templates
+## MCP Server Stack
 
-### Template 1: GSC Daily Pull
+### Tier 1 — Бесплатно или почти бесплатно
 
-```yaml
-name: "SEO — Daily GSC Data"
-trigger:
-  type: schedule
-  cron: "0 6 * * *"  # Every day at 06:00
-  timezone: Asia/Jerusalem
+| MCP Server | Что даёт | Auth | Стоимость |
+|---|---|---|---|
+| **GSC MCP** (Composio или native) | Clicks, impressions, CTR, positions, index coverage | Google OAuth | Бесплатно |
+| **Brave Search MCP** | Web search, competitor monitoring | API key | $5/мес бесплатный кредит |
+| **Firecrawl MCP** | Full-site crawling, content extraction | API key | 500 pages/мес бесплатно |
 
-steps:
-  - name: gsc_auth
-    type: google_search_console
-    action: authenticate
-    config:
-      oauth_token: "{{instance.google_tokens.access_token}}"
-      refresh_token: "{{instance.google_tokens.refresh_token}}"
-      site_url: "{{instance.website_url}}"
+### Tier 2 — Pay-per-query (вместо подписки)
 
-  - name: fetch_queries
-    type: google_search_console
-    action: search_analytics_query
-    config:
-      start_date: "{{today - 1 day}}"
-      end_date: "{{today}}"
-      dimensions: ["query"]
-      row_limit: 20
-      order_by: "clicks DESC"
+| MCP Server | Что даёт | Стоимость |
+|---|---|---|
+| **DataForSEO MCP** | SERP data, keywords, backlinks, AI visibility, PageSpeed | ~$0.002-0.01 per query |
 
-  - name: fetch_pages
-    type: google_search_console
-    action: search_analytics_query
-    config:
-      start_date: "{{today - 1 day}}"
-      end_date: "{{today}}"
-      dimensions: ["page"]
-      row_limit: 10
-      order_by: "clicks DESC"
+**Экономика DataForSEO vs Ahrefs/Semrush:**
+- Ahrefs Lite: $99/мес фиксированно
+- DataForSEO: ~$5-15/мес при 500-1500 queries
+- Для MATEH агента 500 queries/мес = **~$5** вместо $99
 
-  - name: fetch_index_coverage
-    type: google_search_console
-    action: index_coverage
-    config:
-      site_url: "{{instance.website_url}}"
+### Tier 3 — Premium (если клиент подписан)
 
-  - name: detect_anomalies
-    type: code
-    config:
-      language: javascript
-      code: |
-        // Compare with yesterday's data
-        const fs = require('fs');
-        const prevPath = '/workspace/seo-data/gsc-daily.json';
-        let prev = {};
-        try { prev = JSON.parse(fs.readFileSync(prevPath)); } catch {}
+| MCP Server | Что даёт | Стоимость |
+|---|---|---|
+| **Ahrefs MCP** | Backlinks, keyword explorer, content gap, site audit | $99+/мес (подписка клиента) |
+| **Semrush MCP** | Trends API, domain analytics, keyword data | $129+/мес (подписка клиента) |
+| **Frase MCP** | 6-stage pipeline, AI search tracking, content optimization | $49/мес |
 
-        const alerts = [];
-        // Check for traffic drops > 20%
-        const prevClicks = prev.summary?.total_clicks || 0;
-        const todayClicks = steps.fetch_queries.reduce((s, q) => s + q.clicks, 0);
-        if (prevClicks > 0 && todayClicks < prevClicks * 0.8) {
-          alerts.push({ type: 'traffic_drop', drop_pct: Math.round((todayClicks/prevClicks - 1) * 100) });
-        }
-        return { alerts, todayClicks };
+---
 
-  - name: save_to_file
-    type: ssh_exec
-    config:
-      command: |
-        cat > /workspace/seo-data/gsc-daily.json << 'JSONEOF'
-        {{JSON.stringify(result)}}
-        JSONEOF
+## llms.txt — Новый стандарт
 
-  - name: alert_if_needed
-    type: condition
-    config:
-      condition: "{{steps.detect_anomalies.alerts.length > 0}}"
-      if_true:
-        - type: openclaw_message
-          config:
-            message: "⚠️ SEO Alert: {{steps.detect_anomalies.alerts[0].type}} — {{steps.detect_anomalies.alerts[0].drop_pct}}% drop"
-            channel: telegram
-```
+### Что это
+Файл `/llms.txt` — аналог `robots.txt` для AI crawler'ов. Markdown-файл в корне сайта, который говорит LLM: "вот мои главные страницы, вот о чём они".
 
-### Template 2: Weekly SEO Report
+### Почему важно
+- Claude уже поддерживает llms.txt в документации
+- Повышает точность AI ответов о вашем бренде
+- Low-cost signal: 20-50 ссылок, обновлять раз в месяц
 
-```yaml
-name: "SEO — Weekly Report"
-trigger:
-  type: schedule
-  cron: "0 5 * * 0"  # Sunday 05:00
-  timezone: Asia/Jerusalem
+### Реализация в ClawFlow
+מגדלור автоматически генерирует и обновляет `llms.txt` при каждом AEO аудите:
 
-steps:
-  - name: gsc_weekly
-    type: google_search_console
-    action: search_analytics_query
-    config:
-      start_date: "{{today - 7 days}}"
-      end_date: "{{today}}"
-      dimensions: ["query"]
-      row_limit: 50
+```markdown
+# flowmatic.co.il
 
-  - name: gsc_prev_week
-    type: google_search_console
-    action: search_analytics_query
-    config:
-      start_date: "{{today - 14 days}}"
-      end_date: "{{today - 7 days}}"
-      dimensions: ["query"]
-      row_limit: 50
+> Flowmatic builds AI agent hosting tools for the Israeli market.
 
-  - name: competitor_check
-    type: brave_search
-    action: search
-    config:
-      queries:
-        - "{{instance.brand_name}} {{instance.industry}}"
-        - "{{instance.primary_keyword}}"
-        - "{{instance.competitor_1}}"
+## Main Pages
+- [ClawFlow — AI Agent Hosting](https://clawflow.flowmatic.co.il): Deploy AI agents in 3 minutes
+- [Complete OpenClaw Guide](https://flowmatic.co.il/blog/openclaw-complete-guide-2026): Step-by-step setup guide
+- [MATEH Marketing Agents](https://flowmatic.co.il/blog/mateh-guide): 8 sub-agents for autonomous marketing
 
-  - name: build_report
-    type: code
-    config:
-      language: javascript
-      code: |
-        // Compare weeks, find opportunities, build report JSON
-        // ...save to /workspace/seo-data/weekly.json
-
-  - name: trigger_agent_analysis
-    type: openclaw_message
-    config:
-      message: "דוח SEO שבועי מוכן. קרא /workspace/seo-data/weekly.json ושלח סיכום עם המלצות."
-      channel: internal  # triggers סייר → מנתח → מטה chain
-```
-
-### Template 3: Monthly AEO Audit
-
-```yaml
-name: "AEO — Monthly AI Visibility Audit"
-trigger:
-  type: schedule
-  cron: "0 4 1 * *"  # 1st of month, 04:00
-  timezone: Asia/Jerusalem
-
-steps:
-  - name: check_chatgpt
-    type: brave_search
-    action: search
-    config:
-      query: "site:chatgpt.com {{instance.brand_name}}"
-      # Fallback: use OpenClaw browser to ask ChatGPT directly
-
-  - name: check_perplexity
-    type: http_request
-    config:
-      url: "https://api.perplexity.ai/chat/completions"
-      method: POST
-      body:
-        model: "llama-3.1-sonar-small-128k-online"
-        messages:
-          - role: user
-            content: "{{instance.aeo_query}}"
-      # Check if our brand is cited
-
-  - name: check_competitors
-    type: brave_search
-    action: search
-    config:
-      queries:
-        - "{{instance.competitor_1}} {{instance.industry}}"
-        - "{{instance.competitor_2}} {{instance.industry}}"
-
-  - name: build_aeo_report
-    type: code
-    config:
-      language: javascript
-      code: |
-        // Build AEO report JSON
-        // ...save to /workspace/seo-data/aeo-monthly.json
-
-  - name: trigger_migdalor
-    type: openclaw_message
-    config:
-      message: "דוח AEO חודשי מוכן. קרא /workspace/seo-data/aeo-monthly.json ושלח ביקורת מלאה."
-      channel: internal  # triggers מגדלור analysis
+## Documentation
+- [Pricing](https://clawflow.flowmatic.co.il/pricing)
+- [Privacy Policy](https://flowmatic.co.il/privacy)
+- [Contact](https://flowmatic.co.il/contact)
 ```
 
 ---
 
-## Dashboard UI — Карточка GSC
+## Entity Consensus — ключевая концепция 2026
 
-### Расположение
+### Проблема
+AI модели не доверяют одному источнику. Они ищут **консенсус** — факт подтверждённый несколькими независимыми источниками.
 
-Dashboard → Integrations → секция "נתונים וחיפוש" (рядом с Brave Search)
+### Решение для контента (עט)
+Каждый key claim в статье должен быть верифицирован:
+- Fact → Source 1 (official docs)
+- Fact → Source 2 (industry report)
+- Fact → Source 3 (expert quote)
 
-### UI States
+**Процесс סייר → עט:**
+1. סייר ищет через Brave/DataForSEO: какие факты о теме подтверждаются 2+ источниками
+2. מנתח фильтрует: оставляет только подтверждённые claims
+3. עט строит контент вокруг verified claims
+4. Каждый параграф = 500 tokens max (Google AI retrieval window)
+5. AI Summary Nugget (200 chars) вверху страницы — для мгновенного цитирования
 
-**State 1 — Not connected:**
+### Результат
+Контент написанный по entity consensus ранжируется в Google И цитируется AI.
+Это то что делает SEObuild — "pages Google ranks AND LLMs cite".
+
+---
+
+## Dashboard UX
+
+### Новая секция: "SEO & AI Visibility"
+
 ```
+Dashboard → Integrations → נתונים וחיפוש
+
 ┌─────────────────────────────────────────┐
 │ 📊 Google Search Console     לא מחובר  │
 │                                         │
-│ ניטור SEO אוטומטי — דוח יומי,         │
-│ מעקב מיקומים, התראות על ירידות         │
+│ ניטור מיקומים, תנועה, שגיאות אינדוקס  │
+│ דוחות יומיים ושבועיים אוטומטיים        │
 │                                         │
-│ [URL של האתר: ____________]            │
-│ [→ חברו Google Search Console]          │
-│                                         │
-│ 💡 דורש חשבון Google עם גישה ל-GSC     │
+│ [URL האתר: ____________]               │
+│ [→ חברו GSC]                            │
+│ 💡 חינם — דורש חשבון Google             │
 └─────────────────────────────────────────┘
-```
 
-**State 2 — Connected:**
-```
 ┌─────────────────────────────────────────┐
-│ 📊 Google Search Console    ✅ מחובר    │
+│ 🔬 DataForSEO              לא מחובר    │
 │                                         │
-│ אתר: flowmatic.co.il                   │
-│ דוח יומי: 06:00 ✓                      │
-│ דוח שבועי: ראשון 05:00 ✓              │
-│ ביקורת AEO: 1 לחודש ✓                 │
-│                                         │
-│ [📋 צפו בדוח אחרון]  [🔌 נתקו]        │
-└─────────────────────────────────────────┘
-```
-
-### OAuth Flow
-
-1. User clicks "חברו"
-2. OAuth redirect to Google (same client ID as Google Workspace)
-3. Additional scope: `https://www.googleapis.com/auth/webmasters.readonly`
-4. Callback saves token + creates Activepieces workflows via API
-5. First data pull runs immediately
-
----
-
-## Backend Implementation
-
-### Файлы для создания/изменения
-
-| Файл | Действие | Описание |
-|------|----------|----------|
-| `apps/api/src/controllers/hosting/gsc.ts` | Создать | OAuth + status + reports |
-| `apps/api/src/services/activepieces-api.ts` | Создать | Программное создание workflows |
-| `apps/api/src/routes/hosting.ts` | Изменить | Добавить GSC routes |
-| `apps/web/public/dashboard.html` | Изменить | Карточка GSC в интеграциях |
-| `scripts/activepieces-templates/` | Создать | JSON templates для workflows |
-| `scripts/cloud-init-template.yaml` | Изменить | Pre-create seo-data directory |
-| `templates/mateh-system/workspace/AGENTS.md` | Изменить | Добавить SEO data reading instructions |
-
-### API Routes
-
-```
-GET  /hosting/integrations/gsc/auth          → OAuth redirect
-GET  /hosting/integrations/gsc/callback       → Token exchange + workflow creation
-GET  /hosting/integrations/gsc/status         → Connection status + last report
-GET  /hosting/integrations/gsc/report         → Latest report data
-POST /hosting/integrations/gsc/disconnect     → Remove workflows + tokens
-```
-
-### Activepieces API Integration
-
-```typescript
-// apps/api/src/services/activepieces-api.ts
-
-export class ActivepiecesAPI {
-    private baseUrl: string  // http://localhost:8080/api/v1
-    private apiKey: string
-
-    // Create workflow from template
-    async createFlow(template: object): Promise<string>
-
-    // Enable/disable workflow
-    async toggleFlow(flowId: string, enabled: boolean): Promise<void>
-
-    // Delete workflow
-    async deleteFlow(flowId: string): Promise<void>
-
-    // List flows by tag
-    async listFlows(tag: string): Promise<Flow[]>
-}
-```
-
-### GSC Controller
-
-```typescript
-// apps/api/src/controllers/hosting/gsc.ts
-
-export const gscAuth = async (c: Context) => {
-    // Same Google OAuth client, additional scope: webmasters.readonly
-    // Save website URL from user input
-}
-
-export const gscCallback = async (c: Context) => {
-    // 1. Exchange code for tokens
-    // 2. Save GSC tokens to DB (separate from Google Workspace tokens)
-    // 3. Create Activepieces workflows via API:
-    //    - Daily GSC pull
-    //    - Weekly SEO report
-    //    - Monthly AEO audit (only for MATEH)
-    // 4. Create /workspace/seo-data/ directory on VPS
-    // 5. Run first data pull immediately
-    // 6. Redirect to dashboard
-}
-
-export const gscDisconnect = async (c: Context) => {
-    // 1. Delete Activepieces workflows
-    // 2. Clear tokens from DB
-    // 3. Remove /workspace/seo-data/ from VPS
-}
-```
-
----
-
-## MATEH Agent Updates
-
-### AGENTS.md — добавить SEO routing
-
-```markdown
-## ניתוב SEO
-
-| משימה | סוכן | מקור נתונים |
-|-------|------|-------------|
-| ירידות תנועה | סייר | seo-data/gsc-daily.json |
-| הזדמנויות מילות מפתח | מאתר | seo-data/weekly.json |
-| ביקורת AEO חודשית | מגדלור | seo-data/aeo-monthly.json |
-| אסטרטגיה ותוכנית תוכן | מנתח | כל הקבצים |
-| כתיבת תוכן ממוקד SEO | עט | insights ממנתח |
-
-## כלל חשוב
-אל תקרא ל-API ישירות. קרא את הקבצים ב-/workspace/seo-data/.
-הנתונים מתעדכנים אוטומטית על ידי Activepieces.
-```
-
-### HEARTBEAT.md — добавить SEO check
-
-```markdown
-## שבועי (ראשון, 08:00)
-**SEO Weekly Review**
-- קרא seo-data/weekly.json
-- סכם שינויים מרכזיים
-- שלח ב-Telegram:
-  - 📈 מילות מפתח שעלו/ירדו
-  - 🎯 הזדמנויות חדשות
-  - ⚠️ בעיות שזוהו
-```
-
----
-
-## Ahrefs / Semrush — Phase 2
-
-### Ahrefs MCP (когда пользователь подписан)
-
-```json
-{
-  "command": "npx",
-  "args": ["-y", "@anthropic/ahrefs-mcp-server"],
-  "env": {
-    "AHREFS_API_KEY": "..."
-  }
-}
-```
-
-**Важно:** Ahrefs API стоит от $99/мес — это premium feature.
-Добавляем в Dashboard как отдельную карточку с пометкой "דורש מנוי Ahrefs".
-
-Ahrefs MCP даёт агентам:
-- Backlink analysis
-- Keyword explorer
-- Site audit
-- Content gap analysis
-- Rank tracking
-
-### Semrush MCP
-
-```json
-{
-  "command": "npx",
-  "args": ["-y", "@anthropic/semrush-mcp-server"],
-  "env": {
-    "SEMRUSH_API_KEY": "..."
-  }
-}
-```
-
-Semrush MCP даёт:
-- Trends API (market analysis, traffic estimates)
-- Standard API (keyword data, backlink profiles)
-- Domain analytics
-
-### Dashboard UI для Phase 2
-
-```
-┌─────────────────────────────────────────┐
-│ 📊 Ahrefs                   לא מחובר   │
-│                                         │
-│ ניתוח בקלינקים, מחקר מילות מפתח,      │
-│ ניתוח מתחרים ומעקב דירוגים             │
+│ מחקר מילות מפתח, ניתוח מתחרים,        │
+│ בקלינקים, נראות ב-AI — לפי שימוש      │
 │                                         │
 │ [API Key: ____________]                 │
 │ [→ שמרו]                               │
+│ 💡 ~$5/חודש (500 שאילתות)              │
+│    חלופה חסכונית ל-Ahrefs ($99/חודש)   │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│ 🕷️ Firecrawl                לא מחובר   │
 │                                         │
-│ 💰 דורש מנוי Ahrefs ($99+/חודש)       │
+│ סריקת אתרים מלאה — ניתוח טכני,        │
+│ מיפוי תוכן מתחרים, בדיקת קישורים      │
+│                                         │
+│ [API Key: ____________]                 │
+│ [→ שמרו]                               │
+│ 💡 500 דפים/חודש חינם                   │
+└─────────────────────────────────────────┘
+```
+
+### Agent Config — SEO режים
+
+В Dashboard → Agents → Settings:
+
+```
+┌─────────────────────────────────────────┐
+│ 🎯 SEO/AEO Pipeline                    │
+│                                         │
+│ ☑ דוח יומי (GSC positions + alerts)    │
+│ ☑ דוח שבועי (trends + opportunities)   │
+│ ☑ ביקורת AEO חודשית (AI visibility)    │
+│ ☐ כתיבת תוכן אוטומטית (draft→approve) │
+│ ☐ ranking recovery אוטומטי             │
+│                                         │
+│ 💡 כל תוכן עובר אישור לפני פרסום       │
 └─────────────────────────────────────────┘
 ```
 
 ---
 
-## AEO Monitoring — Phase 3
+## Agent Updates
 
-### Выделенный AEO workflow
+### MATEH AGENTS.md — SEO Routing
 
-Специальный Activepieces workflow для מגדלור:
+```markdown
+## SEO/AEO Pipeline (6 שלבים)
 
-1. **Brave Search** — ищет `"brand_name" site:reddit.com`, `"brand_name" review`
-2. **Perplexity API** — задаёт ключевые вопросы, проверяет цитируется ли бренд
-3. **OpenClaw Browser** — заходит в ChatGPT Web, задаёт вопрос, скриншотит ответ
-4. **Comparison** — сравнивает с прошлым месяцем
-5. **Report** — JSON с рекомендациями
+| שלב | סוכן | מקור נתונים | פעולה | מודל |
+|-----|------|-------------|-------|------|
+| Research | סייר | DataForSEO MCP, Brave, Firecrawl | מחקר gaps + keywords | haiku |
+| Strategy | מנתח | research output | תוכנית תוכן + ROI scoring | sonnet |
+| Write | עט | content plan | כתיבת תוכן + schema + AI nugget | sonnet |
+| Audit | מאתר | Firecrawl, GSC | technical SEO audit + llms.txt | haiku |
+| Monitor | מגדלור | GSC, DataForSEO AI Visibility | ranking + AI citation tracking | haiku |
+| Fix | עט+שליח | monitoring alerts | content refresh + republish | sonnet |
 
-### Schema.org Enhancement
+## כללי SEO content
+- Entity consensus: כל עובדה מאומתת מ-2+ מקורות
+- 500-token chunks: מותאם ל-Google AI retrieval window
+- AI Summary Nugget: 200 תווים בראש כל עמוד — לציטוט ב-AI
+- Schema.org: FAQ, HowTo, Article — נוצר אוטומטית
+- De-AI-ify: תוכן לא נשמע כמו AI כתב אותו
+```
 
-עט генерирует Schema.org markup на основе данных от מגדלור:
-- FAQPage schema для страниц с вопросами
-- HowTo schema для гайдов
-- Organization schema с sameAs links
-- Article schema с author + dateModified
+### Personal AGENTS.md — Lightweight SEO
 
-Это повышает вероятность цитирования в AI ответах на 2.3x
-(по данным [Conductor AEO/GEO Benchmarks Report 2026](https://www.conductor.com/academy/aeo-geo-benchmarks-report/)).
-
----
-
-## Метрики успеха
-
-| KPI | Как измеряется | Цель (3 мес) |
-|-----|---------------|-------------|
-| GSC clicks weekly trend | weekly.json | +15% MoM |
-| Keyword positions top 10 | gsc-daily.json | +20 keywords |
-| AI citation count | aeo-monthly.json | Cited in 3+ AI platforms |
-| Content published from insights | עט output | 4 articles/month |
-| SEO issues resolved | מאתר alerts | <3 open issues |
-
----
-
-## Оценка трудозатрат
-
-| Phase | Что | Время | Приоритет |
-|-------|-----|-------|-----------|
-| **Phase 1** | GSC OAuth + Daily pull + Dashboard card | 2-3 дня | HIGH |
-| **Phase 1** | Activepieces API integration | 1-2 дня | HIGH |
-| **Phase 1** | Weekly report workflow | 1 день | HIGH |
-| **Phase 1** | Agent AGENTS.md + HEARTBEAT.md updates | 0.5 дня | HIGH |
-| **Phase 2** | Ahrefs MCP integration | 1 день | MEDIUM |
-| **Phase 2** | Semrush MCP integration | 1 день | MEDIUM |
-| **Phase 3** | AEO monthly audit workflow | 2 дня | MEDIUM |
-| **Phase 3** | Schema.org auto-generation | 1 день | LOW |
-| **Testing** | End-to-end test all workflows | 2 дня | HIGH |
-| | **Итого Phase 1** | **~7 дней** | |
-| | **Итого всё** | **~14 дней** | |
+```markdown
+## SEO (אם GSC מחובר)
+- בודק GSC פעם ביום ב-heartbeat
+- מדווח על ירידות תנועה > 20%
+- מציע שיפורים בתוכן קיים
+- לא כותב תוכן חדש (רק MATEH)
+```
 
 ---
 
-## Риски и решения
+## Файлы для создания/изменения
 
-| Риск | Вероятность | Решение |
-|------|------------|---------|
-| GSC API rate limits (100 req/day) | Низкая — 1-3 запроса/день | Кеширование, batch queries |
-| Activepieces API changes | Средняя | Версионировать templates, pin API version |
-| AEO data unreliable (AI ответы нестабильны) | Высокая | Мониторить тренды, не единичные ответы |
-| Ahrefs/Semrush API costs for users | Высокая | Чётко указывать стоимость, предлагать бесплатные альтернативы |
-| Token consumption spike при анализе | Средняя | Файлы ограничены по размеру, агенты читают summary |
+| Файл | Phase | Описание |
+|------|-------|----------|
+| `apps/api/src/controllers/hosting/gsc.ts` | 1 | GSC OAuth + status + data pull |
+| `apps/api/src/controllers/hosting/dataforseo.ts` | 1 | DataForSEO API key save + MCP deploy |
+| `apps/api/src/controllers/hosting/firecrawl.ts` | 1 | Firecrawl API key save + MCP deploy |
+| `apps/api/src/routes/hosting.ts` | 1 | Новые routes |
+| `apps/web/public/dashboard.html` | 1 | 3 новые карточки интеграций |
+| `apps/api/src/controllers/hosting/mcp.ts` | 1 | Добавить GSC, DataForSEO, Firecrawl в каталог |
+| `scripts/cloud-init-template.yaml` | 1 | Pre-install MCP packages |
+| `templates/mateh-system/workspace/AGENTS.md` | 1 | SEO pipeline routing |
+| `templates/mateh-system/workspace/HEARTBEAT.md` | 1 | SEO monitoring tasks |
+| `templates/personal-system/workspace/AGENTS.md` | 1 | Lightweight GSC check |
+| `scripts/gsc-lite-mcp.js` | 2 | Lightweight GSC MCP (если нужен) |
+| Agent SOUL.md updates | 2 | Entity consensus instructions |
+| llms.txt auto-generation | 3 | מגדלור generates + deploys |
 
 ---
 
-## Связь с существующими roadmap items
+## Оценка
 
-- **09-mcp-migration.md** — GSC/Ahrefs/Semrush = новые MCP серверы в каталоге
-- **03-impact-dashboard.md** — SEO метрики отображаются в Impact Dashboard
-- **05-google-business-profile.md** — GBP данные дополняют SEO отчёт
-- **02-llm-router.md** — SEO анализ = complex task → Sonnet, daily pull reading = Haiku
+| Phase | Что | Время |
+|-------|-----|-------|
+| **Phase 1: Data Layer** | GSC + DataForSEO + Firecrawl MCP + Dashboard cards | 3-4 дня |
+| **Phase 2: Agent Intelligence** | AGENTS.md updates, entity consensus, content pipeline | 2-3 дня |
+| **Phase 3: Automation** | llms.txt, schema auto-gen, ranking recovery workflow | 2-3 дня |
+| **Testing** | End-to-end: research → write → publish → monitor → fix | 2 дня |
+| **Итого** | | **~10-12 дней** |
+
+---
+
+## Конкурентное преимущество ClawFlow
+
+Никто из конкурентов не предлагает **full-stack SEO/AEO в hosted AI agent**:
+
+| Решение | Research | Write | Audit | Monitor | Fix | Hosted |
+|---------|----------|-------|-------|---------|-----|--------|
+| Frase | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ SaaS |
+| Ahrefs | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ SaaS |
+| claude-seo | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ Local |
+| SEObuild | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ Local |
+| **ClawFlow MATEH** | ✅ | ✅ | ✅ | ✅ | ✅ | **✅ Hosted** |
+
+ClawFlow MATEH = единственное решение где весь 6-stage pipeline работает
+автономно на hosted VPS, с 8 специализированными агентами, по цене ₪169/мес
++ ~$5/мес на DataForSEO. Вместо $99 Ahrefs + $49 Frase + self-hosting.
+
+---
+
+## Sources
+
+- [DataForSEO MCP Server](https://dataforseo.com/blog/dataforseo-mcp-server-bridging-the-gap-between-ai-models-and-seo-data)
+- [claude-seo: 19 sub-skills, 12 subagents](https://github.com/AgriciDaniel/claude-seo)
+- [SEObuild: pages Google ranks AND LLMs cite](https://github.com/gbessoni/seobuild-onpage)
+- [Frase AI Agents for SEO — 6-Stage Pipeline](https://www.frase.io/blog/ai-agents-for-seo)
+- [MCP Servers for SEO — Frase.io](https://www.frase.io/blog/mcp-servers-for-seo)
+- [Top SEO MCP Servers 2026 — SEOptimer](https://www.seoptimer.com/blog/seo-mcp/)
+- [AI Agents for SEO Complete Guide — ALM Corp](https://almcorp.com/blog/ai-agents-for-seo/)
+- [SEO's new battleground: consensus layer](https://searchengineland.com/seos-new-battleground-winning-the-consensus-layer-472001)
+- [llms.txt specification guide](https://www.bluehost.com/blog/what-is-llms-txt/)
+- [AEO/GEO Benchmarks Report 2026 — Conductor](https://www.conductor.com/academy/aeo-geo-benchmarks-report/)
+- [Best AEO Tools 2026 — Scrunch](https://scrunch.com/blog/best-answer-engine-optimization-aeo-generative-engine-optimization-geo-tools-2026)
+- [Technical SEO for generative search](https://searchengineland.com/technical-seo-generative-search-optimizing-ai-agents-473039)
