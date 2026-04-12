@@ -272,77 +272,13 @@ export default function Home() {
                   <span className="tool-badge">חינמי</span>
                   <a href="https://brave.com/search/api/" target="_blank" rel="noopener noreferrer" className="tool-cta">הגדירו ←</a>
                 </div>
-              </div>
-            </div>
-            <div>
-              <div className="tools-section-title">
-                <span>🔗</span> אינטגרציות
-              </div>
-              <div className="tools-list">
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Google Workspace</div>
-                    <div className="tool-desc">Calendar, Gmail, Contacts — חיבור בלחיצה</div>
-                  </div>
-                  <span className="tool-badge">OAuth</span>
-                </div>
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z" fill="#00A4EF"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Microsoft 365</div>
-                    <div className="tool-desc">Outlook Calendar, Mail, Contacts — חיבור בלחיצה</div>
-                  </div>
-                  <span className="tool-badge">OAuth</span>
-                </div>
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#2AABEE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M21 5L2 12.5l7 2.5M21 5l-12 10M21 5l-5.5 16L9 15"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Telegram</div>
-                    <div className="tool-desc">ערוץ התקשורת הראשי עם הסוכן</div>
-                  </div>
-                  <span className="tool-badge">חינמי</span>
-                </div>
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Replicate</div>
-                    <div className="tool-desc">ייצור תמונות ווידאו — FLUX, Stable Diffusion</div>
-                  </div>
-                </div>
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#21759B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M2.6 12.4l5.7 5.6 2.6-7.6M8.3 8l3.2 9.5 2.4-5.8"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">WordPress</div>
-                    <div className="tool-desc">פרסום מאמרים ותוכן ישירות לבלוג</div>
-                  </div>
-                </div>
-                <div className="tool-row">
-                  <div className="tool-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#0081FB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 2C6.48 2 2 6 2 11c0 2.8 1.2 5.3 3.2 7L4 22l4.2-2.2c1.2.4 2.4.6 3.8.6 5.52 0 10-4 10-9s-4.48-9.4-10-9.4z"/></svg>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div className="tool-name">Meta Ads</div>
-                    <div className="tool-desc">קמפיינים ב-Facebook, Instagram, Messenger</div>
-                  </div>
-                </div>
                 <div className="tool-row">
                   <div className="tool-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 7h10M7 12h10M7 17h6"/></svg>
                   </div>
                   <div style={{ flex: 1 }}>
                     <div className="tool-name">Twenty CRM</div>
-                    <div className="tool-desc">CRM קוד פתוח — מובנה ללא עלות נוספת</div>
+                    <div className="tool-desc">CRM קוד פתוח — מובנה ב-ClawFlow ללא עלות נוספת</div>
                   </div>
                   <span className="tool-badge mit">MIT</span>
                 </div>
