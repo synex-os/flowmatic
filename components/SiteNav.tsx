@@ -12,7 +12,7 @@ export default function SiteNav() {
           <ul className="nav-center">
             <li><a href="/#tools" className="nav-link">כלים</a></li>
             <li><a href="/blog/" className="nav-link">בלוג</a></li>
-            <li><a href="/#has" className="nav-link">עזרה אישית</a></li>
+            <li><a href="/marketing/" className="nav-link">ניהול שיווק</a></li>
             <li><a href="/#newsletter" className="nav-link">ניוזלטר</a></li>
           </ul>
 
