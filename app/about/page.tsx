@@ -1,0 +1,318 @@
+'use client'
+
+import { useEffect } from 'react'
+
+export default function About() {
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add('in')
+        })
+      },
+      { threshold: 0.08 }
+    )
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+
+    document.getElementById('nl-submit')?.addEventListener('click', () => {
+      const email = (document.getElementById('nl-email') as HTMLInputElement)?.value?.trim()
+      if (!email || !email.includes('@')) { alert('נא להזין אימייל תקין'); return }
+      const btn = document.getElementById('nl-submit') as HTMLButtonElement
+      btn.disabled = true; btn.textContent = 'נרשם...'
+      fetch('https://api.clawflow.flowmatic.co.il/hosting/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      }).then(r => r.json()).then(d => {
+        if (d.success) {
+          document.getElementById('nl-success')!.style.display = ''
+          btn.style.display = 'none'
+        } else {
+          btn.disabled = false; btn.textContent = 'הרשמה ←'
+          alert(d.message || 'שגיאה, נסו שוב')
+        }
+      }).catch(() => {
+        btn.disabled = false; btn.textContent = 'הרשמה ←'
+        alert('שגיאה, נסו שוב')
+      })
+    })
+
+    document.getElementById('has-submit')?.addEventListener('click', () => {
+      const name = (document.getElementById('has-name') as HTMLInputElement)?.value?.trim()
+      const phone = (document.getElementById('has-phone') as HTMLInputElement)?.value?.trim()
+      const type = (document.getElementById('has-type') as HTMLSelectElement)?.value
+      const message = (document.getElementById('has-message') as HTMLTextAreaElement)?.value?.trim()
+      if (!name || !phone) { alert('נא למלא שם וטלפון'); return }
+      const btn = document.getElementById('has-submit') as HTMLButtonElement
+      btn.disabled = true; btn.textContent = 'שולח...'
+      fetch('https://api.clawflow.flowmatic.co.il/hosting/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, type, message })
+      }).then(r => r.json()).then(() => {
+        document.getElementById('has-success')!.style.display = ''
+        btn.style.display = 'none'
+      }).catch(() => {
+        btn.disabled = false; btn.textContent = 'שלחו בקשה ←'
+        alert('שגיאה בשליחה, נסו שוב')
+      })
+    })
+
+    return () => io.disconnect()
+  }, [])
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  return (
+    <>
+      <section className="hero">
+        <div className="wrap">
+          <div className="hero-inner">
+            <div>
+              <div className="hero-kicker">
+                <span className="kicker-line"></span>
+                על Flowmatic — הפילוסופיה שלנו
+              </div>
+              <h1>
+                שימוש <span className="accent">חכם וחסכוני</span><br />
+                ב-AI.
+              </h1>
+              <p className="hero-lead">
+                מדריכים מעשיים ל-OpenClaw, כלים מומלצים, ועזרה אישית לעסקים ישראלים. התוכן חינמי — ההכנסות מגיעות מהמוצרים שבנינו.
+              </p>
+              <div className="hero-btns">
+                <a href="/" className="btn-main">← חזרה לקורס</a>
+                <a href="#has" className="btn-outline" onClick={(e) => { e.preventDefault(); scrollTo('has') }}>
+                  עזרה אישית
+                </a>
+              </div>
+            </div>
+
+            <div className="nl-card" id="newsletter">
+              <span className="nl-badge">חינמי</span>
+              <h3>ניוזלטר שבועי</h3>
+              <p>כל מה שקורה בעולם סוכני ה-AI — פעם בשבוע, ישירות למייל.</p>
+              <div className="nl-perks">
+                <div className="nl-perk"><span className="nl-perk-dot"></span>עדכונים על סרטונים חדשים בערוץ</div>
+                <div className="nl-perk"><span className="nl-perk-dot"></span>סקרים והצבעות אינטראקטיביות</div>
+                <div className="nl-perk"><span className="nl-perk-dot"></span>טיפים, כלים חדשים ועדכוני OpenClaw</div>
+              </div>
+              <input type="email" id="nl-email" className="nl-field" placeholder="האימייל שלכם" />
+              <div id="nl-success" style={{ display: 'none', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 8, padding: 12, textAlign: 'center', color: '#166534', fontWeight: 600, marginBottom: 8 }}>
+                ✅ נרשמת בהצלחה! נשלח לך עדכונים בקרוב.
+              </div>
+              <button className="nl-submit" id="nl-submit">הרשמה ←</button>
+              <p className="nl-micro">ביטול בכל עת · ללא ספאם</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="phil-strip">
+        <div className="wrap">
+          <div className="phil-inner">
+            <div className="phil-label">
+              איך זה<br /><em>עובד?</em>
+            </div>
+            <div className="phil-items">
+              <div className="phil-item">
+                <div className="phil-num">01</div>
+                <div className="phil-title">תוכן חינמי — המוצרים בתשלום</div>
+                <div className="phil-desc">כל המדריכים, הסרטונים והטיפים — חינמיים לגמרי. ההכנסות שלנו מגיעות מהמוצרים שבנינו: ClawFlow, הקורס, קול VoiceAI, ועזרה אישית.</div>
+              </div>
+              <div className="phil-item">
+                <div className="phil-num">02</div>
+                <div className="phil-title">בנינו את מה שחיפשנו</div>
+                <div className="phil-desc">לא מצאנו פתרון פשוט לאירוח סוכני AI בעברית — אז בנינו אחד. ClawFlow נותן VPS מוכן תוך 3 דקות, בלי הגדרות טכניות.</div>
+              </div>
+              <div className="phil-item">
+                <div className="phil-num">03</div>
+                <div className="phil-title">שקיפות מלאה</div>
+                <div className="phil-desc">כשממליצים על כלי חיצוני — מסמנים אם יש לינק אפיליאט. כשממליצים על כלי שלנו — מסמנים שהוא שלנו. תמיד.</div>
+              </div>
+              <div className="phil-item">
+                <div className="phil-num">04</div>
+                <div className="phil-title">נתקעתם? יש בן אדם</div>
+                <div className="phil-desc">Human as a Service — עזרה אישית בהגדרת סוכני AI, אינטגרציות ואוטומציות. בתשלום לפי מקרה, ללא מנוי.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section className="section" id="guides">
+        <div className="wrap">
+          <div className="sh reveal">
+            <div className="eyebrow">מדריכים</div>
+            <h2>למדו OpenClaw מאפס</h2>
+            <p className="sub">כל המדריכים מעשיים, מעודכנים ל-2026, ועם צילומי מסך מלאים.</p>
+          </div>
+          <div className="guides-grid guides-single reveal">
+            <a href="/blog/openclaw-complete-guide-2026/" className="guide-card guide-featured" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="guide-tag">⭐ מומלץ להתחלה</div>
+              <div className="guide-title" style={{ fontSize: '1.2rem' }}>המדריך המלא ל-OpenClaw 2026 — מאפס לסוכן AI עובד תוך שעה</div>
+              <div className="guide-desc">הגדרת שרת, אבטחה, חיבור טלגרם, Google Workspace, זיכרון, אוטומציות, ניתוב מודלים, קול, וסאב-אגנטים. ללא שורת קוד אחת.</div>
+              <div className="guide-foot">
+                <span>📗 הדרך הפשוטה · 55 דקות קריאה · עודכן 2026-03-19</span>
+                <span className="guide-read">קראו את המדריך ←</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="tools">
+        <div className="wrap">
+          <div className="sh reveal">
+            <div className="eyebrow">כלים</div>
+            <h2>הסטאק שעובד</h2>
+            <p className="sub">כלים שנבדקו אישית — הכלים שלנו ורשימת ספקים מומלצים. לינקי אפיליאט מסומנים תמיד בגלוי.</p>
+          </div>
+          <div className="tools-section-grid reveal">
+            <div>
+              <div className="tools-section-title">
+                <span>🛠</span> הכלים שלנו
+              </div>
+              <div className="tools-list">
+                <a href="https://clawflow.flowmatic.co.il" target="_blank" rel="noopener noreferrer" className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">ClawFlow ↗</div>
+                    <div className="tool-desc">אירוח סוכני AI — מוכן תוך 3 דקות, ללא הגדרות טכניות</div>
+                  </div>
+                  <span className="tool-badge ours">שלנו</span>
+                  <span className="tool-cta">התחילו ←</span>
+                </a>
+                <a href="https://kol-ai.xyz" target="_blank" rel="noopener noreferrer" className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.07 3h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L8.09 11.5a16 16 0 0 0 6.41 6.41l2.1-2.1a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57 2 2 0 0 1 1.72 2z"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">קול VoiceAI ↗</div>
+                    <div className="tool-desc">ה-AI שלך מתקשר ללידים, עונה בעברית טבעית</div>
+                  </div>
+                  <span className="tool-badge free">יש גרסה חינמית</span>
+                  <span className="tool-cta">נסו בחינם ←</span>
+                </a>
+              </div>
+            </div>
+            <div>
+              <div className="tools-section-title">
+                <span>⚡</span> סטאק מומלץ
+              </div>
+              <div className="tools-list">
+                <div className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4z"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 12v4"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">Claude API</div>
+                    <div className="tool-desc">מוח הסוכן — עברית מצוינת, היגיון עסקי</div>
+                  </div>
+                  <span className="tool-badge">מומלץ</span>
+                  <a href="#" className="tool-cta">פתחו חשבון ←</a>
+                </div>
+                <div className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">ElevenLabs</div>
+                    <div className="tool-desc">TTS בעברית לסוכן קולי — קול טבעי</div>
+                  </div>
+                  <span className="tool-badge aff">אפיליאט</span>
+                  <a href="#" className="tool-cta">נסו בחינם ←</a>
+                </div>
+                <div className="tool-row">
+                  <div className="tool-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div className="tool-name">Activepieces</div>
+                    <div className="tool-desc">אוטומציות open-source לחיבור כלים — רישיון MIT</div>
+                  </div>
+                  <span className="tool-badge mit">MIT</span>
+                  <a href="#" className="tool-cta">Self-host ←</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="has-section" id="has">
+        <div className="wrap">
+          <div className="has-inner">
+            <div className="has-text reveal">
+              <div className="eyebrow">עזרה אישית</div>
+              <h2>כשהמדריך לא מספיק — יש בן אדם מאחורה</h2>
+              <p>
+                כל התוכן כאן חינמי ומפורט ככל האפשר. אבל לפעמים — נתקעים. הגדרה שלא עובדת, שגיאה שלא מובנת, או שפשוט רוצים שמישהו יעשה את זה בשבילכם.
+              </p>
+              <p>
+                שלחו טופס, ספרו מה צריכים — ואחזור עם הצעה מותאמת אישית. ללא מחיר קבוע, כי כל מקרה שונה.
+              </p>
+              <div className="has-price-note">
+                💡 אין מחירון קבוע — <strong>הכל לפי הצורך</strong>
+              </div>
+              <div className="has-steps">
+                <div className="has-step">
+                  <div className="has-step-num">1</div>
+                  <div className="has-step-text"><strong>שולחים טופס</strong> — מספרים מה הבעיה, מה כבר ניסיתם</div>
+                </div>
+                <div className="has-step">
+                  <div className="has-step-num">2</div>
+                  <div className="has-step-text"><strong>מקבלים הצעה</strong> — היקף, זמן, ועלות מוצעת</div>
+                </div>
+                <div className="has-step">
+                  <div className="has-step-num">3</div>
+                  <div className="has-step-text"><strong>מחליטים</strong> — ללא לחץ, ללא התחייבות</div>
+                </div>
+              </div>
+            </div>
+            <div className="has-form-card reveal">
+              <div className="has-form-head">
+                <p>HUMAN AS A SERVICE</p>
+                <h4>שלחו בקשה לעזרה</h4>
+              </div>
+              <div className="has-form-body">
+                <div className="form-row">
+                  <label className="form-label">שם</label>
+                  <input type="text" id="has-name" className="form-input" placeholder="השם שלכם" />
+                </div>
+                <div className="form-row">
+                  <label className="form-label">טלפון</label>
+                  <input type="tel" id="has-phone" className="form-input" placeholder="05X-XXXXXXX" dir="ltr" />
+                </div>
+                <div className="form-row">
+                  <label className="form-label">מה אתם צריכים?</label>
+                  <select id="has-type" className="form-select" defaultValue="">
+                    <option value="">בחרו סוג עזרה...</option>
+                    <option>הקמת OpenClaw מאפס</option>
+                    <option>פתרון בעיה ספציפית</option>
+                    <option>חיבור אינטגרציה</option>
+                    <option>בניית אוטומציה</option>
+                    <option>אחר</option>
+                  </select>
+                </div>
+                <div className="form-row">
+                  <label className="form-label">ספרו בקצרה</label>
+                  <textarea id="has-message" className="form-textarea" placeholder="מה ניסיתם? איפה נתקעתם? מה המטרה?"></textarea>
+                </div>
+                <div id="has-success" style={{ display: 'none', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: 16, textAlign: 'center', color: '#166534', fontWeight: 600 }}>
+                  ✅ הפנייה נשלחה! ניצור איתכם קשר בהקדם.
+                </div>
+                <button className="form-submit" id="has-submit">שלחו בקשה ←</button>
+                <p className="form-note">אחזור תוך 24 שעות · ללא התחייבות</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}

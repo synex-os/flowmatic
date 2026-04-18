@@ -10,10 +10,10 @@ export default function SiteNav() {
           </a>
 
           <ul className="nav-center">
-            <li><a href="/#tools" className="nav-link">כלים</a></li>
+            <li><a href="/#courses" className="nav-link">הקורסים</a></li>
+            <li><a href="/#waitlist" className="nav-link">רשימת המתנה</a></li>
             <li><a href="/blog/" className="nav-link">בלוג</a></li>
-            <li><a href="/marketing/" className="nav-link">ניהול שיווק</a></li>
-            <li><a href="/#newsletter" className="nav-link">ניוזלטר</a></li>
+            <li><a href="/about/" className="nav-link">על פלומטיק</a></li>
           </ul>
 
           <div className="nav-right">
@@ -21,7 +21,7 @@ export default function SiteNav() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16}}>
                 <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
               </svg>
-              אירוח ClawFlow
+              אחסון ClawFlow
             </a>
             <a href="https://youtube.com/@OpenClawIsrael" target="_blank" rel="noopener noreferrer" className="yt-link">
               <svg viewBox="0 0 24 24" fill="currentColor">
