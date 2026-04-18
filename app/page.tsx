@@ -11,6 +11,31 @@ const Tip = ({ children, text }: { children: ReactNode; text: string }) => (
   </span>
 )
 
+/* ── SVG icons (Lucide-style stroke). Size via CSS on wrapping container. */
+const sx = (path: ReactNode): ReactNode => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{path}</svg>
+)
+const IStore     = () => sx(<><path d="m2 7 2-4h16l2 4"/><path d="M4 7v13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7"/><path d="M8 12h8"/><path d="M2 7c0 2 1 3 3 3s3-1 3-3c0 2 1 3 3 3s3-1 3-3c0 2 1 3 3 3s3-1 3-3"/></>)
+const IRocket    = () => sx(<><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2Z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></>)
+const IInfinity  = () => sx(<path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>)
+const IRefresh   = () => sx(<><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M8 16H3v5"/></>)
+const ISearch    = () => sx(<><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></>)
+const ITarget    = () => sx(<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>)
+const IPalette   = () => sx(<><circle cx="12" cy="12" r="10"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="8" r="1.2"/><circle cx="16" cy="10" r="1.2"/><path d="M12 22a4 4 0 0 0 4-4c0-1-1-1.5-2-1.5h-1c-1.3 0-2-1-2-2s.7-2 2-2h1.5c1.3 0 2.5-.7 3-2"/></>)
+const IPen       = () => sx(<><path d="M12 19 7 22l3-5"/><path d="m20.5 6.5-3-3L5 16v3h3Z"/><path d="m15 5 3 3"/></>)
+const IMegaphone = () => sx(<><path d="M3 11v2a2 2 0 0 0 2 2h2l8 5V4L7 9H5a2 2 0 0 0-2 2Z"/><path d="M18 8a5 5 0 0 1 0 8"/></>)
+const ICheck     = () => sx(<><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></>)
+const IBook      = () => sx(<><path d="M4 4h12a4 4 0 0 1 4 4v13H6a2 2 0 0 1-2-2Z"/><path d="M4 19a2 2 0 0 1 2-2h14"/><path d="M8 8h8"/><path d="M8 12h6"/></>)
+const ICompass   = () => sx(<><circle cx="12" cy="12" r="10"/><path d="m16 8-2 6-6 2 2-6 6-2Z"/></>)
+const ITrendUp   = () => sx(<><path d="m3 17 6-6 4 4 8-8"/><path d="M21 7v7h-7"/></>)
+const ICoins     = () => sx(<><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/></>)
+const IUsers     = () => sx(<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>)
+const IBrain     = () => sx(<path d="M9 2a3 3 0 0 1 3 3v14a3 3 0 0 1-6 0v-1a3 3 0 0 1-2-5 3 3 0 0 1 1-5 3 3 0 0 1 1-5 3 3 0 0 1 3-1Zm6 0a3 3 0 0 0-3 3v14a3 3 0 0 0 6 0v-1a3 3 0 0 0 2-5 3 3 0 0 0-1-5 3 3 0 0 0-1-5 3 3 0 0 0-3-1Z"/>)
+const ICode      = () => sx(<><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></>)
+const IZap       = () => sx(<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/>)
+const ILayers    = () => sx(<><path d="m12 2 10 6-10 6L2 8Z"/><path d="m2 14 10 6 10-6"/><path d="m2 11 10 6 10-6"/></>)
+const ILightbulb = () => sx(<><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></>)
+
 export default function Home() {
   const [coursePick, setCoursePick] = useState<CoursePick>('owners')
   const [openModule, setOpenModule] = useState<string | null>(null)
@@ -83,7 +108,7 @@ export default function Home() {
       '@context': 'https://schema.org',
       '@type': 'Course',
       name: 'Flowmatic Academy — Business Owners Track',
-      description: 'המסלול המלא לבעלי עסקים בישראל: לנהל לבד את כל מחזור השיווק בעזרת סוכני AI, ללא רקע טכני',
+      description: 'הקורס המלא לבעלי עסקים בישראל: לנהל לבד את כל מחזור השיווק בעזרת סוכני AI, ללא רקע טכני',
       provider: { '@type': 'Organization', name: 'Flowmatic', url: 'https://flowmatic.co.il' },
       offers: { '@type': 'Offer', price: '199', priceCurrency: 'ILS' }
     },
@@ -95,6 +120,24 @@ export default function Home() {
       provider: { '@type': 'Organization', name: 'Flowmatic', url: 'https://flowmatic.co.il' },
       offers: { '@type': 'Offer', price: '1499', priceCurrency: 'ILS' }
     }
+  ]
+
+  const ownersWants = [
+    { icon: <ISearch />, text: <>לדעת מה <strong>המתחרים שלכם</strong> עושים — בלי לבלות על זה שעות בשבוע?</>, agent: 'סוכן Sayer סורק כל שבוע' },
+    { icon: <IPen />,    text: <>שמישהו יכתוב לכם <strong>פוסטים, מיילים וקמפיינים</strong> — בקול של המותג שלכם?</>, agent: 'סוכנים Ayat + Yotzer' },
+    { icon: <IMegaphone/>,text: <>שהתוכן יפורסם <strong>בכל הערוצים בזמן הנכון</strong> — בלי ששתכחו, בלי שתפספסו?</>, agent: 'סוכן Shaliach מפרסם' },
+    { icon: <ITrendUp/>, text: <>לדעת <strong>איפה אתם בגוגל</strong> ומה לשפר — בלי להסתבך בטבלאות?</>, agent: 'סוכן Meater עוקב יומי' },
+    { icon: <IBook />,   text: <>לקבל <strong>סיכום יומי של 5 דקות</strong> שמספר הכל — בזמן הקפה של הבוקר?</>, agent: 'סוכן Menateach מכין' },
+    { icon: <IBrain />,  text: <>להופיע ב-<strong><Tip text="צ'אטבוטים של בינה מלאכותית — ChatGPT, Claude, Perplexity. כשאנשים שואלים עליכם, המותג שלכם מופיע בתשובה.">ChatGPT ו-Perplexity</Tip></strong> כשאנשים שואלים על התחום שלכם?</>, agent: 'סוכן Migdalor מייעל' },
+  ]
+
+  const prosWants = [
+    { icon: <ILayers/>,   text: <>לבנות <strong>שירות שיווק AI ללקוחות</strong> ולהכפיל את ההכנסה השוטפת שלכם?</>, agent: 'מודול 11 — סוכנות' },
+    { icon: <ICoins/>,    text: <>לחסוך <strong>עד 90% בעלויות AI</strong> עם ניתוב חכם בין מודלים?</>, agent: 'מודול 2 — LiteLLM' },
+    { icon: <IPalette/>,  text: <>להתאים אישית כל סוכן ללקוח — <strong>טון, קול, סגנון</strong> שונים לכל מותג?</>, agent: 'מודול 3 — BRAND.md' },
+    { icon: <ICode />,    text: <>להפעיל <strong>פייסבוק ו-Google Ads דרך API</strong>, לא ידנית?</>, agent: 'מודול 8 — Paid Ads' },
+    { icon: <ITarget />,  text: <>להיות <strong>המומחה שכולם פונים אליו</strong> בעבודה עם AI בישראל?</>, agent: 'Case Study חי' },
+    { icon: <IUsers />,   text: <>להקים סוכנות עם <strong>White-label ותוכנית שותפים</strong> על ClawFlow?</>, agent: 'מודול 11 + 12' },
   ]
 
   const ownersModules = [
@@ -256,26 +299,27 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
 
       <style>{`
-        /* Tooltip system */
+        /* Icon sizing via parent context */
+        .hero-badge svg{width:14px;height:14px;color:var(--ink-3);flex-shrink:0;}
+        .rz-head-icon svg{width:22px;height:22px;}
+        .rz-ico svg{width:20px;height:20px;}
+        .youdo-icon svg{width:26px;height:26px;}
+        .plan-icon svg{width:24px;height:24px;}
+        .mod-head h3 svg{width:22px;height:22px;}
+        .wl-pick-btn svg{width:22px;height:22px;}
+        .has-price-note svg{width:16px;height:16px;color:var(--accent);vertical-align:-3px;margin-left:4px;}
+
         .tip{position:relative;cursor:help;border-bottom:1px dashed currentColor;}
         .tip .tip-body{
           visibility:hidden;opacity:0;
-          position:absolute;bottom:calc(100% + 6px);right:50%;
-          transform:translateX(50%);
-          background:#1C1B18;color:#fff;
-          font-size:0.8rem;font-weight:400;
-          padding:10px 14px;border-radius:8px;
-          width:260px;line-height:1.55;
-          z-index:200;
-          transition:opacity 0.15s,visibility 0.15s;
-          white-space:normal;pointer-events:none;
-          direction:rtl;text-align:right;
+          position:absolute;bottom:calc(100% + 6px);right:50%;transform:translateX(50%);
+          background:#1C1B18;color:#fff;font-size:0.8rem;font-weight:400;
+          padding:10px 14px;border-radius:8px;width:260px;line-height:1.55;
+          z-index:200;transition:opacity 0.15s,visibility 0.15s;
+          white-space:normal;pointer-events:none;direction:rtl;text-align:right;
           box-shadow:0 10px 30px rgba(0,0,0,0.2);
         }
-        .tip .tip-body::after{
-          content:'';position:absolute;top:100%;right:50%;transform:translateX(50%);
-          border:6px solid transparent;border-top-color:#1C1B18;
-        }
+        .tip .tip-body::after{content:'';position:absolute;top:100%;right:50%;transform:translateX(50%);border:6px solid transparent;border-top-color:#1C1B18;}
         .tip:hover .tip-body{visibility:visible;opacity:1;}
 
         .kicker-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-bg);color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;}
@@ -290,24 +334,33 @@ export default function Home() {
         .video-play-btn svg{width:26px;height:26px;fill:var(--accent);margin-right:4px;}
         .video-label{position:absolute;bottom:18px;right:20px;color:#fff;font-size:0.82rem;font-weight:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);padding:4px 12px;border-radius:14px;}
 
-        .audience-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-        .audience-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:28px 26px;}
-        .audience-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-bg);color:var(--accent);display:grid;place-items:center;font-size:22px;margin-bottom:14px;}
-        .audience-title{font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
-        .audience-desc{font-size:0.9rem;color:var(--ink-3);line-height:1.65;margin-bottom:16px;}
-        .audience-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;}
-        .audience-list li{font-size:0.87rem;color:var(--ink-2);padding-right:18px;position:relative;}
-        .audience-list li::before{content:"✓";position:absolute;right:0;color:var(--green);font-weight:700;}
+        .hero-course-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:start;}
+        .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+        .hero-badge{font-size:0.78rem;font-weight:500;color:var(--ink-2);background:#fff;border:1px solid var(--border);padding:5px 12px;border-radius:16px;display:inline-flex;align-items:center;gap:6px;}
+        .hero-badge strong{color:var(--accent);font-weight:600;}
+        .hero-badge svg{color:var(--ink-3);}
 
-        /* Agents-do-for-you grid */
-        .adfy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
-        .adfy-card{background:#fff;padding:28px 24px;}
-        .adfy-icon{width:44px;height:44px;border-radius:12px;background:var(--accent-bg);display:grid;place-items:center;font-size:22px;margin-bottom:14px;}
-        .adfy-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
-        .adfy-text{font-size:0.88rem;color:var(--ink-2);line-height:1.7;}
-        .adfy-text strong{color:var(--ink);font-weight:600;}
+        /* Combined ROTZIM section */
+        .rz-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+        .rz-col{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+        .rz-col.featured{border-color:var(--ink);}
+        .rz-head{padding:28px 30px 24px;border-bottom:1px solid var(--border);background:var(--bg-2);}
+        .rz-col.featured .rz-head{background:var(--ink);color:#fff;}
+        .rz-head-icon{width:40px;height:40px;border-radius:10px;background:var(--accent-bg);color:var(--accent);display:grid;place-items:center;margin-bottom:12px;}
+        .rz-col.featured .rz-head-icon{background:rgba(255,255,255,0.1);color:var(--accent-l);}
+        .rz-kicker{font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
+        .rz-col.featured .rz-kicker{color:rgba(255,255,255,0.55);}
+        .rz-title{font-size:1.35rem;font-weight:800;color:var(--ink);line-height:1.3;letter-spacing:-0.3px;}
+        .rz-col.featured .rz-title{color:#fff;}
+        .rz-items{padding:18px 24px 26px;display:flex;flex-direction:column;gap:2px;}
+        .rz-item{display:flex;align-items:flex-start;gap:14px;padding:12px 6px;border-bottom:1px dashed var(--border);}
+        .rz-item:last-child{border-bottom:none;}
+        .rz-ico{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:var(--bg-2);color:var(--accent);display:grid;place-items:center;margin-top:2px;}
+        .rz-txt{flex:1;font-size:0.92rem;color:var(--ink-2);line-height:1.55;}
+        .rz-txt strong{color:var(--ink);font-weight:600;}
+        .rz-agent{font-size:0.73rem;color:var(--ink-3);margin-top:4px;display:block;}
 
-        /* You-do section */
+        /* You Do */
         .youdo-inner{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:48px 40px;}
         .youdo-inner .eyebrow{color:rgba(255,255,255,0.55);}
         .youdo-inner .eyebrow::before{background:rgba(255,255,255,0.3);}
@@ -315,19 +368,9 @@ export default function Home() {
         .youdo-sub{color:rgba(255,255,255,0.7);font-size:1rem;line-height:1.7;margin-bottom:32px;}
         .youdo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
         .youdo-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:24px 22px;}
-        .youdo-icon{font-size:28px;margin-bottom:10px;}
+        .youdo-icon{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.06);display:grid;place-items:center;color:var(--accent-l);margin-bottom:12px;}
         .youdo-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px;}
         .youdo-text{font-size:0.85rem;color:rgba(255,255,255,0.7);line-height:1.6;}
-
-        /* Israel tuning */
-        .il-section{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0;}
-        .il-flag{font-size:2.4rem;margin-bottom:8px;}
-        .il-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
-        .il-item{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
-        .il-item-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
-        .il-item-icon{font-size:18px;}
-        .il-item-title{font-size:0.95rem;font-weight:600;color:var(--ink);}
-        .il-item-text{font-size:0.83rem;color:var(--ink-3);line-height:1.6;}
 
         .stack-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
         .stack-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;font-size:0.82rem;color:var(--ink-2);display:flex;align-items:center;gap:8px;}
@@ -339,6 +382,8 @@ export default function Home() {
         .plan-card:hover{border-color:var(--border-h);}
         .plan-card.featured{border-color:var(--ink);}
         .plan-featured-tag{position:absolute;top:-12px;right:28px;background:var(--ink);color:#fff;font-size:0.68rem;font-weight:700;letter-spacing:0.6px;padding:4px 12px;border-radius:12px;text-transform:uppercase;}
+        .plan-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-bg);color:var(--accent);display:grid;place-items:center;margin-bottom:14px;}
+        .plan-card.featured .plan-icon{background:var(--ink);color:var(--accent-l);}
         .plan-name{font-size:0.78rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
         .plan-title{font-size:1.35rem;font-weight:800;color:var(--ink);margin-bottom:8px;line-height:1.3;}
         .plan-desc{font-size:0.9rem;color:var(--ink-3);line-height:1.6;margin-bottom:20px;}
@@ -356,7 +401,8 @@ export default function Home() {
         .mod-section{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px 0;}
         .mod-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:28px;}
         .mod-head-left{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
-        .mod-head h3{font-size:1.6rem;font-weight:800;color:var(--ink);letter-spacing:-0.5px;}
+        .mod-head h3{font-size:1.6rem;font-weight:800;color:var(--ink);letter-spacing:-0.5px;display:flex;align-items:center;gap:10px;}
+        .mod-head h3 svg{color:var(--accent);}
         .mod-price-badge{font-size:0.88rem;font-weight:700;color:var(--accent);background:var(--accent-bg);padding:4px 12px;border-radius:14px;}
         .mod-meta{font-size:0.85rem;color:var(--ink-3);}
         .mod-list{display:flex;flex-direction:column;gap:8px;}
@@ -394,10 +440,10 @@ export default function Home() {
         .wl-card h2{color:#fff;}
         .wl-card p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;margin-bottom:22px;}
         .wl-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
-        .wl-pick-btn{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);color:#fff;padding:12px 10px;border-radius:var(--r);font-size:0.82rem;font-weight:500;cursor:pointer;transition:all 0.15s;text-align:center;line-height:1.35;}
+        .wl-pick-btn{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);color:#fff;padding:12px 10px;border-radius:var(--r);font-size:0.82rem;font-weight:500;cursor:pointer;transition:all 0.15s;text-align:center;line-height:1.35;display:flex;flex-direction:column;align-items:center;gap:6px;}
         .wl-pick-btn:hover{background:rgba(255,255,255,0.12);}
         .wl-pick-btn.active{background:var(--accent);border-color:var(--accent);}
-        .wl-pick-price{display:block;font-size:0.72rem;opacity:0.75;margin-top:2px;}
+        .wl-pick-price{display:block;font-size:0.72rem;opacity:0.75;}
         .wl-field{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:var(--r);padding:11px 14px;color:#fff;font-family:var(--ff);font-size:0.9rem;margin-bottom:10px;direction:rtl;}
         .wl-field::placeholder{color:rgba(255,255,255,0.4);}
         .wl-field:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.1);}
@@ -413,23 +459,16 @@ export default function Home() {
         .faq-a{padding:0 0 18px;color:var(--ink-2);font-size:0.92rem;line-height:1.75;display:none;}
         .faq-item.open .faq-a{display:block;}
 
-        .hero-course-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:start;}
-        .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
-        .hero-badge{font-size:0.78rem;font-weight:500;color:var(--ink-2);background:#fff;border:1px solid var(--border);padding:5px 12px;border-radius:16px;display:inline-flex;align-items:center;gap:6px;}
-        .hero-badge strong{color:var(--accent);font-weight:600;}
-
         @media(max-width:900px){
           .hero-course-inner{grid-template-columns:1fr;gap:32px;}
-          .audience-grid{grid-template-columns:1fr;}
+          .rz-grid{grid-template-columns:1fr;}
           .stack-grid{grid-template-columns:repeat(2,1fr);}
           .plans-grid{grid-template-columns:1fr;}
           .about-grid{grid-template-columns:1fr;}
           .about-avatar{width:120px;height:120px;font-size:38px;}
           .wl-pick{grid-template-columns:1fr;}
           .mod-body{padding-right:22px;}
-          .adfy-grid{grid-template-columns:1fr;}
           .youdo-grid{grid-template-columns:1fr;}
-          .il-grid{grid-template-columns:1fr 1fr;}
           .youdo-inner{padding:32px 26px;}
         }
         @media(max-width:600px){
@@ -440,8 +479,9 @@ export default function Home() {
           .mod-head h3{font-size:1.3rem;}
           .stack-grid{grid-template-columns:1fr 1fr;}
           .about-stats{grid-template-columns:1fr;}
-          .il-grid{grid-template-columns:1fr;}
           .tip .tip-body{width:220px;}
+          .rz-head{padding:22px 22px 18px;}
+          .rz-items{padding:10px 16px 18px;}
         }
       `}</style>
 
@@ -464,10 +504,10 @@ export default function Home() {
               </p>
 
               <div className="hero-badges">
-                <span className="hero-badge">🏪 בעלי עסקים — <strong>₪199</strong></span>
-                <span className="hero-badge">🚀 משווקים מקצועיים — <strong>₪1,499</strong></span>
-                <span className="hero-badge">♾ גישה לכל החיים</span>
-                <span className="hero-badge">🔄 עדכונים חינם</span>
+                <span className="hero-badge"><IStore/> בעלי עסקים — <strong>₪199</strong></span>
+                <span className="hero-badge"><IRocket/> משווקים מקצועיים — <strong>₪1,499</strong></span>
+                <span className="hero-badge"><IInfinity/> גישה לכל החיים</span>
+                <span className="hero-badge"><IRefresh/> עדכונים חינם</span>
               </div>
 
               <div className="hero-btns">
@@ -505,124 +545,60 @@ export default function Home() {
                 <div className="video-label">▶ הדגמה · 90 שניות · ייצא בקרוב</div>
               </div>
               <p style={{ marginTop: 14, fontSize: '0.82rem', color: 'var(--ink-3)', textAlign: 'center', lineHeight: 1.6 }}>
-                סרגיי מציג את הפלטפורמה ומסביר למה זה הקורס הראשון בישראל שמלמד שיווק AI אמיתי — לא תיאוריה.
+                סרגיי מציג את הפלטפורמה ומסביר למה זה הקורס הראשון בישראל שמלמד שיווק AI אמיתי.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* AUDIENCES */}
+      {/* ROTZIM — combined audiences + what agents do */}
       <section className="section" id="who">
         <div className="wrap">
-          <div className="sh reveal">
-            <div className="eyebrow">למי זה מיועד</div>
-            <h2>שני קהלים. שני מסלולים. אותה שליטה מלאה.</h2>
-            <p className="sub">שני המסלולים הם קורסים שלמים — כל אחד מותאם למטרה שונה. בוחרים לפי מי אתם, לא לפי "הרצינות".</p>
-          </div>
-
-          <div className="audience-grid reveal">
-            <div className="audience-card">
-              <div className="audience-icon">🏪</div>
-              <div className="audience-title">בעלי עסקים (SMB)</div>
-              <div className="audience-desc">
-                אתם מנהלים עסק ורוצים שהשיווק יעבוד — בלי סוכנויות, בלי פרילנסרים שמחכים שבועיים.
-                אין לכם זמן או רצון להתעסק בצד הטכני. אתם רוצים תוצאות ושליטה.
-              </div>
-              <ul className="audience-list">
-                <li>לנהל את כל 9 סוכני השיווק שעובדים בשבילכם</li>
-                <li>לאשר תוכן בדקות ולקבל החלטות על סמך דוחות</li>
-                <li>לחבר Google, פייסבוק ו-WhatsApp בלי איש טכני</li>
-                <li>להבין מה קורה בעסק שלכם — בכל רגע</li>
-                <li>לדעת מתי לעבוד לבד ומתי לבקש עזרה אישית</li>
-              </ul>
-            </div>
-
-            <div className="audience-card">
-              <div className="audience-icon">🚀</div>
-              <div className="audience-title">משווקים דיגיטליים ומקצועיים</div>
-              <div className="audience-desc">
-                אתם בתחום, מבינים את המשחק, ורוצים להפוך למומחי AI שכולם פונים אליהם.
-                לבנות שירות מבוסס AI — לעצמכם או ללקוחות — ולהקים סוכנות שלמה על הפלטפורמה.
-              </div>
-              <ul className="audience-list">
-                <li>לשלוט במודלי AI ובעלויות ברמת מומחה</li>
-                <li>להתאים אישית לכל לקוח את הזהות, הטון והסגנון</li>
-                <li>לבנות Skills מותאמים בפייתון או Node</li>
-                <li>להפעיל Google Ads ופייסבוק-אדס דרך קוד</li>
-                <li>להקים סוכנות שיווק שלמה על ClawFlow</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AGENTS DO FOR YOU */}
-      <section className="section" style={{ paddingTop: 24 }}>
-        <div className="wrap">
-          <div className="sh reveal">
-            <div className="eyebrow">מה הסוכנים עושים בשבילכם</div>
+          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' }}>
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>למי זה מיועד</div>
             <h2>מחזור שיווק שלם — אוטומטי.</h2>
-            <p className="sub">המערכת עושה את כל העבודה הקשה. אתם רק מאשרים, קוראים דוחות ומכוונים את הכיוון. זה לא סיסמה — זה איך שהפלטפורמה באמת עובדת.</p>
+            <p className="sub" style={{ margin: '0 auto' }}>
+              בחרו את הצד שלכם — כל שורה היא משהו שהסוכנים עושים בשבילכם ואתם רק מאשרים.
+            </p>
           </div>
 
-          <div className="adfy-grid reveal">
-            <div className="adfy-card">
-              <div className="adfy-icon">🔎</div>
-              <div className="adfy-title">מחקר שוק רציף</div>
-              <div className="adfy-text">
-                סוכן <strong>Sayer</strong> סורק את המתחרים שלכם כל שבוע — שינויי מחירים, תכונות חדשות, מסרים שיווקיים.
-                סוכן <strong>Meater</strong> בודק כל יום איפה אתם מופיעים ב-<Tip text="מנוע החיפוש של גוגל בישראל — google.co.il. נפרד מהגרסה העולמית, עם תוצאות מותאמות למשתמשים בישראל.">Google ישראל</Tip>.
-                סוכן <strong>Maazin</strong> מאזין לפייסבוק, רדיט וקבוצות — ומגלה מה אומרים עליכם.
+          <div className="rz-grid reveal">
+            <div className="rz-col">
+              <div className="rz-head">
+                <div className="rz-head-icon"><IStore/></div>
+                <div className="rz-kicker">מסלול בעלי עסקים · ₪199</div>
+                <div className="rz-title">אתם בעלי עסק? אז רוצים...</div>
+              </div>
+              <div className="rz-items">
+                {ownersWants.map((w, i) => (
+                  <div key={i} className="rz-item">
+                    <div className="rz-ico">{w.icon}</div>
+                    <div className="rz-txt">
+                      {w.text}
+                      <span className="rz-agent">← {w.agent}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="adfy-card">
-              <div className="adfy-icon">🎯</div>
-              <div className="adfy-title">אסטרטגיה חודשית</div>
-              <div className="adfy-text">
-                המערכת מנתחת את כל הנתונים ומכינה לכם <strong>תוכנית פעולה חודשית</strong> — לוח תוכן, תקציבים, סדרי עדיפויות.
-                לא קובץ Word במגירה — אלא פעולות ממשיות שאתם מאשרים בקליק והמערכת מבצעת.
+            <div className="rz-col featured">
+              <div className="rz-head">
+                <div className="rz-head-icon"><IRocket/></div>
+                <div className="rz-kicker">מסלול משווקים מקצועיים · ₪1,499</div>
+                <div className="rz-title">אתם משווקים? אז רוצים...</div>
               </div>
-            </div>
-
-            <div className="adfy-card">
-              <div className="adfy-icon">🎨</div>
-              <div className="adfy-title">מיתוג ועקביות</div>
-              <div className="adfy-text">
-                באונבורדינג הסוכן לומד את המותג שלכם ובונה <Tip text="מסמך פנימי שמכיל את הזהות המלאה של המותג שלכם: קול, טון, ערכים, מסרים. כל הסוכנים משתמשים בו כשהם יוצרים תוכן.">BRAND.md</Tip> —
-                מסמך פנימי שמנחה את כל הסוכנים לכתוב בקול שלכם.
-                סוכן <strong>Mekhayev</strong> מבצע אודיט חודשי ובודק עקביות מותגית.
-              </div>
-            </div>
-
-            <div className="adfy-card">
-              <div className="adfy-icon">✍️</div>
-              <div className="adfy-title">יצירת תוכן איכותי</div>
-              <div className="adfy-text">
-                סוכן <strong>Ayat</strong> כותב מאמרי <Tip text="אופטימיזציה למנועי חיפוש — איך לגרום לאתר שלכם להופיע גבוה בתוצאות הגוגל.">SEO</Tip>, פוסטים לרשתות, מיילים שיווקיים — הכל בטון של המותג שלכם.
-                סוכן <strong>Yotzer</strong> יוצר את הויזואלים — תמונות וגרפיקות לפוסטים וקמפיינים.
-                אתם רק מאשרים מה יוצא.
-              </div>
-            </div>
-
-            <div className="adfy-card">
-              <div className="adfy-icon">📢</div>
-              <div className="adfy-title">פרסום מתוזמן</div>
-              <div className="adfy-text">
-                סוכן <strong>Shaliach</strong> מפרסם את התוכן המאושר בזמנים הנכונים ובכל ערוץ:
-                פייסבוק, אינסטגרם, לינקדאין, טלגרם, בלוג, מייל ו-<Tip text="חשבון עסקי של WhatsApp — מאפשר לשלוח הודעות ללקוחות ברשימות, לנהל תשובות אוטומטיות, ולהפעיל קמפיינים.">WhatsApp Business</Tip>.
-                לא שוכח ולא מפספס — כל יום, על פי לוח הזמנים.
-              </div>
-            </div>
-
-            <div className="adfy-card">
-              <div className="adfy-icon">📊</div>
-              <div className="adfy-title">אופטימיזציה ודוחות</div>
-              <div className="adfy-text">
-                המערכת עוקבת אחרי <Tip text="Click-Through Rate — אחוז האנשים שראו משהו ולחצו עליו. מדד מרכזי להצלחת פוסט או מודעה.">CTR</Tip> של כל פוסט, ביצועי קמפיינים, מיקומים בגוגל.
-                ממליצה על שינויים מדויקים — מה להגביר, מה לכבות, מה לשנות.
-                סוכן <strong>Migdalor</strong> בודק חודשי אם אתם מופיעים ב-<Tip text="צ'אטבוטים של בינה מלאכותית — ChatGPT, Claude, Perplexity, Gemini. אנשים שואלים אותם שאלות ומקבלים תשובות שכוללות מקורות. מטרתנו — שהמותג שלכם יהיה אחד המקורות.">ChatGPT ו-Perplexity</Tip>.
+              <div className="rz-items">
+                {prosWants.map((w, i) => (
+                  <div key={i} className="rz-item">
+                    <div className="rz-ico">{w.icon}</div>
+                    <div className="rz-txt">
+                      {w.text}
+                      <span className="rz-agent">← {w.agent}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -637,131 +613,29 @@ export default function Home() {
             <h2>הרבה פחות ממה שחשבתם.</h2>
             <p className="youdo-sub">
               שיווק מקצועי בלי להיות "עסוקים כל הזמן". הסוכנים עובדים ברקע — אתם קובעים כיוון ומאשרים.
-              15 דקות ביום — זה כל מה שצריך כדי לשלוט על הכל.
+              15 דקות ביום זה כל מה שצריך לשליטה מלאה.
             </p>
 
             <div className="youdo-grid">
               <div className="youdo-card">
-                <div className="youdo-icon">✅</div>
+                <div className="youdo-icon"><ICheck/></div>
                 <div className="youdo-title">מאשרים</div>
-                <div className="youdo-text">
-                  הסוכן מכין — אתם מאשרים. תוכן, קמפיינים, מסרים.
-                  הכל עובר אישור אנושי לפני פרסום. לחצו V או ✕ — זהו.
-                </div>
+                <div className="youdo-text">הסוכן מכין — אתם מאשרים. תוכן, קמפיינים, מסרים. הכל עובר אישור אנושי לפני פרסום. V או ✕ — זהו.</div>
               </div>
               <div className="youdo-card">
-                <div className="youdo-icon">📖</div>
+                <div className="youdo-icon"><IBook/></div>
                 <div className="youdo-title">קוראים דוחות</div>
-                <div className="youdo-text">
-                  כל בוקר מחכה לכם <strong>Daily Brief</strong> — סיכום של מה קרה אתמול,
-                  מה היום ומה דורש תשומת לב. 5 דקות של קריאה, לא יותר.
-                </div>
+                <div className="youdo-text">כל בוקר מחכה לכם <strong>Daily Brief</strong> — סיכום של מה קרה אתמול, מה היום ומה דורש תשומת לב. 5 דקות.</div>
               </div>
               <div className="youdo-card">
-                <div className="youdo-icon">🎯</div>
+                <div className="youdo-icon"><ICompass/></div>
                 <div className="youdo-title">מחליטים על הכיוון</div>
-                <div className="youdo-text">
-                  אתם עדיין הבוסים. הסוכנים מבצעים — אתם קובעים מטרות חודשיות והכיוון הכללי.
-                  הם מחכים להוראות שלכם, לא להיפך.
-                </div>
+                <div className="youdo-text">אתם עדיין הבוסים. הסוכנים מבצעים — אתם קובעים מטרות חודשיות והכיוון הכללי. הם מחכים להוראות שלכם.</div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ISRAEL TUNING */}
-      <section className="il-section">
-        <div className="wrap">
-          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 700, margin: '0 auto 20px' }}>
-            <div className="il-flag">🇮🇱</div>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>מכוון ב-100% לשוק הישראלי</div>
-            <h2>זה לא תרגום. זו לא "גרסה ישראלית" של כלי אמריקאי.</h2>
-            <p className="sub" style={{ margin: '0 auto' }}>
-              כל פיסת הכיוונון של המערכת נעשתה מהיום הראשון מתוך הבנה עמוקה של השוק הישראלי, השפה והתרבות.
-              כל הסוכנים חושבים בעברית — לא מתרגמים מאנגלית.
-            </p>
-          </div>
-
-          <div className="il-grid reveal">
-            <div className="il-item">
-              <div className="il-item-head">
-                <span className="il-item-icon">🗣</span>
-                <span className="il-item-title">עברית טבעית, לא מתורגמת</span>
-              </div>
-              <div className="il-item-text">הסוכנים כותבים עברית כמו בן-אדם, עם סלנג ישראלי, ביטויים מקומיים, והבנה תרבותית — לא תרגום-גוגל.</div>
-            </div>
-            <div className="il-item">
-              <div className="il-item-head">
-                <span className="il-item-icon">📍</span>
-                <span className="il-item-title">מתחרים ישראלים בלבד</span>
-              </div>
-              <div className="il-item-text">המערכת מזהה ומנתחת את המתחרים שלכם בישראל — לא חברות אמריקאיות שלא רלוונטיות לקהל שלכם.</div>
-            </div>
-            <div className="il-item">
-              <div className="il-item-head">
-                <span className="il-item-icon">🔎</span>
-                <span className="il-item-title">SEO ל-Google.co.il</span>
-              </div>
-              <div className="il-item-text">האופטימיזציה מכוונת לגוגל ישראל, לא לגוגל עולמי. משלב תוצאות שונות, דפי תוצאות שונים, תחרות שונה.</div>
-            </div>
-            <div className="il-item">
-              <div className="il-item-head">
-                <span className="il-item-icon">🕍</span>
-                <span className="il-item-title">חגים ומועדים</span>
-              </div>
-              <div className="il-item-text">לוחות הקמפיינים ממוזגים אוטומטית עם חגי ישראל, שישי-שבת, בין הזמנים — הסוכן מבין את השנה העברית.</div>
-            </div>
-            <div className="il-item">
-              <div className="il-item-head">
-                <span className="il-item-icon">💰</span>
-                <span className="il-item-title">שקלים, לא דולרים</span>
-              </div>
-              <div className="il-item-text">כל הדוחות, התקציבים וחישובי ה-ROAS — בשקלים. אין פה המרות טרחניות או עלויות מוסתרות במטבע זר.</div>
-            </div>
-            <div className="il-item">
-              <div className="il-item-head">
-                <span className="il-item-icon">📱</span>
-                <span className="il-item-title">WhatsApp ישראלי</span>
-              </div>
-              <div className="il-item-text">חיבור ל-WhatsApp Business דרך ספק ישראלי (Green API) — מאושר על ידי מטא, פועל עם מספרים ישראלים בלי בעיות.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PLATFORM INSIDE */}
-      <div className="phil-strip">
-        <div className="wrap">
-          <div className="phil-inner">
-            <div className="phil-label">
-              מה יש בפנים?<br/><em>פלטפורמה אמיתית.</em>
-            </div>
-            <div className="phil-items">
-              <div className="phil-item">
-                <div className="phil-num">01</div>
-                <div className="phil-title">9 סוכני MATEH מוכנים לעבודה</div>
-                <div className="phil-desc">צוות של 9 סוכני AI שכל אחד מתמחה בתחום — מחקר, כתיבה, עיצוב, פרסום, אופטימיזציה. עובדים יחד, כמו צוות שיווק אמיתי — בלי ארוחות צהריים ובלי חופשות.</div>
-              </div>
-              <div className="phil-item">
-                <div className="phil-num">02</div>
-                <div className="phil-title">תזמור חכם של מודלי AI</div>
-                <div className="phil-desc">המערכת בוחרת אוטומטית את המודל המתאים לכל משימה (Claude של Anthropic, GPT של OpenAI, או מודל מקומי) — כך שתקבלו את האיכות הטובה ביותר במחיר הנמוך ביותר.</div>
-              </div>
-              <div className="phil-item">
-                <div className="phil-num">03</div>
-                <div className="phil-title">זיכרון ומחקר אמיתיים</div>
-                <div className="phil-desc">הסוכן זוכר הכל על העסק שלכם, לומד מכל שיחה, סורק אתרי מתחרים, ומוציא נתונים אמיתיים מגוגל. לא שוכח כלום, לא ממציא.</div>
-              </div>
-              <div className="phil-item">
-                <div className="phil-num">04</div>
-                <div className="phil-title">הכל מחובר — ערוצים ופרסום</div>
-                <div className="phil-desc">Gmail, Calendar, Drive, פייסבוק, אינסטגרם, WhatsApp Business, Google Ads, Google Business Profile — הכל מחובר למקום אחד. לא צריך Zapier.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* STACK GRID WITH TOOLTIPS */}
       <section className="section">
@@ -769,7 +643,7 @@ export default function Home() {
           <div className="sh reveal">
             <div className="eyebrow">הטכנולוגיה שברקע</div>
             <h2>כל הכלים שמפעילים את המערכת — מוסברים.</h2>
-            <p className="sub">אל תפחדו מהשמות. רחפו עם העכבר על כל אחד ותראו הסבר בעברית פשוטה. במסלול בעלי העסקים — אתם לא צריכים להתעסק בזה. במסלול המקצועי — תשלטו בכולם.</p>
+            <p className="sub">אל תפחדו מהשמות. רחפו עם העכבר על כל אחד ותראו הסבר בעברית פשוטה. במסלול בעלי העסקים לא צריכים להתעסק בזה — במסלול המקצועי תשלטו בכולם.</p>
           </div>
           <div className="stack-grid reveal">
             <div className="stack-item"><span className="stack-item-dot"></span><Tip text="תוכנת קוד פתוח לסוכני AI — המנוע שלנו. זו התשתית שמאפשרת ליצור סוכנים חכמים שמבצעים משימות."><strong>OpenClaw</strong></Tip></div>
@@ -798,13 +672,13 @@ export default function Home() {
           <div className="sh reveal">
             <div className="eyebrow">המסלולים</div>
             <h2>בחרו את המסלול שמתאים לכם</h2>
-            <p className="sub">שני המסלולים הם קורסים מלאים — כל אחד לקהל אחר. המחיר מאפשר לכל אחד להתחיל, בלי גישה יקרה ומיושנת.</p>
+            <p className="sub">שני המסלולים הם קורסים מלאים — כל אחד לקהל אחר. המחיר מאפשר לכל אחד להתחיל.</p>
           </div>
 
           <div className="plans-grid reveal">
-            {/* Business Owners Track */}
             <div className="plan-card">
-              <div className="plan-name">🏪 בעלי עסקים</div>
+              <div className="plan-icon"><IStore/></div>
+              <div className="plan-name">בעלי עסקים</div>
               <div className="plan-title">ניהול עצמאי של שיווק AI</div>
               <div className="plan-desc">הקורס המלא לבעלי עסקים — לשלוט בכל מחזור השיווק שלכם לבד, עם 9 סוכני AI שעובדים בשבילכם. בלי צוות, בלי סוכנות, בלי כאבי ראש.</div>
               <div className="plan-price">₪199<small>חד-פעמי</small></div>
@@ -820,10 +694,10 @@ export default function Home() {
               <button className="plan-cta outline" onClick={() => pickCourse('owners')}>שמרו לי מקום במסלול הזה ←</button>
             </div>
 
-            {/* Marketing Pros Track */}
             <div className="plan-card featured">
               <span className="plan-featured-tag">הכי מקיף בישראל</span>
-              <div className="plan-name">🚀 משווקים מקצועיים</div>
+              <div className="plan-icon"><IRocket/></div>
+              <div className="plan-name">משווקים מקצועיים</div>
               <div className="plan-title">AI Marketing Mastery</div>
               <div className="plan-desc">הקורס המתקדם למשווקים, פרילנסרים וסוכנויות — לבנות מערכי שיווק מבוססי AI לעצמכם וללקוחות, ולהקים סוכנות דיגיטלית שלמה על הפלטפורמה.</div>
               <div className="plan-price">₪1,499<small>חד-פעמי</small></div>
@@ -850,7 +724,7 @@ export default function Home() {
         <div className="wrap">
           <div className="mod-head reveal">
             <div className="mod-head-left">
-              <h3>🏪 תוכנית המסלול לבעלי עסקים</h3>
+              <h3><IStore/> תוכנית המסלול לבעלי עסקים</h3>
               <span className="mod-price-badge">₪199</span>
             </div>
             <div className="mod-meta">6 מודולים · ~2.5 שעות · hands-on לאורך כל הדרך</div>
@@ -882,7 +756,7 @@ export default function Home() {
         <div className="wrap">
           <div className="mod-head reveal">
             <div className="mod-head-left">
-              <h3>🚀 תוכנית המסלול למשווקים מקצועיים</h3>
+              <h3><IRocket/> תוכנית המסלול למשווקים מקצועיים</h3>
               <span className="mod-price-badge">₪1,499</span>
             </div>
             <div className="mod-meta">12 מודולים · ~15 שעות · Case Study חי · קבוצת בוגרים</div>
@@ -909,33 +783,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NON-TECHNICAL */}
-      <section className="section">
-        <div className="wrap">
-          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 44px' }}>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>ללא רקע טכני</div>
-            <h2>אם אתם יודעים לשלוח מייל — אתם תסתדרו.</h2>
-            <p className="sub" style={{ margin: '0 auto' }}>
-              מסלול בעלי העסקים נבנה במיוחד לאדם שמעולם לא נגע בקוד. לא תצטרכו לכתוב prompts מתקדמים. לא תיגעו ב-API.
-              רק ממשק נקי, הסברים בעברית, ומישהו שמדריך אתכם צעד-אחר-צעד.
-            </p>
-          </div>
-
-          <div className="audience-grid reveal">
-            <div className="audience-card">
-              <div className="audience-icon">✋</div>
-              <div className="audience-title">0 שורות קוד</div>
-              <div className="audience-desc">כל המודולים של מסלול בעלי העסקים — נקודה ולחיצה בלבד. לא נפתחת שורת פקודה. לא מתקינים דבר על המחשב שלכם.</div>
-            </div>
-            <div className="audience-card">
-              <div className="audience-icon">🎯</div>
-              <div className="audience-title">שגרה של 15 דקות ביום</div>
-              <div className="audience-desc">אחרי ההקמה הראשונית, העבודה היומית פשוטה: בודקים התראות, מאשרים תוכן, קוראים סיכום. ולחזור לניהול העסק.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* HAAS + WHY SYMBOLIC */}
       <section className="has-section" id="has">
         <div className="wrap">
@@ -952,7 +799,7 @@ export default function Home() {
                 לבוגרי המסלול המקצועי — תעריף מוזל, תור קצר ותמיכה עדיפה בקבוצת הטלגרם הסגורה.
               </p>
               <div className="has-price-note">
-                💡 <strong>בוגרי הקורס</strong> — תעריף מיוחד ותור מהיר
+                <ILightbulb/>&nbsp;<strong>בוגרי הקורס</strong> — תעריף מיוחד ותור מהיר
               </div>
               <div className="has-steps">
                 <div className="has-step">
@@ -1071,15 +918,18 @@ export default function Home() {
 
               <div className="wl-pick">
                 <button className={`wl-pick-btn ${coursePick === 'owners' ? 'active' : ''}`} onClick={() => setCoursePick('owners')}>
-                  🏪 בעלי עסקים
+                  <IStore/>
+                  <span>בעלי עסקים</span>
                   <span className="wl-pick-price">₪199</span>
                 </button>
                 <button className={`wl-pick-btn ${coursePick === 'pros' ? 'active' : ''}`} onClick={() => setCoursePick('pros')}>
-                  🚀 משווקים מקצועיים
+                  <IRocket/>
+                  <span>משווקים מקצועיים</span>
                   <span className="wl-pick-price">₪1,499</span>
                 </button>
                 <button className={`wl-pick-btn ${coursePick === 'both' ? 'active' : ''}`} onClick={() => setCoursePick('both')}>
-                  ⚡ שניהם
+                  <IZap/>
+                  <span>שניהם</span>
                   <span className="wl-pick-price">שדרוג ב-₪1,300</span>
                 </button>
               </div>
@@ -1097,7 +947,7 @@ export default function Home() {
               </select>
 
               <div id="wl-success" style={{ display: 'none', background: 'rgba(42,122,75,0.15)', border: '1px solid rgba(42,122,75,0.4)', borderRadius: 8, padding: 14, textAlign: 'center', color: '#6EE7A7', fontWeight: 600, marginBottom: 10 }}>
-                ✅ נרשמתם! תקבלו הודעה במייל ברגע שהקורס מוכן.
+                ✓ נרשמתם! תקבלו הודעה במייל ברגע שהקורס מוכן.
               </div>
               <button className="wl-submit" id="wl-submit" onClick={submitWaitlist}>שמרו לי מקום ←</button>
               <p className="wl-micro">בלי ספאם · ביטול בכל עת · עדיפות למצטרפים מוקדם</p>
