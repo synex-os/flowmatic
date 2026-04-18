@@ -108,7 +108,7 @@ export default function MarketingPage() {
               <li className="locked">יצירת תוכן חדש</li>
               <li className="locked">ניהול פרסום ממומן</li>
             </ul>
-            <button className="mkt-cta mkt-cta-outline" onClick={() => {}} id="mkt-cta-starter">בחרו Starter ←</button>
+            <button className="mkt-cta mkt-cta-outline" id="mkt-cta-starter">בחרו Starter ←</button>
           </div>
 
           {/* Growth */}
@@ -129,7 +129,7 @@ export default function MarketingPage() {
               <li><span className="mkt-tooltip">Prompt Engineering<span className="mkt-tip">נותאם את הוראות הסוכנים (SOUL.md) לעסק שלכם — טון, סגנון, מסרים</span></span></li>
               <li><span className="mkt-tooltip">שיחה כל שבועיים (20 דק)<span className="mkt-tip">שיחת Zoom קצרה — מה עבד, מה לשנות, מה בתוכנית</span></span></li>
             </ul>
-            <button className="mkt-cta mkt-cta-primary" onClick={() => {}} id="mkt-cta-growth">בחרו Growth ←</button>
+            <button className="mkt-cta mkt-cta-primary" id="mkt-cta-growth">בחרו Growth ←</button>
           </div>
 
           {/* Autopilot */}
@@ -149,7 +149,7 @@ export default function MarketingPage() {
               <li><span className="mkt-tooltip">שיחה שבועית (30 דק)<span className="mkt-tip">פגישה שבועית קבועה עם מנהל חשבון ייעודי — סטטוס, תוכניות, החלטות</span></span></li>
               <li><span className="mkt-tooltip">דוח ROAS<span className="mkt-tip">כמה הושקע בפרסום → כמה הכניס. מספרים אמיתיים, לא תחושות</span></span></li>
             </ul>
-            <button className="mkt-cta mkt-cta-outline" onClick={() => {}} id="mkt-cta-autopilot">בחרו Autopilot ←</button>
+            <button className="mkt-cta mkt-cta-outline" id="mkt-cta-autopilot">בחרו Autopilot ←</button>
           </div>
         </div>
 
@@ -223,23 +223,23 @@ export default function MarketingPage() {
         <div className="mkt-faq" id="mkt-faq">
           <h2>שאלות נפוצות</h2>
           <div className="mkt-faq-item">
-            <div className="mkt-faq-q" onClick={(e) => { const a = (e.currentTarget.nextElementSibling as HTMLElement); a.style.display = a.style.display === 'block' ? 'none' : 'block' }}>מה ההבדל בין ClawFlow לבין ניהול שיווק?</div>
+            <div className="mkt-faq-q">מה ההבדל בין ClawFlow לבין ניהול שיווק?</div>
             <div className="mkt-faq-a">ClawFlow הוא השרת עם סוכני ה-AI. ניהול שיווק הוא שירות אנושי שמוודא שהסוכנים עובדים נכון, מתקן שגיאות, מכוון אסטרטגיה, ומייצר תוכן איכותי. אפשר להשתמש ב-ClawFlow בלי ניהול שיווק — אבל עם ניהול, התוצאות טובות יותר.</div>
           </div>
           <div className="mkt-faq-item">
-            <div className="mkt-faq-q" onClick={(e) => { const a = (e.currentTarget.nextElementSibling as HTMLElement); a.style.display = a.style.display === 'block' ? 'none' : 'block' }}>מה עם תקציב הפרסום (ad spend)?</div>
+            <div className="mkt-faq-q">מה עם תקציב הפרסום (ad spend)?</div>
             <div className="mkt-faq-a">תקציב הפרסום ב-Meta/Google נפרד ומשולם ישירות על ידכם. אנחנו לא גובים עמלה על ה-spend — רק את דמי הניהול. נמליץ על תקציב מתאים בשיחת ההכרות.</div>
           </div>
           <div className="mkt-faq-item">
-            <div className="mkt-faq-q" onClick={(e) => { const a = (e.currentTarget.nextElementSibling as HTMLElement); a.style.display = a.style.display === 'block' ? 'none' : 'block' }}>כמה זמן לוקח לראות תוצאות?</div>
+            <div className="mkt-faq-q">כמה זמן לוקח לראות תוצאות?</div>
             <div className="mkt-faq-a">פרסום ממומן — תוצאות ראשונות תוך 1-2 שבועות. SEO אורגני — 2-4 חודשים לתנועה משמעותית. AEO (נראות ב-AI) — 3-6 חודשים. כל חודש תקבלו דוח עם מספרים אמיתיים.</div>
           </div>
           <div className="mkt-faq-item">
-            <div className="mkt-faq-q" onClick={(e) => { const a = (e.currentTarget.nextElementSibling as HTMLElement); a.style.display = a.style.display === 'block' ? 'none' : 'block' }}>אפשר להחליף חבילה?</div>
+            <div className="mkt-faq-q">אפשר להחליף חבילה?</div>
             <div className="mkt-faq-a">כן, אפשר לשדרג או לצמצם בכל חודש. ללא התחייבות.</div>
           </div>
           <div className="mkt-faq-item">
-            <div className="mkt-faq-q" onClick={(e) => { const a = (e.currentTarget.nextElementSibling as HTMLElement); a.style.display = a.style.display === 'block' ? 'none' : 'block' }}>מה אני צריך לעשות?</div>
+            <div className="mkt-faq-q">מה אני צריך לעשות?</div>
             <div className="mkt-faq-a">ב-Starter: לאשר תוכן פעם בשבוע. ב-Growth: לאשר + להשתתף בשיחה כל שבועיים. ב-Autopilot: רק לאשר — אנחנו עושים הכל.</div>
           </div>
         </div>
@@ -248,6 +248,15 @@ export default function MarketingPage() {
       {/* Form submission script */}
       <script dangerouslySetInnerHTML={{ __html: `
         document.addEventListener('DOMContentLoaded', function() {
+          // FAQ accordion
+          document.querySelectorAll('.mkt-faq-q').forEach(function(q) {
+            q.addEventListener('click', function() {
+              var a = q.nextElementSibling;
+              if (!a) return;
+              a.style.display = a.style.display === 'block' ? 'none' : 'block';
+            });
+          });
+
           // CTA buttons scroll to form
           ['starter', 'growth', 'autopilot'].forEach(function(plan) {
             var btn = document.getElementById('mkt-cta-' + plan);
