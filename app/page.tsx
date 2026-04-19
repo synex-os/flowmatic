@@ -4,8 +4,8 @@ import { useEffect, useState, ReactNode } from 'react'
 
 type CoursePick = 'owners' | 'pros' | 'both'
 
-const Tip = ({ children, text }: { children: ReactNode; text: string }) => (
-  <span className="tip">
+const Tip = ({ children, text, wide }: { children: ReactNode; text: string; wide?: boolean }) => (
+  <span className={`tip ${wide ? 'tip-wide' : ''}`}>
     {children}
     <span className="tip-body">{text}</span>
   </span>
@@ -123,21 +123,21 @@ export default function Home() {
   ]
 
   const ownersWants = [
-    { icon: <ISearch />, text: <>לדעת מה <strong>המתחרים שלכם</strong> עושים — בלי לבלות על זה שעות בשבוע?</>, agent: 'סוכן Sayer סורק כל שבוע' },
-    { icon: <IPen />,    text: <>שמישהו יכתוב לכם <strong>פוסטים, מיילים וקמפיינים</strong> — בקול של המותג שלכם?</>, agent: 'סוכנים Ayat + Yotzer' },
-    { icon: <IMegaphone/>,text: <>שהתוכן יפורסם <strong>בכל הערוצים בזמן הנכון</strong> — בלי ששתכחו, בלי שתפספסו?</>, agent: 'סוכן Shaliach מפרסם' },
-    { icon: <ITrendUp/>, text: <>לדעת <strong>איפה אתם בגוגל</strong> ומה לשפר — בלי להסתבך בטבלאות?</>, agent: 'סוכן Meater עוקב יומי' },
-    { icon: <IBook />,   text: <>לקבל <strong>סיכום יומי של 5 דקות</strong> שמספר הכל — בזמן הקפה של הבוקר?</>, agent: 'סוכן Menateach מכין' },
-    { icon: <IBrain />,  text: <>להופיע ב-<strong><Tip text="צ'אטבוטים של בינה מלאכותית — ChatGPT, Claude, Perplexity. כשאנשים שואלים עליכם, המותג שלכם מופיע בתשובה.">ChatGPT ו-Perplexity</Tip></strong> כשאנשים שואלים על התחום שלכם?</>, agent: 'סוכן Migdalor מייעל' },
+    { icon: <ISearch />, text: <><strong>מחקר שוק חודשי אוטומטי</strong> — מתחרים, קהלים, מילות מפתח, טרנדים — הכל מוכן לכם כל חודש?</>, agent: 'סוכני Sayer + Meater + Maazin' },
+    { icon: <ITarget />, text: <><strong>אסטרטגיה שיווקית מובנית</strong> — תוכנית פעולה חודשית עם סדרי עדיפויות ותקציבים מומלצים?</>, agent: 'המערכת מסנתזת את המחקר' },
+    { icon: <IPen />,    text: <><strong>יצירת כל התוכן</strong> — פוסטים, מיילים, מודעות, גרפיקות — בקול של המותג שלכם?</>, agent: 'סוכנים Ayat + Yotzer' },
+    { icon: <IMegaphone/>,text: <><strong>ניהול קמפיינים ממומנים ב-Meta ו-Google</strong> — הקמה, הפעלה, כיוונון ואופטימיזציה אוטומטיים?</>, agent: 'סוכן Shaliach + ROAS tracking' },
+    { icon: <IBook />,   text: <><strong>דוח יומי של 5 דקות</strong> שמסכם הכל — מה קרה, מה היום, מה דורש תשומת לב?</>, agent: 'סוכן Menateach' },
+    { icon: <IBrain />,  text: <>להופיע ב-<strong><Tip text="צ'אטבוטים של בינה מלאכותית — ChatGPT, Claude, Perplexity. כשאנשים שואלים עליכם, המותג שלכם מופיע בתשובה.">ChatGPT ו-Perplexity</Tip></strong> — ה-SEO החדש של 2026?</>, agent: 'סוכן Migdalor — AEO audit' },
   ]
 
   const prosWants = [
-    { icon: <ILayers/>,   text: <>לבנות <strong>שירות שיווק AI ללקוחות</strong> ולהכפיל את ההכנסה השוטפת שלכם?</>, agent: 'מודול 11 — סוכנות' },
-    { icon: <ICoins/>,    text: <>לחסוך <strong>עד 90% בעלויות AI</strong> עם ניתוב חכם בין מודלים?</>, agent: 'מודול 2 — LiteLLM' },
-    { icon: <IPalette/>,  text: <>להתאים אישית כל סוכן ללקוח — <strong>טון, קול, סגנון</strong> שונים לכל מותג?</>, agent: 'מודול 3 — BRAND.md' },
-    { icon: <ICode />,    text: <>להפעיל <strong>פייסבוק ו-Google Ads דרך API</strong>, לא ידנית?</>, agent: 'מודול 8 — Paid Ads' },
-    { icon: <ITarget />,  text: <>להיות <strong>המומחה שכולם פונים אליו</strong> בעבודה עם AI בישראל?</>, agent: 'Case Study חי' },
-    { icon: <IUsers />,   text: <>להקים סוכנות עם <strong>White-label ותוכנית שותפים</strong> על ClawFlow?</>, agent: 'מודול 11 + 12' },
+    { icon: <IZap />,     text: <>ללמוד את <strong>הכלים הכי חדשים של 2026</strong> — ברמת מומחה, לא ברמת "ניסיתי ChatGPT פעם"?</>, agent: 'Stack מקצועי · 12 מודולים' },
+    { icon: <ICoins/>,    text: <>לחסוך <strong>עד 90% בעלויות AI</strong> עם ניתוב חכם בין מודלים?</>, agent: 'מודול 2 — LiteLLM Gateway' },
+    { icon: <IPalette/>,  text: <>להתאים אישית כל סוכן ללקוח — <strong>טון, קול, סגנון</strong> שונים לכל מותג?</>, agent: 'מודול 3 — USER.md + BRAND.md' },
+    { icon: <ICode />,    text: <>להפעיל <strong>Meta Ads ו-Google Ads דרך API</strong>, לא ידנית דרך ממשק?</>, agent: 'מודול 8 — Paid Automation' },
+    { icon: <ILayers/>,   text: <>לבנות <strong>שירות שיווק AI ללקוחות</strong> ולהכפיל את ההכנסה שלכם?</>, agent: 'מודול 11 — סוכנות' },
+    { icon: <IUsers />,   text: <>להקים סוכנות <strong>White-label עם תוכנית שותפים</strong> ו-Case Study חי של פרויקט אמיתי?</>, agent: 'מודולים 11-12' },
   ]
 
   const ownersModules = [
@@ -321,6 +321,7 @@ export default function Home() {
         }
         .tip .tip-body::after{content:'';position:absolute;top:100%;right:50%;transform:translateX(50%);border:6px solid transparent;border-top-color:#1C1B18;}
         .tip:hover .tip-body{visibility:visible;opacity:1;}
+        .tip-wide .tip-body{width:360px;font-size:0.82rem;padding:14px 16px;}
 
         .kicker-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-bg);color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;}
         .kicker-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
@@ -499,23 +500,20 @@ export default function Home() {
                 <span className="accent">אתם מנהלים. הסוכנים עובדים.</span>
               </h1>
               <p className="hero-lead">
-                הקורס הראשון בישראל שמלמד אתכם לנהל מחזור שיווק שלם עם סוכני בינה מלאכותית.
-                לא תיאוריה, לא מצגות — הדרכה צעד-אחר-צעד על פלטפורמה אמיתית בעברית, מכוונת לגמרי לשוק הישראלי.
+                הקורס הראשון בישראל שמלמד אתכם לנהל מחזור שיווק שלם עם סוכני בינה מלאכותית —
+                על <Tip wide text="פלטפורמה מקצועית שבנינו מאפס — נפרשת על VPS פרטי שלכם והופכת לנכס שלכם לכל דבר. מבוססת על הכלים הכי טובים בקוד פתוח בשוק, מאומנת עמוק על עברית ועל השוק הישראלי, ומותאמת למקסימום אופטימיזציה של עלויות Token. פשוט — הדבר הכי טוב שאפשר לבנות היום."><strong>הפלטפורמה המקצועית שלנו</strong></Tip> המבוססת על OpenClaw.
+                לא תיאוריה, לא מצגות — הדרכה צעד-אחר-צעד על פתרון שלם שמחכה לכם מוכן.
               </p>
 
               <div className="hero-badges">
                 <span className="hero-badge"><IStore/> בעלי עסקים — <strong>₪199</strong></span>
                 <span className="hero-badge"><IRocket/> משווקים מקצועיים — <strong>₪1,499</strong></span>
                 <span className="hero-badge"><IInfinity/> גישה לכל החיים</span>
-                <span className="hero-badge"><IRefresh/> עדכונים חינם</span>
               </div>
 
               <div className="hero-btns">
                 <a href="#courses" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('courses') }}>
                   הציגו לי את המסלולים ←
-                </a>
-                <a href="#waitlist" className="btn-outline" onClick={(e) => { e.preventDefault(); scrollTo('waitlist') }}>
-                  הצטרפו לרשימת המתנה
                 </a>
               </div>
 
@@ -525,12 +523,12 @@ export default function Home() {
                   בשיווק דיגיטלי
                 </div>
                 <div className="fn-item">
-                  <span className="fn-num">100K+</span>
-                  משתמשים בפרויקטים
+                  <span className="fn-num">1M+</span>
+                  משתמשים אורגניים בפרויקטים
                 </div>
                 <div className="fn-item">
                   <span className="fn-num">פלטפורמה</span>
-                  אמיתית, שלנו
+                  שלנו, על בסיס OpenClaw
                 </div>
               </div>
             </div>
@@ -544,9 +542,6 @@ export default function Home() {
                 </div>
                 <div className="video-label">▶ הדגמה · 90 שניות · ייצא בקרוב</div>
               </div>
-              <p style={{ marginTop: 14, fontSize: '0.82rem', color: 'var(--ink-3)', textAlign: 'center', lineHeight: 1.6 }}>
-                סרגיי מציג את הפלטפורמה ומסביר למה זה הקורס הראשון בישראל שמלמד שיווק AI אמיתי.
-              </p>
             </div>
           </div>
         </div>
@@ -680,16 +675,18 @@ export default function Home() {
               <div className="plan-icon"><IStore/></div>
               <div className="plan-name">בעלי עסקים</div>
               <div className="plan-title">ניהול עצמאי של שיווק AI</div>
-              <div className="plan-desc">הקורס המלא לבעלי עסקים — לשלוט בכל מחזור השיווק שלכם לבד, עם 9 סוכני AI שעובדים בשבילכם. בלי צוות, בלי סוכנות, בלי כאבי ראש.</div>
+              <div className="plan-desc">במקום לשלם ₪5,000-15,000 לחודש לסוכנות שעובדת לאט — תשתלטו על כל מחזור השיווק שלכם עם 9 סוכני AI שעובדים 24/7. הקורס מלמד אתכם לנהל הכל לבד, בזמן שלכם, בעלות של כוס קפה ליום.</div>
               <div className="plan-price">₪199<small>חד-פעמי</small></div>
-              <div className="plan-meta">~2.5 שעות וידאו · 6 מודולים מלאים · גישה לכל החיים · עדכונים חינם</div>
+              <div className="plan-meta">~2.5 שעות וידאו · 6 מודולים מלאים · גישה לכל החיים</div>
               <ul className="plan-features">
                 <li>הקמה מלאה של הפלטפורמה בלי רקע טכני</li>
-                <li>ניהול כל 9 סוכני השיווק בשפה פשוטה</li>
-                <li>חיבור כל הערוצים (Google, פייסבוק, אינסטגרם, WhatsApp)</li>
-                <li>קריאת דוחות יומיים וקבלת החלטות מבוססות נתונים</li>
-                <li>שגרה יומית של 15 דקות לכל השליטה</li>
-                <li>הכל בעברית, מותאם לישראל, בשפה של בן אדם</li>
+                <li>מחקר שוק חודשי: מתחרים, מילות מפתח, טרנדים ישראלים</li>
+                <li>בניית אסטרטגיה שיווקית ולוח תוכן חודשי</li>
+                <li>יצירת תוכן ויזואלי: פוסטים, גרפיקות, מיילים, מודעות</li>
+                <li>ניהול קמפיינים ממומנים ב-Meta ו-Google: הקמה, הפעלה, אופטימיזציה</li>
+                <li>פרסום בכל הערוצים בזמן הנכון — Facebook, Instagram, WhatsApp, בלוג</li>
+                <li>קריאת דוחות ROAS בשקלים וקבלת החלטות מבוססות נתונים</li>
+                <li>שגרה יומית של 15 דקות לשליטה מלאה</li>
               </ul>
               <button className="plan-cta outline" onClick={() => pickCourse('owners')}>שמרו לי מקום במסלול הזה ←</button>
             </div>
@@ -699,18 +696,19 @@ export default function Home() {
               <div className="plan-icon"><IRocket/></div>
               <div className="plan-name">משווקים מקצועיים</div>
               <div className="plan-title">AI Marketing Mastery</div>
-              <div className="plan-desc">הקורס המתקדם למשווקים, פרילנסרים וסוכנויות — לבנות מערכי שיווק מבוססי AI לעצמכם וללקוחות, ולהקים סוכנות דיגיטלית שלמה על הפלטפורמה.</div>
+              <div className="plan-desc">למשווקים, פרילנסרים, סוכנויות — או כל מי שרוצה להפוך למומחה המקצועי ש-SMBs פונים אליו ב-2026. הקורס הכי מקיף בישראל לבניית מערכי שיווק AI, לכלים הכי חדשים בתחום, ולהקמת סוכנות דיגיטלית שלמה על הפלטפורמה.</div>
               <div className="plan-price">₪1,499<small>חד-פעמי</small></div>
-              <div className="plan-meta">~15 שעות וידאו · 12 מודולים · גישה לכל החיים · עדכונים חינם · Q&A חודשי</div>
+              <div className="plan-meta">~15 שעות וידאו · 12 מודולים · גישה לכל החיים · Q&A חודשי</div>
               <ul className="plan-features">
-                <li>ארכיטקטורת הפלטפורמה מ-A עד ת׳</li>
-                <li>אסטרטגיית מודלים וחיסכון של 90% בעלויות AI</li>
-                <li>התאמה אישית: USER.md, BRAND.md, Skills מותאמים</li>
-                <li>Google Ads ופייסבוק-אדס דרך קוד (API)</li>
-                <li>SEO + AEO Mastery — להופיע בגוגל וב-ChatGPT</li>
-                <li>הקמת סוכנות דיגיטלית על ClawFlow</li>
-                <li>Case Study חי: פרויקט שהגיע ל-100K משתמשים</li>
-                <li>קבוצת טלגרם סגורה לבוגרים</li>
+                <li>הכלים הכי חדשים של 2026 ברמת מומחה — Claude, LiteLLM, CrewAI, Mem0</li>
+                <li>ארכיטקטורת הפלטפורמה מ-A עד ת׳ — VPS, Docker, מודלים</li>
+                <li>אסטרטגיית מודלים — חיסכון של עד 90% בעלויות AI</li>
+                <li>התאמה אישית לכל לקוח: USER.md, BRAND.md, Skills מותאמים</li>
+                <li>Google Ads ו-Meta Ads דרך API — לא ממשק, קוד</li>
+                <li>SEO + AEO Mastery — להופיע בגוגל וגם ב-ChatGPT/Perplexity</li>
+                <li>הקמת סוכנות על ClawFlow: Pricing, White-label, תוכנית שותפים</li>
+                <li>Case Study חי: פרויקט אורגני אמיתי שהגיע למעל מיליון משתמשים</li>
+                <li>קבוצת טלגרם סגורה לבוגרים + מפגשי Q&A חודשיים</li>
                 <li>שדרגתם ממסלול בעלי העסקים? משלמים רק ₪1,300 הפרש</li>
               </ul>
               <button className="plan-cta" onClick={() => pickCourse('pros')}>שמרו לי מקום במסלול הזה ←</button>
@@ -796,11 +794,8 @@ export default function Home() {
               </p>
               <p>
                 בלי מנוי חודשי. בלי מחירון נוקשה. לפי מקרה — ותמיד הוגן.
-                לבוגרי המסלול המקצועי — תעריף מוזל, תור קצר ותמיכה עדיפה בקבוצת הטלגרם הסגורה.
+                לבוגרי המסלול המקצועי יש גם תמיכה עדיפה בקבוצת הטלגרם הסגורה.
               </p>
-              <div className="has-price-note">
-                <ILightbulb/>&nbsp;<strong>בוגרי הקורס</strong> — תעריף מיוחד ותור מהיר
-              </div>
               <div className="has-steps">
                 <div className="has-step">
                   <div className="has-step-num">1</div>
@@ -826,10 +821,6 @@ export default function Home() {
                 לא מהקורס. הקורס הוא הגשר."
               </blockquote>
               <cite>— סרגיי גופמן, מייסד Flowmatic</cite>
-              <p style={{ fontSize: '0.87rem', color: 'var(--ink-3)', marginTop: 18, lineHeight: 1.7 }}>
-                ₪199 זה חופן ארוחות. ₪1,499 זה פחות מיום עבודה של פרילנסר שיעשה לכם חצי עבודה.
-                מה שתרוויחו מהקורס — יחזור אליכם בשורה התחתונה של העסק, לא לכיס שלי.
-              </p>
             </div>
           </div>
         </div>
@@ -849,14 +840,20 @@ export default function Home() {
               <div className="about-name">סרגיי גופמן</div>
               <div className="about-role">מייסד Flowmatic · בונה ClawFlow · משווק מ-2017</div>
               <p>
+                ההכשרה שלי לא הגיעה מיוטיוב ולא מקורסי אונליין אקראיים. למדתי במוסדות הכשרה
+                מקצועיים מובילים בתחום, ובליווי אישי של מנטורים שהיו הטובים ביותר בתחומם
+                באותה התקופה. מה שאלמד אתכם בקורס — עברתי, ניסיתי, שיפרתי, וראיתי עובד
+                בעסקים אמיתיים.
+              </p>
+              <p>
                 מ-2017 בשיווק דיגיטלי — עבדתי עם עשרות פרויקטים, גם בתור סטודיו וגם באופן עצמאי.
-                הובלתי קמפיינים אורגניים למעל 100,000 משתמשים, ניהלתי תקציבי פרסום ממומן,
-                עבדתי יד-ביד עם מעצבי UX/UI. ראיתי את המקצוע משני הצדדים.
+                הובלתי קמפיינים אורגניים שהביאו <strong>מעל מיליון משתמשים</strong> לפרויקטים שלי ושל לקוחות,
+                ניהלתי תקציבי פרסום ממומן, עבדתי יד-ביד עם מעצבי UX/UI. ראיתי את המקצוע משני הצדדים.
               </p>
               <p>
                 כשה-AI הגיע לחיינו, הבנתי שמגיע משהו הרבה יותר גדול מ"כתבו לי מייל ב-ChatGPT".
-                בניתי את ClawFlow — פלטפורמה שמאפשרת לכל אחד לנהל מחזור שיווק שלם
-                בעצמו. הקורס הזה הוא מה שהייתי רוצה לקבל לפני 8 שנים.
+                בניתי את ClawFlow — פלטפורמה שמאפשרת לכל אחד לנהל מחזור שיווק שלם בעצמו.
+                הקורס הזה הוא מה שהייתי רוצה לקבל לפני 8 שנים.
               </p>
               <div className="about-stats">
                 <div className="about-stat">
@@ -864,8 +861,8 @@ export default function Home() {
                   <span>בתחום השיווק</span>
                 </div>
                 <div className="about-stat">
-                  <strong>100K+</strong>
-                  <span>משתמשים בפרויקטים</span>
+                  <strong>1M+</strong>
+                  <span>משתמשים אורגניים שהובלתי</span>
                 </div>
                 <div className="about-stat">
                   <strong>9 סוכנים</strong>
@@ -976,9 +973,6 @@ export default function Home() {
           </div>
 
           <div className="reveal" style={{ textAlign: 'center', marginTop: 48 }}>
-            <p style={{ color: 'var(--ink-3)', fontSize: '0.92rem', marginBottom: 16 }}>
-              עדיין יש שאלות? <a href="/about" style={{ color: 'var(--accent)', fontWeight: 500 }}>קראו על פלומטיק</a> או שלחו לנו הודעה.
-            </p>
             <a href="#waitlist" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('waitlist') }}>
               הצטרפו לרשימת המתנה ←
             </a>

@@ -11,9 +11,7 @@ export default function SiteNav() {
 
           <ul className="nav-center">
             <li><a href="/#courses" className="nav-link">הקורסים</a></li>
-            <li><a href="/#waitlist" className="nav-link">רשימת המתנה</a></li>
             <li><a href="/blog/" className="nav-link">בלוג</a></li>
-            <li><a href="/about/" className="nav-link">על פלומטיק</a></li>
           </ul>
 
           <div className="nav-right">
