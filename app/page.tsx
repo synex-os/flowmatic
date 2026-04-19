@@ -122,24 +122,6 @@ export default function Home() {
     }
   ]
 
-  const ownersWants = [
-    { icon: <ISearch />, text: <><strong>מחקר שוק חודשי אוטומטי</strong> — מתחרים, קהלים, מילות מפתח, טרנדים — הכל מוכן לכם כל חודש?</>, agent: 'סוכני Sayer + Meater + Maazin' },
-    { icon: <ITarget />, text: <><strong>אסטרטגיה שיווקית מובנית</strong> — תוכנית פעולה חודשית עם סדרי עדיפויות ותקציבים מומלצים?</>, agent: 'המערכת מסנתזת את המחקר' },
-    { icon: <IPen />,    text: <><strong>יצירת כל התוכן</strong> — פוסטים, מיילים, מודעות, גרפיקות — בקול של המותג שלכם?</>, agent: 'סוכנים Ayat + Yotzer' },
-    { icon: <IMegaphone/>,text: <><strong>ניהול קמפיינים ממומנים ב-Meta ו-Google</strong> — הקמה, הפעלה, כיוונון ואופטימיזציה אוטומטיים?</>, agent: 'סוכן Shaliach + ROAS tracking' },
-    { icon: <IBook />,   text: <><strong>דוח יומי של 5 דקות</strong> שמסכם הכל — מה קרה, מה היום, מה דורש תשומת לב?</>, agent: 'סוכן Menateach' },
-    { icon: <IBrain />,  text: <>להופיע ב-<strong><Tip text="צ'אטבוטים של בינה מלאכותית — ChatGPT, Claude, Perplexity. כשאנשים שואלים עליכם, המותג שלכם מופיע בתשובה.">ChatGPT ו-Perplexity</Tip></strong> — ה-SEO החדש של 2026?</>, agent: 'סוכן Migdalor — AEO audit' },
-  ]
-
-  const prosWants = [
-    { icon: <IZap />,     text: <>ללמוד את <strong>הכלים הכי חדשים של 2026</strong> — ברמת מומחה, לא ברמת "ניסיתי ChatGPT פעם"?</>, agent: 'Stack מקצועי · 12 מודולים' },
-    { icon: <ICoins/>,    text: <>לחסוך <strong>עד 90% בעלויות AI</strong> עם ניתוב חכם בין מודלים?</>, agent: 'מודול 2 — LiteLLM Gateway' },
-    { icon: <IPalette/>,  text: <>להתאים אישית כל סוכן ללקוח — <strong>טון, קול, סגנון</strong> שונים לכל מותג?</>, agent: 'מודול 3 — USER.md + BRAND.md' },
-    { icon: <ICode />,    text: <>להפעיל <strong>Meta Ads ו-Google Ads דרך API</strong>, לא ידנית דרך ממשק?</>, agent: 'מודול 8 — Paid Automation' },
-    { icon: <ILayers/>,   text: <>לבנות <strong>שירות שיווק AI ללקוחות</strong> ולהכפיל את ההכנסה שלכם?</>, agent: 'מודול 11 — סוכנות' },
-    { icon: <IUsers />,   text: <>להקים סוכנות <strong>White-label עם תוכנית שותפים</strong> ו-Case Study חי של פרויקט אמיתי?</>, agent: 'מודולים 11-12' },
-  ]
-
   const ownersModules = [
     { id: 'o1', title: 'להתחיל תוך 10 דקות — ממש פשוט', duration: '15 דק׳', points: [
       'מה זה סוכן AI — בשפה של בן אדם, לא של מתכנת',
@@ -323,7 +305,16 @@ export default function Home() {
         }
         .tip .tip-body::after{content:'';position:absolute;top:100%;right:50%;transform:translateX(50%);border:6px solid transparent;border-top-color:#1C1B18;}
         .tip:hover .tip-body{visibility:visible;opacity:1;}
-        .tip-wide .tip-body{width:360px;font-size:0.82rem;padding:14px 16px;}
+        /* Wide tooltip opens BELOW the anchor (room above is often cut off in hero) */
+        .tip-wide .tip-body{
+          width:360px;font-size:0.82rem;padding:14px 16px;
+          bottom:auto;top:calc(100% + 8px);
+          font-weight:400;letter-spacing:normal;
+        }
+        .tip-wide .tip-body::after{
+          top:auto;bottom:100%;
+          border-top-color:transparent;border-bottom-color:#1C1B18;
+        }
 
         .kicker-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-bg);color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;}
         .kicker-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
@@ -439,6 +430,9 @@ export default function Home() {
         .plan-price{font-size:2.4rem;font-weight:800;color:var(--ink);line-height:1;margin-bottom:4px;}
         .plan-price small{font-size:0.78rem;font-weight:500;color:var(--ink-3);margin-right:4px;}
         .plan-meta{font-size:0.78rem;color:var(--ink-3);margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+        .plan-wants-label{font-size:0.85rem;font-weight:700;color:var(--accent);margin-bottom:14px;letter-spacing:-0.2px;}
+        .plan-card.featured .plan-wants-label{color:var(--accent);}
+        .plan-upgrade-note{font-size:0.78rem;color:var(--ink-3);padding:10px 12px;background:var(--bg-2);border-radius:var(--r);margin-bottom:16px;text-align:center;}
         .plan-features{list-style:none;padding:0;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;}
         .plan-features li{font-size:0.87rem;color:var(--ink-2);padding-right:20px;position:relative;line-height:1.55;}
         .plan-features li::before{content:"✓";position:absolute;right:0;color:var(--green);font-weight:700;}
@@ -484,6 +478,7 @@ export default function Home() {
         .about-stat strong{display:block;font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
         .about-stat span{font-size:0.8rem;color:var(--ink-3);}
 
+        .wl-single-wrap{max-width:560px;margin:0 auto;}
         .wl-card{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:40px 36px;}
         .wl-card .eyebrow{color:rgba(255,255,255,0.55);}
         .wl-card .eyebrow::before{background:rgba(255,255,255,0.3);}
@@ -588,12 +583,9 @@ export default function Home() {
       {/* DEMO — standalone video section */}
       <section className="demo-section" id="demo">
         <div className="wrap">
-          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 40px' }}>
+          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 36px' }}>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>סרטון היכרות</div>
             <h2>כמה מילים על המסלולים</h2>
-            <p className="sub" style={{ margin: '0 auto' }}>
-              סרגיי מציג בקצרה את שני המסלולים — מה ההבדל ביניהם, למי כל אחד מתאים, ומה בדיוק מקבלים בכל אחד.
-            </p>
           </div>
           <div className="demo-frame reveal">
             <div className="video-box" onClick={() => scrollTo('courses')}>
@@ -602,73 +594,14 @@ export default function Home() {
                   <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div className="video-label">▶ 90 שניות · הסרטון ייצא בקרוב</div>
-            </div>
-            <div className="demo-chips">
-              <span className="demo-chip"><ICheck/> בעברית מלאה</span>
-              <span className="demo-chip"><ICheck/> מכוון לשוק הישראלי</span>
-              <span className="demo-chip"><ICheck/> מוכן תוך 3 דקות</span>
-              <span className="demo-chip"><ICheck/> קוד פתוח, שלכם לגמרי</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ROTZIM — combined audiences + what agents do */}
-      <section className="section" id="who">
-        <div className="wrap">
-          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' }}>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>למי זה מיועד</div>
-            <h2>מחזור שיווק שלם — אוטומטי.</h2>
-            <p className="sub" style={{ margin: '0 auto' }}>
-              בחרו את הצד שלכם — כל שורה היא משהו שהסוכנים עושים בשבילכם ואתם רק מאשרים.
-            </p>
-          </div>
-
-          <div className="rz-grid reveal">
-            <div className="rz-col">
-              <div className="rz-head">
-                <div className="rz-head-icon"><IStore/></div>
-                <div className="rz-kicker">מסלול בעלי עסקים · ₪199</div>
-                <div className="rz-title">אתם בעלי עסק? אז רוצים...</div>
-              </div>
-              <div className="rz-items">
-                {ownersWants.map((w, i) => (
-                  <div key={i} className="rz-item">
-                    <div className="rz-ico">{w.icon}</div>
-                    <div className="rz-txt">
-                      {w.text}
-                      <span className="rz-agent">← {w.agent}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rz-col featured">
-              <div className="rz-head">
-                <div className="rz-head-icon"><IRocket/></div>
-                <div className="rz-kicker">מסלול משווקים מקצועיים · ₪1,499</div>
-                <div className="rz-title">אתם משווקים? אז רוצים...</div>
-              </div>
-              <div className="rz-items">
-                {prosWants.map((w, i) => (
-                  <div key={i} className="rz-item">
-                    <div className="rz-ico">{w.icon}</div>
-                    <div className="rz-txt">
-                      {w.text}
-                      <span className="rz-agent">← {w.agent}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <div className="video-label">▶ כמה דקות · ייצא בקרוב</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* YOU DO */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section">
         <div className="wrap">
           <div className="youdo-inner reveal">
             <div className="eyebrow">ומה אתם עושים?</div>
@@ -728,13 +661,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COURSES */}
+      {/* COURSES — merged section */}
       <section className="section" id="courses">
         <div className="wrap">
-          <div className="sh reveal">
-            <div className="eyebrow">המסלולים</div>
-            <h2>בחרו את המסלול שמתאים לכם</h2>
-            <p className="sub">שני המסלולים הם קורסים מלאים — כל אחד לקהל אחר. המחיר מאפשר לכל אחד להתחיל.</p>
+          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' }}>
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>שני מסלולים · שני קהלים · אותה שליטה</div>
+            <h2>בחרו את המסלול שלכם</h2>
+            <p className="sub" style={{ margin: '0 auto' }}>
+              שני המסלולים הם קורסים מלאים — כל אחד לקהל שלו. בוחרים לפי מי אתם, לא לפי "הרצינות".
+            </p>
           </div>
 
           <div className="plans-grid reveal">
@@ -742,18 +677,22 @@ export default function Home() {
               <div className="plan-icon"><IStore/></div>
               <div className="plan-name">בעלי עסקים</div>
               <div className="plan-title">ניהול עצמאי של שיווק AI</div>
-              <div className="plan-desc">במקום לשלם ₪5,000-15,000 לחודש לסוכנות שעובדת לאט — תשתלטו על כל מחזור השיווק שלכם עם 9 סוכני AI שעובדים 24/7. הקורס מלמד אתכם לנהל הכל לבד, בזמן שלכם, בעלות של כוס קפה ליום.</div>
+              <div className="plan-desc">
+                במקום לשלם ₪5,000-15,000 לחודש לסוכנות שעובדת לאט — אתם מנהלים צוות של 9 מקצועני AI שעובדים בשבילכם 24/7.
+                הקורס מלמד אתכם איך — צעד-אחר-צעד, בשפה של בן אדם.
+              </div>
               <div className="plan-price">₪199<small>חד-פעמי</small></div>
-              <div className="plan-meta">~2.5 שעות וידאו · 6 מודולים מלאים · גישה לכל החיים</div>
+              <div className="plan-meta">~2.5 שעות וידאו · 6 מודולים · גישה לכל החיים</div>
+
+              <div className="plan-wants-label">רוצים לנהל את הצוות ש...</div>
               <ul className="plan-features">
-                <li>הקמה מלאה של הפלטפורמה בלי רקע טכני</li>
-                <li>מחקר שוק חודשי: מתחרים, מילות מפתח, טרנדים ישראלים</li>
-                <li>בניית אסטרטגיה שיווקית ולוח תוכן חודשי</li>
-                <li>יצירת תוכן ויזואלי: פוסטים, גרפיקות, מיילים, מודעות</li>
-                <li>ניהול קמפיינים ממומנים ב-Meta ו-Google: הקמה, הפעלה, אופטימיזציה</li>
-                <li>פרסום בכל הערוצים בזמן הנכון — Facebook, Instagram, WhatsApp, בלוג</li>
-                <li>קריאת דוחות ROAS בשקלים וקבלת החלטות מבוססות נתונים</li>
-                <li>שגרה יומית של 15 דקות לשליטה מלאה</li>
+                <li>עושה <strong>מחקר שוק חודשי אוטומטי</strong> — מתחרים, מילות מפתח, טרנדים ישראלים</li>
+                <li>בונה לכם <strong>אסטרטגיה שיווקית ולוח תוכן</strong> חודשי</li>
+                <li>כותב <strong>פוסטים, מיילים, מודעות וגרפיקות</strong> בקול של המותג שלכם</li>
+                <li>מנהל <strong>קמפיינים ממומנים ב-Meta ו-Google</strong> — הקמה, הפעלה, אופטימיזציה</li>
+                <li>מוביל <strong>SEO + <Tip text="Answer Engine Optimization — להופיע בתשובות של ChatGPT, Claude, Perplexity כשאנשים שואלים שאלות בתחום שלכם.">AEO</Tip></strong> — גבוה בגוגל ישראל וגם בצ'אטבוטים של AI</li>
+                <li>שולח <strong>דוח יומי של 5 דקות</strong> — מה קרה, מה היום, מה חשוב</li>
+                <li>מנוהל ב<strong>שגרה יומית של 15 דקות</strong> בלבד</li>
               </ul>
               <button className="plan-cta outline" onClick={() => pickCourse('owners')}>התחילו חינם עם המסלול הזה ←</button>
             </div>
@@ -763,21 +702,24 @@ export default function Home() {
               <div className="plan-icon"><IRocket/></div>
               <div className="plan-name">משווקים מקצועיים</div>
               <div className="plan-title">AI Marketing Mastery</div>
-              <div className="plan-desc">למשווקים, פרילנסרים, סוכנויות — או כל מי שרוצה להפוך למומחה המקצועי ש-SMBs פונים אליו ב-2026. הקורס הכי מקיף בישראל לבניית מערכי שיווק AI, לכלים הכי חדשים בתחום, ולהקמת סוכנות דיגיטלית שלמה על הפלטפורמה.</div>
+              <div className="plan-desc">
+                למשווקים, פרילנסרים, סוכנויות — וכל מי שרוצה להפוך למומחה המקצועי ש-SMBs פונים אליו ב-2026.
+                הקורס הכי מקיף בישראל לבניית מערכי AI, לכלים הכי חדשים, ולהקמת סוכנות דיגיטלית מבוססת הפלטפורמה.
+              </div>
               <div className="plan-price">₪1,499<small>חד-פעמי</small></div>
-              <div className="plan-meta">~15 שעות וידאו · 12 מודולים · גישה לכל החיים · Q&A חודשי</div>
+              <div className="plan-meta">~15 שעות · 12 מודולים · Q&A חודשי · קבוצת טלגרם לבוגרים</div>
+
+              <div className="plan-wants-label">רוצים ל...</div>
               <ul className="plan-features">
-                <li>הכלים הכי חדשים של 2026 ברמת מומחה — Claude, LiteLLM, CrewAI, Mem0</li>
-                <li>ארכיטקטורת הפלטפורמה מ-A עד ת׳ — VPS, Docker, מודלים</li>
-                <li>אסטרטגיית מודלים — חיסכון של עד 90% בעלויות AI</li>
-                <li>התאמה אישית לכל לקוח: USER.md, BRAND.md, Skills מותאמים</li>
-                <li>Google Ads ו-Meta Ads דרך API — לא ממשק, קוד</li>
-                <li>SEO + AEO Mastery — להופיע בגוגל וגם ב-ChatGPT/Perplexity</li>
-                <li>הקמת סוכנות על ClawFlow: Pricing, White-label, תוכנית שותפים</li>
-                <li>Case Study חי: פרויקט אורגני אמיתי שהגיע למעל מיליון משתמשים</li>
-                <li>קבוצת טלגרם סגורה לבוגרים + מפגשי Q&A חודשיים</li>
-                <li>שדרגתם ממסלול בעלי העסקים? משלמים רק ₪1,300 הפרש</li>
+                <li>ללמוד את <strong>הכלים הכי חדשים של 2026</strong> ברמת מומחה (Claude, LiteLLM, Mem0, CrewAI)</li>
+                <li>לחסוך <strong>עד 90% בעלויות AI</strong> עם ניתוב חכם בין מודלים</li>
+                <li>להתאים אישית כל סוכן ללקוח — <strong>USER.md, BRAND.md, Skills מותאמים</strong></li>
+                <li>להפעיל <strong>Meta Ads ו-Google Ads דרך API</strong> — לא ממשק, קוד</li>
+                <li>להוביל <strong>SEO + <Tip text="Answer Engine Optimization — להופיע בתשובות של ChatGPT, Claude, Perplexity כשאנשים שואלים שאלות בתחום שלכם.">AEO</Tip></strong> מקצועי — גוגל ובצ'אטבוטים של AI</li>
+                <li>להקים <strong>סוכנות דיגיטלית על ClawFlow</strong> — Pricing, White-label, תוכנית שותפים</li>
+                <li>לראות <strong>Case Study חי</strong> של פרויקט אמיתי שהגיע למעל מיליון משתמשים</li>
               </ul>
+              <div className="plan-upgrade-note">שדרגתם ממסלול בעלי העסקים? משלמים רק ₪1,300 הפרש.</div>
               <button className="plan-cta" onClick={() => pickCourse('pros')}>התחילו חינם עם המסלול הזה ←</button>
             </div>
           </div>
@@ -913,39 +855,11 @@ export default function Home() {
       {/* FREE FIRST LESSON REGISTRATION */}
       <section className="has-section" id="waitlist">
         <div className="wrap">
-          <div className="has-inner">
-            <div className="has-text reveal">
-              <div className="eyebrow">גישה חינם</div>
-              <h2>תתחילו בחינם — שיעור ראשון מלא, בלי תשלום.</h2>
-              <p>
-                אנחנו נותנים לכם גישה לפלטפורמת הקורס <strong>חינם</strong>, יחד עם שיעור ראשון מלא —
-                כדי שתוכלו לבדוק בעצמכם את האיכות, הפורמט וקצב הלמידה לפני שתחליטו אם לרכוש מסלול מלא.
-              </p>
-              <p><strong>מה תקבלו מיד אחרי ההרשמה:</strong></p>
-              <div className="has-steps">
-                <div className="has-step">
-                  <div className="has-step-num">1</div>
-                  <div className="has-step-text"><strong>גישה מלאה לפלטפורמת הקורס</strong> — תוכלו לראות איך הכל בנוי ולנווט בחופשיות</div>
-                </div>
-                <div className="has-step">
-                  <div className="has-step-num">2</div>
-                  <div className="has-step-text"><strong>שיעור ראשון מלא, חינם</strong> — מתוך המסלול שבחרתם, בדיוק כמו התלמידים המשלמים</div>
-                </div>
-                <div className="has-step">
-                  <div className="has-step-num">3</div>
-                  <div className="has-step-text"><strong>טעימה אמיתית מהאיכות</strong> — להעריך את הפורמט, השפה והקצב לפני שמחליטים</div>
-                </div>
-                <div className="has-step">
-                  <div className="has-step-num">4</div>
-                  <div className="has-step-text"><strong>אהבתם? רוכשים את המסלול המלא</strong> — לא אהבתם? לא שילמתם שקל.</div>
-                </div>
-              </div>
-            </div>
-
+          <div className="wl-single-wrap">
             <div className="wl-card reveal">
-              <div className="eyebrow">הרשמה מיידית</div>
-              <h2 style={{ fontSize: '1.4rem', marginBottom: 10 }}>התחילו חינם עם השיעור הראשון</h2>
-              <p>איזה מסלול מעניין אתכם? השיעור הראשון יישלח למייל תוך דקות.</p>
+              <div className="eyebrow">גישה חינם · ללא כרטיס אשראי</div>
+              <h2 style={{ fontSize: '1.5rem', marginBottom: 10 }}>התחילו חינם עם השיעור הראשון</h2>
+              <p>איזה מסלול מעניין אתכם? קישור לפלטפורמת הקורס והשיעור הראשון יישלחו למייל שלכם תוך דקות.</p>
 
               <div className="wl-pick">
                 <button className={`wl-pick-btn ${coursePick === 'owners' ? 'active' : ''}`} onClick={() => setCoursePick('owners')}>
