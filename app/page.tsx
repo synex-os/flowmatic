@@ -40,6 +40,9 @@ export default function Home() {
   const [coursePick, setCoursePick] = useState<CoursePick>('owners')
   const [openModule, setOpenModule] = useState<string | null>(null)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalIntent, setModalIntent] = useState<'trial' | 'buy'>('trial')
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -52,53 +55,60 @@ export default function Home() {
     return () => io.disconnect()
   }, [])
 
+  useEffect(() => {
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setDrawerOpen(false); setModalOpen(false) }
+    }
+    window.addEventListener('keydown', onEsc)
+    return () => window.removeEventListener('keydown', onEsc)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = (drawerOpen || modalOpen) ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [drawerOpen, modalOpen])
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const pickCourse = (c: CoursePick) => {
-    setCoursePick(c)
-    setTimeout(() => scrollTo('waitlist'), 50)
-  }
+  const openTrialFor = (c: CoursePick) => { setCoursePick(c); setModalIntent('trial'); setModalOpen(true) }
+  const openBuyFor   = (c: CoursePick) => { setCoursePick(c); setModalIntent('buy'); setModalOpen(true) }
 
-  const submitWaitlist = () => {
-    const name = (document.getElementById('wl-name') as HTMLInputElement)?.value?.trim()
-    const email = (document.getElementById('wl-email') as HTMLInputElement)?.value?.trim()
-    const phone = (document.getElementById('wl-phone') as HTMLInputElement)?.value?.trim()
-    const role = (document.getElementById('wl-role') as HTMLSelectElement)?.value
+  const submitModal = () => {
+    const name = (document.getElementById('md-name') as HTMLInputElement)?.value?.trim()
+    const email = (document.getElementById('md-email') as HTMLInputElement)?.value?.trim()
     if (!email || !email.includes('@')) { alert('אנא הזינו אימייל תקין'); return }
     if (!name) { alert('אנא מלאו שם'); return }
 
-    const btn = document.getElementById('wl-submit') as HTMLButtonElement
+    const btn = document.getElementById('md-submit') as HTMLButtonElement
     btn.disabled = true; btn.textContent = 'שולח...'
 
     const courseLabel = coursePick === 'owners' ? 'המסלול לבעלי עסקים — ₪199'
                       : coursePick === 'pros'   ? 'המסלול למשווקים מקצועיים — ₪1,499'
                       : 'שני המסלולים'
-    const roleLabel = role || 'לא צוין'
-
-    const message = `הרשמה לשיעור ראשון חינם\nמסלול: ${courseLabel}\nתפקיד: ${roleLabel}\nאימייל: ${email}\nטלפון: ${phone || 'לא צוין'}`
+    const intentLabel = modalIntent === 'trial' ? 'שיעור ראשון חינם' : 'בקשת רכישה'
+    const message = `${intentLabel}\nמסלול: ${courseLabel}\nאימייל: ${email}`
 
     fetch('https://api.clawflow.flowmatic.co.il/hosting/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name,
-        phone: phone || email,
-        type: `שיעור ראשון חינם — ${courseLabel}`,
+        phone: email,
+        type: `${intentLabel} — ${courseLabel}`,
         message
       })
     }).then(r => r.json()).then(() => {
-      document.getElementById('wl-success')!.style.display = ''
+      document.getElementById('md-success')!.style.display = ''
       btn.style.display = 'none'
-
       fetch('https://api.clawflow.flowmatic.co.il/hosting/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       }).catch(() => {})
     }).catch(() => {
-      btn.disabled = false; btn.textContent = 'קבלו גישה חינם ←'
+      btn.disabled = false; btn.textContent = modalIntent === 'trial' ? 'קבלו גישה חינם ←' : 'שלחו בקשת רכישה ←'
       alert('שגיאה בשליחה, נסו שוב')
     })
   }
@@ -478,7 +488,131 @@ export default function Home() {
         .about-stat strong{display:block;font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
         .about-stat span{font-size:0.8rem;color:var(--ink-3);}
 
+        /* Platform link (opens drawer) */
+        .platform-btn{
+          display:inline;cursor:pointer;border:none;background:none;padding:0;
+          font-family:inherit;font-size:inherit;color:inherit;
+          border-bottom:2px dashed var(--accent);
+          font-weight:700;
+          transition:color 0.15s;
+        }
+        .platform-btn:hover{color:var(--accent);}
+        .platform-btn::after{content:' ↗';font-size:0.75em;color:var(--accent);vertical-align:super;opacity:0.8;margin-right:2px;}
+
+        /* Drawer */
+        .drawer-wrap{position:fixed;inset:0;z-index:1000;pointer-events:none;}
+        .drawer-wrap.open{pointer-events:auto;}
+        .drawer-backdrop{
+          position:absolute;inset:0;
+          background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);
+          opacity:0;transition:opacity 0.25s var(--ease);
+        }
+        .drawer-wrap.open .drawer-backdrop{opacity:1;}
+        .drawer{
+          position:absolute;top:0;bottom:0;left:0;
+          width:480px;max-width:92vw;
+          background:#fff;
+          transform:translateX(-100%);
+          transition:transform 0.3s var(--ease);
+          box-shadow:20px 0 60px rgba(0,0,0,0.25);
+          overflow-y:auto;
+          display:flex;flex-direction:column;
+          padding:56px 44px 44px;
+        }
+        .drawer-wrap.open .drawer{transform:translateX(0);}
+        .drawer-close{
+          position:absolute;top:18px;left:18px;
+          width:36px;height:36px;border-radius:50%;
+          background:var(--bg-2);border:none;cursor:pointer;
+          display:grid;place-items:center;
+          font-size:1.4rem;color:var(--ink-2);
+          transition:background 0.15s;
+        }
+        .drawer-close:hover{background:var(--bg-3);}
+        .drawer-kicker{
+          display:inline-block;background:var(--accent-bg);color:var(--accent);
+          font-size:0.72rem;font-weight:700;letter-spacing:1px;
+          text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:16px;
+        }
+        .drawer h3{
+          font-size:1.7rem;font-weight:800;line-height:1.2;
+          letter-spacing:-0.8px;color:var(--ink);margin-bottom:20px;
+        }
+        .drawer-intro{font-size:1rem;color:var(--ink-2);line-height:1.75;margin-bottom:26px;}
+        .drawer-intro strong{color:var(--ink);font-weight:700;}
+        .drawer-features{list-style:none;padding:0;display:flex;flex-direction:column;gap:14px;margin-bottom:26px;}
+        .drawer-feature{display:flex;align-items:flex-start;gap:14px;}
+        .drawer-feature-ico{
+          flex-shrink:0;width:36px;height:36px;border-radius:10px;
+          background:var(--accent-bg);color:var(--accent);
+          display:grid;place-items:center;margin-top:1px;
+        }
+        .drawer-feature-ico svg{width:18px;height:18px;}
+        .drawer-feature-txt{flex:1;font-size:0.92rem;color:var(--ink-2);line-height:1.6;}
+        .drawer-feature-txt strong{color:var(--ink);font-weight:600;}
+        .drawer-outro{
+          background:var(--ink);color:#fff;padding:20px 22px;border-radius:var(--r-lg);
+          font-size:0.95rem;line-height:1.65;text-align:center;margin-top:auto;
+        }
+        .drawer-outro strong{color:var(--accent-l);}
+
+        /* Modal (registration) */
+        .modal-wrap{position:fixed;inset:0;z-index:1000;display:none;place-items:center;padding:20px;}
+        .modal-wrap.open{display:grid;}
+        .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(3px);animation:fadeIn 0.2s;}
+        .modal{
+          position:relative;z-index:1;
+          background:var(--ink);color:#fff;
+          border-radius:var(--r-lg);padding:40px 36px;
+          width:100%;max-width:460px;
+          animation:modalIn 0.25s var(--ease);
+          box-shadow:0 30px 80px rgba(0,0,0,0.4);
+        }
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .modal-close{
+          position:absolute;top:14px;left:14px;
+          width:32px;height:32px;border-radius:50%;
+          background:rgba(255,255,255,0.08);border:none;cursor:pointer;color:#fff;
+          display:grid;place-items:center;font-size:1.2rem;
+          transition:background 0.15s;
+        }
+        .modal-close:hover{background:rgba(255,255,255,0.15);}
+        .modal h3{font-size:1.35rem;font-weight:800;margin-bottom:8px;color:#fff;}
+        .modal-sub{font-size:0.9rem;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:22px;}
+        .modal-track{
+          font-size:0.78rem;color:rgba(255,255,255,0.5);margin-bottom:14px;
+          padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.1);
+        }
+        .modal-track strong{color:#fff;font-weight:600;}
+
         .wl-single-wrap{max-width:560px;margin:0 auto;}
+
+        /* BUY section */
+        .buy-section{padding:72px 0 80px;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+        .buy-inner{max-width:760px;margin:0 auto;text-align:center;}
+        .buy-buttons{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+        .buy-btn{
+          background:#fff;border:2px solid var(--border);border-radius:var(--r-lg);
+          padding:26px 24px;cursor:pointer;transition:all 0.2s var(--ease);
+          display:flex;flex-direction:column;align-items:center;gap:10px;
+          text-align:center;
+        }
+        .buy-btn:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:0 12px 24px -8px rgba(0,0,0,0.15);}
+        .buy-btn.featured{background:var(--ink);color:#fff;border-color:var(--ink);}
+        .buy-btn.featured:hover{background:#2B2A26;}
+        .buy-btn-icon{width:48px;height:48px;border-radius:12px;background:var(--accent-bg);color:var(--accent);display:grid;place-items:center;}
+        .buy-btn.featured .buy-btn-icon{background:rgba(255,255,255,0.1);color:var(--accent-l);}
+        .buy-btn-icon svg{width:24px;height:24px;}
+        .buy-btn-name{font-size:0.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);}
+        .buy-btn.featured .buy-btn-name{color:rgba(255,255,255,0.6);}
+        .buy-btn-title{font-size:1.05rem;font-weight:700;color:inherit;line-height:1.3;}
+        .buy-btn-price{font-size:1.6rem;font-weight:800;color:var(--ink);letter-spacing:-0.5px;line-height:1;margin-top:2px;}
+        .buy-btn.featured .buy-btn-price{color:#fff;}
+        .buy-btn-cta{font-size:0.82rem;color:var(--accent);font-weight:600;margin-top:4px;}
+        .buy-btn.featured .buy-btn-cta{color:var(--accent-l);}
+        .buy-trial-link{display:inline-block;margin-top:28px;font-size:0.92rem;color:var(--ink-3);border-bottom:1px dashed currentColor;padding-bottom:2px;cursor:pointer;transition:color 0.15s;background:none;border:none;border-bottom:1px dashed currentColor;font-family:inherit;}
+        .buy-trial-link:hover{color:var(--accent);}
         .wl-card{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:40px 36px;}
         .wl-card .eyebrow{color:rgba(255,255,255,0.55);}
         .wl-card .eyebrow::before{background:rgba(255,255,255,0.3);}
@@ -522,7 +656,13 @@ export default function Home() {
           .youdo-grid{grid-template-columns:1fr;}
           .youdo-inner{padding:32px 26px;}
         }
+        @media(max-width:900px){
+          .buy-buttons{grid-template-columns:1fr;}
+        }
         @media(max-width:600px){
+          .drawer{padding:44px 24px 28px;}
+          .drawer h3{font-size:1.4rem;}
+          .modal{padding:32px 24px;}
           .plan-card{padding:24px 20px;}
           .wl-card{padding:28px 22px;}
           .why-card{padding:26px 22px;}
@@ -551,8 +691,8 @@ export default function Home() {
             </h1>
 
             <p className="hero-lead">
-              ב-8 שנים של שיווק וקידום דיגיטלי, עם ההכשרה של הטובים בתחום, בניתי את מה שתמיד חיפשתי:
-              <Tip wide text="פלטפורמה מקצועית שבנינו מאפס — נפרשת על VPS פרטי שלכם והופכת לנכס שלכם לכל דבר. מבוססת על הכלים הכי טובים בקוד פתוח בשוק, מאומנת עמוק על עברית ועל השוק הישראלי, ומותאמת למקסימום אופטימיזציה של עלויות Token. פשוט — הדבר הכי טוב שאפשר לבנות היום."><strong> הפלטפורמה המקצועית שלנו </strong></Tip>
+              ב-8 שנים של שיווק וקידום דיגיטלי, עם ההכשרה של הטובים בתחום, בניתי את מה שתמיד חיפשתי:{' '}
+              <button className="platform-btn" onClick={() => setDrawerOpen(true)}>הפלטפורמה המקצועית שלנו</button>{' '}
               שמעסיקה בעבורכם <strong>צוות של 9 מקצועני AI</strong> שמקדמים את העסק שלכם ברמה הגבוהה ביותר. הקורס מלמד אתכם איך לנהל את הצוות — לא איך לעשות שיווק בעצמכם.
             </p>
 
@@ -600,8 +740,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* YOU DO */}
+      {/* STACK GRID WITH TOOLTIPS */}
       <section className="section">
+        <div className="wrap">
+          <div className="sh reveal">
+            <div className="eyebrow">הטכנולוגיה שברקע</div>
+            <h2>כל הכלים שמפעילים את המערכת — מוסברים.</h2>
+            <p className="sub">אל תפחדו מהשמות. רחפו עם העכבר על כל אחד ותראו הסבר בעברית פשוטה. במסלול בעלי העסקים לא צריכים להתעסק בזה — במסלול המקצועי תשלטו בכולם.</p>
+          </div>
+          <div className="stack-grid reveal">
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="תוכנת קוד פתוח לסוכני AI — המנוע שלנו. זו התשתית שמאפשרת ליצור סוכנים חכמים שמבצעים משימות."><strong>OpenClaw</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל הבינה המלאכותית של Anthropic — אחד החזקים בעולם. במיוחד טוב בעברית. זה ה'מוח' של הסוכן."><strong>Claude AI</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מנתב חכם בין מודלי AI שונים. שולח כל משימה למודל הכי מתאים — וחוסך עד 90% בעלויות."><strong>LiteLLM</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל AI שרץ מקומי על השרת שלכם — בלי תלות באינטרנט. טוב למשימות פשוטות ולפרטיות."><strong>Ollama</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת זיכרון חכמה — הסוכן שולף מהזיכרון שלו רק את המידע הרלוונטי בזמן אמת, ללא צורך לקרוא הכל כל פעם."><strong>Mem0 + Qdrant</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי שסורק אתרי אינטרנט במקומכם — למשל, סריקת אתר מתחרה כדי להבין את האסטרטגיה שלו."><strong>Crawl4AI</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שמחלץ מידע מאתרים בצורה מסודרת — למשל, רשימת מוצרים או מחירים מאתר של מתחרה."><strong>Firecrawl</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שנותן נתונים מגוגל — מיקומים, מילות מפתח, כמה אנשים מחפשים מה, ואיך המתחרים מדורגים."><strong>DataForSEO</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="Gmail + Calendar + Drive + Sheets. הסוכן מתחבר לחשבון שלכם וקורא מיילים, קובע פגישות ומנהל קבצים."><strong>Google Workspace</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום הממומן של גוגל. הסוכן מקים ומנהל קמפיינים אוטומטית — קהלי יעד, תקציבים, מודעות."><strong>Google Ads</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום של פייסבוק ואינסטגרם. הסוכן יוצר קמפיינים, יצירתיים ומקדם אותם אוטומטית."><strong>Meta Ads</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="WhatsApp Business — חשבון עסקי של וואטסאפ. מאפשר לשלוח הודעות ללקוחות, ולנהל תשובות אוטומטיות."><strong>WhatsApp Business</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="הפרופיל העסקי שלכם בגוגל מפות ובחיפוש. הסוכן מעלה פוסטים, מגיב לביקורות ומתחזק נוכחות."><strong>Google Business</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי אוטומציות פתוח — מחבר בין אפליקציות ומאפשר ליצור זרימות עבודה מורכבות. כמו Zapier אבל פתוח."><strong>Activepieces</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מסגרת לניהול צוותי סוכנים מרובים שעובדים ביחד על משימה מורכבת. משתמשים בה למשימות מתקדמות."><strong>CrewAI</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שכבת הגנה שמונעת התקפות על הסוכן — כמו שמישהו ינסה 'להטעות' אותו לעשות משהו לא רצוי."><strong>LLM Guard</strong></Tip></div>
+          </div>
+        </div>
+      </section>
+
+      {/* YOU DO — after stack, before modules */}
+      <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="youdo-inner reveal">
             <div className="eyebrow">ומה אתם עושים?</div>
@@ -628,35 +797,6 @@ export default function Home() {
                 <div className="youdo-text">אתם עדיין הבוסים. הסוכנים מבצעים — אתם קובעים מטרות חודשיות והכיוון הכללי. הם מחכים להוראות שלכם.</div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STACK GRID WITH TOOLTIPS */}
-      <section className="section">
-        <div className="wrap">
-          <div className="sh reveal">
-            <div className="eyebrow">הטכנולוגיה שברקע</div>
-            <h2>כל הכלים שמפעילים את המערכת — מוסברים.</h2>
-            <p className="sub">אל תפחדו מהשמות. רחפו עם העכבר על כל אחד ותראו הסבר בעברית פשוטה. במסלול בעלי העסקים לא צריכים להתעסק בזה — במסלול המקצועי תשלטו בכולם.</p>
-          </div>
-          <div className="stack-grid reveal">
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="תוכנת קוד פתוח לסוכני AI — המנוע שלנו. זו התשתית שמאפשרת ליצור סוכנים חכמים שמבצעים משימות."><strong>OpenClaw</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל הבינה המלאכותית של Anthropic — אחד החזקים בעולם. במיוחד טוב בעברית. זה ה'מוח' של הסוכן."><strong>Claude AI</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מנתב חכם בין מודלי AI שונים. שולח כל משימה למודל הכי מתאים — וחוסך עד 90% בעלויות."><strong>LiteLLM</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל AI שרץ מקומי על השרת שלכם — בלי תלות באינטרנט. טוב למשימות פשוטות ולפרטיות."><strong>Ollama</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת זיכרון חכמה — הסוכן שולף מהזיכרון שלו רק את המידע הרלוונטי בזמן אמת, ללא צורך לקרוא הכל כל פעם."><strong>Mem0 + Qdrant</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי שסורק אתרי אינטרנט במקומכם — למשל, סריקת אתר מתחרה כדי להבין את האסטרטגיה שלו."><strong>Crawl4AI</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שמחלץ מידע מאתרים בצורה מסודרת — למשל, רשימת מוצרים או מחירים מאתר של מתחרה."><strong>Firecrawl</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שנותן נתונים מגוגל — מיקומים, מילות מפתח, כמה אנשים מחפשים מה, ואיך המתחרים מדורגים."><strong>DataForSEO</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="Gmail + Calendar + Drive + Sheets. הסוכן מתחבר לחשבון שלכם וקורא מיילים, קובע פגישות ומנהל קבצים."><strong>Google Workspace</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום הממומן של גוגל. הסוכן מקים ומנהל קמפיינים אוטומטית — קהלי יעד, תקציבים, מודעות."><strong>Google Ads</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום של פייסבוק ואינסטגרם. הסוכן יוצר קמפיינים, יצירתיים ומקדם אותם אוטומטית."><strong>Meta Ads</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="WhatsApp Business — חשבון עסקי של וואטסאפ. מאפשר לשלוח הודעות ללקוחות, ולנהל תשובות אוטומטיות."><strong>WhatsApp Business</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="הפרופיל העסקי שלכם בגוגל מפות ובחיפוש. הסוכן מעלה פוסטים, מגיב לביקורות ומתחזק נוכחות."><strong>Google Business</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי אוטומציות פתוח — מחבר בין אפליקציות ומאפשר ליצור זרימות עבודה מורכבות. כמו Zapier אבל פתוח."><strong>Activepieces</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מסגרת לניהול צוותי סוכנים מרובים שעובדים ביחד על משימה מורכבת. משתמשים בה למשימות מתקדמות."><strong>CrewAI</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שכבת הגנה שמונעת התקפות על הסוכן — כמו שמישהו ינסה 'להטעות' אותו לעשות משהו לא רצוי."><strong>LLM Guard</strong></Tip></div>
           </div>
         </div>
       </section>
@@ -694,7 +834,7 @@ export default function Home() {
                 <li>שולח <strong>דוח יומי של 5 דקות</strong> — מה קרה, מה היום, מה חשוב</li>
                 <li>מנוהל ב<strong>שגרה יומית של 15 דקות</strong> בלבד</li>
               </ul>
-              <button className="plan-cta outline" onClick={() => pickCourse('owners')}>התחילו חינם עם המסלול הזה ←</button>
+              <button className="plan-cta outline" onClick={() => openTrialFor('owners')}>נסו שיעור ראשון חינם — לוודא שזה מתאים ←</button>
             </div>
 
             <div className="plan-card featured">
@@ -720,7 +860,7 @@ export default function Home() {
                 <li>לראות <strong>Case Study חי</strong> של פרויקט אמיתי שהגיע למעל מיליון משתמשים</li>
               </ul>
               <div className="plan-upgrade-note">שדרגתם ממסלול בעלי העסקים? משלמים רק ₪1,300 הפרש.</div>
-              <button className="plan-cta" onClick={() => pickCourse('pros')}>התחילו חינם עם המסלול הזה ←</button>
+              <button className="plan-cta" onClick={() => openTrialFor('pros')}>נסו שיעור ראשון חינם — לוודא שזה מתאים ←</button>
             </div>
           </div>
         </div>
@@ -798,7 +938,7 @@ export default function Home() {
             <h2 style={{ textAlign: 'center', marginBottom: 22 }}>למה ₪199? למה ₪1,499?</h2>
             <blockquote className="why-quote">
               "יכולתי לגבות ₪4,000 על המסלול המקצועי. קורסים פחות מפורטים עולים ככה.
-              אבל המטרה שלי אחרת — אני רוצה שכל בעל עסק בישראל יוכל להתחיל. הכסף שלי מגיע מהפלטפורמה,
+              אבל המטרה שלי אחרת — אני רוצה שכל בעל עסק בישראל יוכל להתחיל. ההכנסות שלי מגיעות מהפלטפורמה,
               לא מהקורס. הקורס הוא הגשר."
             </blockquote>
             <cite className="why-cite">— סרגיי גופמן, מייסד Flowmatic</cite>
@@ -852,51 +992,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FREE FIRST LESSON REGISTRATION */}
-      <section className="has-section" id="waitlist">
+      {/* BUY CTA — simple final call-to-action */}
+      <section className="buy-section" id="buy">
         <div className="wrap">
-          <div className="wl-single-wrap">
-            <div className="wl-card reveal">
-              <div className="eyebrow">גישה חינם · ללא כרטיס אשראי</div>
-              <h2 style={{ fontSize: '1.5rem', marginBottom: 10 }}>התחילו חינם עם השיעור הראשון</h2>
-              <p>איזה מסלול מעניין אתכם? קישור לפלטפורמת הקורס והשיעור הראשון יישלחו למייל שלכם תוך דקות.</p>
+          <div className="buy-inner reveal">
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>מוכנים להתחיל?</div>
+            <h2>רכשו את המסלול שלכם</h2>
+            <p className="sub" style={{ margin: '14px auto 0' }}>
+              תשלום חד-פעמי · גישה לכל החיים · עדכונים עתידיים כלולים.
+            </p>
 
-              <div className="wl-pick">
-                <button className={`wl-pick-btn ${coursePick === 'owners' ? 'active' : ''}`} onClick={() => setCoursePick('owners')}>
-                  <IStore/>
-                  <span>בעלי עסקים</span>
-                  <span className="wl-pick-price">₪199</span>
-                </button>
-                <button className={`wl-pick-btn ${coursePick === 'pros' ? 'active' : ''}`} onClick={() => setCoursePick('pros')}>
-                  <IRocket/>
-                  <span>משווקים מקצועיים</span>
-                  <span className="wl-pick-price">₪1,499</span>
-                </button>
-                <button className={`wl-pick-btn ${coursePick === 'both' ? 'active' : ''}`} onClick={() => setCoursePick('both')}>
-                  <IZap/>
-                  <span>שניהם</span>
-                  <span className="wl-pick-price">שדרוג ב-₪1,300</span>
-                </button>
-              </div>
-
-              <input type="text" id="wl-name" className="wl-field" placeholder="שם מלא" />
-              <input type="email" id="wl-email" className="wl-field" placeholder="אימייל" />
-              <input type="tel" id="wl-phone" className="wl-field" placeholder="טלפון (לא חובה)" dir="ltr" />
-              <select id="wl-role" className="wl-field" defaultValue="">
-                <option value="">מה התפקיד שלכם? (לא חובה)</option>
-                <option value="בעל/ת עסק">בעל/ת עסק</option>
-                <option value="משווק/ת דיגיטלי/ת">משווק/ת דיגיטלי/ת</option>
-                <option value="פרילנסר/ית">פרילנסר/ית</option>
-                <option value="סוכנות דיגיטל">סוכנות דיגיטל</option>
-                <option value="אחר">אחר</option>
-              </select>
-
-              <div id="wl-success" style={{ display: 'none', background: 'rgba(42,122,75,0.15)', border: '1px solid rgba(42,122,75,0.4)', borderRadius: 8, padding: 14, textAlign: 'center', color: '#6EE7A7', fontWeight: 600, marginBottom: 10 }}>
-                ✓ נרשמתם! קישור לפלטפורמת הקורס והשיעור הראשון נשלחו למייל שלכם.
-              </div>
-              <button className="wl-submit" id="wl-submit" onClick={submitWaitlist}>קבלו גישה חינם ←</button>
-              <p className="wl-micro">בלי תשלום · בלי כרטיס אשראי · גישה מיידית למייל</p>
+            <div className="buy-buttons">
+              <button className="buy-btn" onClick={() => openBuyFor('owners')}>
+                <div className="buy-btn-icon"><IStore/></div>
+                <span className="buy-btn-name">בעלי עסקים</span>
+                <span className="buy-btn-title">ניהול עצמאי של שיווק AI</span>
+                <span className="buy-btn-price">₪199</span>
+                <span className="buy-btn-cta">רכישה ←</span>
+              </button>
+              <button className="buy-btn featured" onClick={() => openBuyFor('pros')}>
+                <div className="buy-btn-icon"><IRocket/></div>
+                <span className="buy-btn-name">משווקים מקצועיים</span>
+                <span className="buy-btn-title">AI Marketing Mastery</span>
+                <span className="buy-btn-price">₪1,499</span>
+                <span className="buy-btn-cta">רכישה ←</span>
+              </button>
             </div>
+
+            <button className="buy-trial-link" onClick={() => openTrialFor('owners')}>
+              עדיין לא בטוחים? נסו שיעור ראשון חינם →
+            </button>
           </div>
         </div>
       </section>
@@ -921,12 +1046,82 @@ export default function Home() {
           </div>
 
           <div className="reveal" style={{ textAlign: 'center', marginTop: 48 }}>
-            <a href="#waitlist" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('waitlist') }}>
-              קבלו גישה חינם עכשיו ←
+            <a href="#buy" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('buy') }}>
+              רכשו את המסלול ←
             </a>
           </div>
         </div>
       </section>
+
+      {/* ── Platform Drawer ─────────────────────────────── */}
+      <div className={`drawer-wrap ${drawerOpen ? 'open' : ''}`} aria-hidden={!drawerOpen}>
+        <div className="drawer-backdrop" onClick={() => setDrawerOpen(false)}></div>
+        <aside className="drawer" role="dialog" aria-label="פרטי הפלטפורמה">
+          <button className="drawer-close" onClick={() => setDrawerOpen(false)} aria-label="סגור">×</button>
+          <div className="drawer-kicker">מה זו בעצם הפלטפורמה שלנו?</div>
+          <h3>משהו שלא היה בשוק — אז בנינו מאפס.</h3>
+          <p className="drawer-intro">
+            לא wrapper על ChatGPT. לא עוד "agent builder" פשוט.
+            פלטפורמה מקצועית, עצמאית ושלמה, שנפרשת על שרת פרטי שלכם
+            והופכת להיות <strong>הנכס שלכם — לחלוטין</strong>.
+          </p>
+          <ul className="drawer-features">
+            <li className="drawer-feature">
+              <div className="drawer-feature-ico"><ILayers/></div>
+              <div className="drawer-feature-txt"><strong>נפרשת על VPS פרטי שלכם</strong> — בעלות מלאה על הנתונים ועל המערכת. אתם הבעלים הבלעדיים.</div>
+            </li>
+            <li className="drawer-feature">
+              <div className="drawer-feature-ico"><ICode/></div>
+              <div className="drawer-feature-txt"><strong>מבוססת על הכלים הטובים ביותר בקוד פתוח</strong> — בחרנו בקפידה כל רכיב מהטובים שבתחום, כדי שתקבלו את המיטב.</div>
+            </li>
+            <li className="drawer-feature">
+              <div className="drawer-feature-ico"><IBrain/></div>
+              <div className="drawer-feature-txt"><strong>מאומנת עמוק על עברית ועל השוק הישראלי</strong> — לא תרגום, לא adaptation. מדברת בעברית טבעית כמו ישראלי.</div>
+            </li>
+            <li className="drawer-feature">
+              <div className="drawer-feature-ico"><ICoins/></div>
+              <div className="drawer-feature-txt"><strong>אופטימיזציית Token מתקדמת</strong> — ניתוב חכם בין מודלים שחוסך עד 90% בעלויות ה-AI. אתם לא משלמים מיותר.</div>
+            </li>
+            <li className="drawer-feature">
+              <div className="drawer-feature-ico"><IUsers/></div>
+              <div className="drawer-feature-txt"><strong>9 סוכני AI מקצועיים לשיווק וקידום</strong> — מחקר, אסטרטגיה, תוכן, פרסום, אופטימיזציה — מוכנים לעבודה ביום הראשון.</div>
+            </li>
+          </ul>
+          <div className="drawer-outro">
+            פשוט — <strong>הדבר הכי טוב</strong> שאפשר לבנות בתחום הזה היום.
+          </div>
+        </aside>
+      </div>
+
+      {/* ── Registration Modal (trial / buy) ─────────── */}
+      <div className={`modal-wrap ${modalOpen ? 'open' : ''}`}>
+        <div className="modal-backdrop" onClick={() => setModalOpen(false)}></div>
+        <div className="modal" role="dialog" aria-label="הרשמה">
+          <button className="modal-close" onClick={() => setModalOpen(false)} aria-label="סגור">×</button>
+          <h3>
+            {modalIntent === 'trial' ? 'שיעור ראשון חינם' : 'בקשת רכישה'}
+          </h3>
+          <p className="modal-sub">
+            {modalIntent === 'trial'
+              ? 'הזינו פרטים ותקבלו למייל קישור לפלטפורמת הקורס ולשיעור הראשון המלא. בלי תשלום, בלי כרטיס אשראי.'
+              : 'הזינו פרטים ונחזור אליכם עם פרטי רכישה. המחיר קבוע, ללא עלויות נוספות.'}
+          </p>
+          <div className="modal-track">
+            מסלול: <strong>{coursePick === 'owners' ? 'בעלי עסקים — ₪199' : coursePick === 'pros' ? 'משווקים מקצועיים — ₪1,499' : 'שני המסלולים'}</strong>
+          </div>
+          <input type="text" id="md-name" className="wl-field" placeholder="שם מלא" />
+          <input type="email" id="md-email" className="wl-field" placeholder="אימייל" />
+          <div id="md-success" style={{ display: 'none', background: 'rgba(42,122,75,0.15)', border: '1px solid rgba(42,122,75,0.4)', borderRadius: 8, padding: 14, textAlign: 'center', color: '#6EE7A7', fontWeight: 600, marginBottom: 10 }}>
+            ✓ נרשמתם! {modalIntent === 'trial' ? 'הקישור נשלח למייל שלכם.' : 'ניצור קשר בהקדם.'}
+          </div>
+          <button className="wl-submit" id="md-submit" onClick={submitModal}>
+            {modalIntent === 'trial' ? 'קבלו גישה חינם ←' : 'שלחו בקשת רכישה ←'}
+          </button>
+          <p className="wl-micro">
+            {modalIntent === 'trial' ? 'בלי תשלום · בלי כרטיס אשראי · גישה מיידית למייל' : 'נחזור אליכם תוך 24 שעות'}
+          </p>
+        </div>
+      </div>
     </>
   )
 }
