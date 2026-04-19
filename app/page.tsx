@@ -327,19 +327,66 @@ export default function Home() {
         .kicker-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
         @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
 
-        .video-box{aspect-ratio:16/9;background:var(--ink);border-radius:var(--r-lg);position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
-        .video-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(212,98,10,0.22),transparent 60%),radial-gradient(circle at 70% 80%,rgba(37,99,235,0.18),transparent 50%);}
-        .video-play{position:absolute;inset:0;display:grid;place-items:center;}
-        .video-play-btn{width:74px;height:74px;border-radius:50%;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,0.35);display:grid;place-items:center;transition:transform 0.2s;}
-        .video-box:hover .video-play-btn{transform:scale(1.08);}
-        .video-play-btn svg{width:26px;height:26px;fill:var(--accent);margin-right:4px;}
-        .video-label{position:absolute;bottom:18px;right:20px;color:#fff;font-size:0.82rem;font-weight:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);padding:4px 12px;border-radius:14px;}
-
-        .hero-course-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:start;}
-        .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
-        .hero-badge{font-size:0.78rem;font-weight:500;color:var(--ink-2);background:#fff;border:1px solid var(--border);padding:5px 12px;border-radius:16px;display:inline-flex;align-items:center;gap:6px;}
-        .hero-badge strong{color:var(--accent);font-weight:600;}
+        /* ── HERO (centered, airy) ────────────────── */
+        .hero{padding:92px 0 84px;}
+        .hero-centered{max-width:820px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
+        .hero-centered .kicker-pill{margin-bottom:22px;}
+        .hero-centered h1{
+          font-size:clamp(2.4rem,5.2vw,4rem);
+          font-weight:900;line-height:1.05;letter-spacing:-2.5px;
+          color:var(--ink);margin-bottom:22px;max-width:820px;
+        }
+        .hero-centered h1 .line2{display:block;color:var(--accent);margin-top:10px;font-size:0.9em;letter-spacing:-1.8px;font-weight:800;}
+        .hero-centered .hero-lead{
+          font-size:1.1rem;color:var(--ink-2);line-height:1.8;
+          max-width:680px;margin:0 auto 34px;text-align:center;
+        }
+        .hero-centered .btn-main{padding:14px 32px;font-size:1rem;margin-bottom:28px;}
+        .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:40px;}
+        .hero-badge{font-size:0.82rem;font-weight:500;color:var(--ink-2);background:#fff;border:1px solid var(--border);padding:6px 14px;border-radius:18px;display:inline-flex;align-items:center;gap:7px;}
+        .hero-badge strong{color:var(--accent);font-weight:700;}
         .hero-badge svg{color:var(--ink-3);}
+        .hero-stats{
+          display:grid;grid-template-columns:repeat(3,1fr);
+          gap:1px;background:var(--border);
+          border:1px solid var(--border);border-radius:var(--r-lg);
+          overflow:hidden;max-width:680px;margin:0 auto;width:100%;
+        }
+        .hero-stat{background:var(--bg);padding:20px 18px;text-align:center;}
+        .hero-stat-num{display:block;font-family:var(--ff);font-size:1.55rem;font-weight:800;color:var(--ink);line-height:1;margin-bottom:6px;letter-spacing:-0.5px;}
+        .hero-stat-lbl{font-size:0.8rem;color:var(--ink-3);line-height:1.4;}
+
+        /* ── DEMO section ─────────────────────────── */
+        .demo-section{
+          padding:72px 0 96px;
+          background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+          border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+        }
+        .demo-frame{max-width:980px;margin:0 auto;position:relative;}
+        .demo-frame::before{
+          content:'';position:absolute;
+          inset:-30px;z-index:0;
+          background:radial-gradient(ellipse at center,rgba(212,98,10,0.12),transparent 60%);
+          filter:blur(30px);pointer-events:none;
+        }
+        .video-box{
+          position:relative;z-index:1;
+          aspect-ratio:16/9;background:var(--ink);
+          border-radius:var(--r-lg);overflow:hidden;
+          border:1px solid rgba(0,0,0,0.1);cursor:pointer;
+          box-shadow:0 30px 80px -20px rgba(0,0,0,0.35),0 12px 30px -10px rgba(212,98,10,0.18);
+          transition:transform 0.3s var(--ease),box-shadow 0.3s var(--ease);
+        }
+        .video-box:hover{transform:translateY(-3px);box-shadow:0 40px 100px -20px rgba(0,0,0,0.4),0 16px 40px -10px rgba(212,98,10,0.25);}
+        .video-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(212,98,10,0.3),transparent 55%),radial-gradient(circle at 70% 80%,rgba(37,99,235,0.2),transparent 50%);}
+        .video-play{position:absolute;inset:0;display:grid;place-items:center;}
+        .video-play-btn{width:92px;height:92px;border-radius:50%;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,0.4);display:grid;place-items:center;transition:transform 0.25s var(--ease);}
+        .video-box:hover .video-play-btn{transform:scale(1.08);}
+        .video-play-btn svg{width:32px;height:32px;fill:var(--accent);margin-right:5px;}
+        .video-label{position:absolute;bottom:20px;right:22px;color:#fff;font-size:0.85rem;font-weight:500;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);padding:5px 14px;border-radius:16px;z-index:2;}
+        .demo-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px;}
+        .demo-chip{background:#fff;border:1px solid var(--border);border-radius:18px;padding:6px 14px;font-size:0.82rem;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px;}
+        .demo-chip svg{width:14px;height:14px;color:var(--accent);}
 
         /* Combined ROTZIM section */
         .rz-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
@@ -461,7 +508,13 @@ export default function Home() {
         .faq-item.open .faq-a{display:block;}
 
         @media(max-width:900px){
-          .hero-course-inner{grid-template-columns:1fr;gap:32px;}
+          .hero{padding:60px 0 52px;}
+          .hero-centered h1{font-size:2.1rem;letter-spacing:-1.2px;}
+          .hero-centered .hero-lead{font-size:0.98rem;}
+          .hero-stats{grid-template-columns:1fr;}
+          .demo-section{padding:52px 0 72px;}
+          .video-play-btn{width:68px;height:68px;}
+          .video-play-btn svg{width:24px;height:24px;}
           .rz-grid{grid-template-columns:1fr;}
           .stack-grid{grid-template-columns:repeat(2,1fr);}
           .plans-grid{grid-template-columns:1fr;}
@@ -486,62 +539,78 @@ export default function Home() {
         }
       `}</style>
 
-      {/* HERO */}
+      {/* HERO — centered, airy */}
       <section className="hero">
         <div className="wrap">
-          <div className="hero-course-inner">
-            <div>
-              <div className="kicker-pill">
-                <span className="kicker-pill-dot"></span>
-                קורס דיגיטלי חדש · 2026
-              </div>
-              <h1>
-                שיווק דיגיטלי עם AI —<br />
-                <span className="accent">אתם מנהלים. הסוכנים עובדים.</span>
-              </h1>
-              <p className="hero-lead">
-                הקורס הראשון בישראל שמלמד אתכם לנהל מחזור שיווק שלם עם סוכני בינה מלאכותית —
-                על <Tip wide text="פלטפורמה מקצועית שבנינו מאפס — נפרשת על VPS פרטי שלכם והופכת לנכס שלכם לכל דבר. מבוססת על הכלים הכי טובים בקוד פתוח בשוק, מאומנת עמוק על עברית ועל השוק הישראלי, ומותאמת למקסימום אופטימיזציה של עלויות Token. פשוט — הדבר הכי טוב שאפשר לבנות היום."><strong>הפלטפורמה המקצועית שלנו</strong></Tip> המבוססת על OpenClaw.
-                לא תיאוריה, לא מצגות — הדרכה צעד-אחר-צעד על פתרון שלם שמחכה לכם מוכן.
-              </p>
-
-              <div className="hero-badges">
-                <span className="hero-badge"><IStore/> בעלי עסקים — <strong>₪199</strong></span>
-                <span className="hero-badge"><IRocket/> משווקים מקצועיים — <strong>₪1,499</strong></span>
-                <span className="hero-badge"><IInfinity/> גישה לכל החיים</span>
-              </div>
-
-              <div className="hero-btns">
-                <a href="#courses" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('courses') }}>
-                  הציגו לי את המסלולים ←
-                </a>
-              </div>
-
-              <div className="hero-footnote">
-                <div className="fn-item">
-                  <span className="fn-num">8 שנים</span>
-                  בשיווק דיגיטלי
-                </div>
-                <div className="fn-item">
-                  <span className="fn-num">1M+</span>
-                  משתמשים אורגניים בפרויקטים
-                </div>
-                <div className="fn-item">
-                  <span className="fn-num">פלטפורמה</span>
-                  שלנו, על בסיס OpenClaw
-                </div>
-              </div>
+          <div className="hero-centered">
+            <div className="kicker-pill">
+              <span className="kicker-pill-dot"></span>
+              קורס דיגיטלי חדש · 2026
             </div>
 
-            <div>
-              <div className="video-box" onClick={() => scrollTo('waitlist')}>
-                <div className="video-play">
-                  <div className="video-play-btn">
-                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
-                </div>
-                <div className="video-label">▶ הדגמה · 90 שניות · ייצא בקרוב</div>
+            <h1>
+              שיווק וקידום דיגיטלי עם AI.
+              <span className="line2">אתם מנהלים. הסוכנים עובדים.</span>
+            </h1>
+
+            <p className="hero-lead">
+              הקורס הראשון בישראל שמלמד אתכם לנהל את כל מחזור השיווק והקידום עם סוכני בינה מלאכותית,
+              על <Tip wide text="פלטפורמה מקצועית שבנינו מאפס — נפרשת על VPS פרטי שלכם והופכת לנכס שלכם לכל דבר. מבוססת על הכלים הכי טובים בקוד פתוח בשוק, מאומנת עמוק על עברית ועל השוק הישראלי, ומותאמת למקסימום אופטימיזציה של עלויות Token. פשוט — הדבר הכי טוב שאפשר לבנות היום."><strong>הפלטפורמה המקצועית שלנו</strong></Tip> המבוססת על OpenClaw.
+              לא תיאוריה, לא מצגות — הדרכה צעד-אחר-צעד על פתרון שלם שמחכה לכם מוכן.
+            </p>
+
+            <a href="#courses" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('courses') }}>
+              הציגו לי את המסלולים ←
+            </a>
+
+            <div className="hero-badges">
+              <span className="hero-badge"><IStore/> בעלי עסקים — <strong>₪199</strong></span>
+              <span className="hero-badge"><IRocket/> משווקים מקצועיים — <strong>₪1,499</strong></span>
+              <span className="hero-badge"><IInfinity/> גישה לכל החיים</span>
+            </div>
+
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <span className="hero-stat-num">8 שנים</span>
+                <span className="hero-stat-lbl">בשיווק וקידום דיגיטלי</span>
               </div>
+              <div className="hero-stat">
+                <span className="hero-stat-num">1M+</span>
+                <span className="hero-stat-lbl">משתמשים אורגניים בפרויקטים</span>
+              </div>
+              <div className="hero-stat">
+                <span className="hero-stat-num">9 סוכנים</span>
+                <span className="hero-stat-lbl">בנויים ומתואמים לעברית</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DEMO — standalone video section */}
+      <section className="demo-section" id="demo">
+        <div className="wrap">
+          <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 40px' }}>
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>הדגמה חיה</div>
+            <h2>הכירו את הפלטפורמה ב-90 שניות</h2>
+            <p className="sub" style={{ margin: '0 auto' }}>
+              סרגיי מציג את המערכת, את הסוכנים, ומסביר למה זה לא עוד קורס AI — אלא הכלים שבאמת משנים את המשחק.
+            </p>
+          </div>
+          <div className="demo-frame reveal">
+            <div className="video-box" onClick={() => scrollTo('courses')}>
+              <div className="video-play">
+                <div className="video-play-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div className="video-label">▶ 90 שניות · הסרטון ייצא בקרוב</div>
+            </div>
+            <div className="demo-chips">
+              <span className="demo-chip"><ICheck/> בעברית מלאה</span>
+              <span className="demo-chip"><ICheck/> מכוון לשוק הישראלי</span>
+              <span className="demo-chip"><ICheck/> מוכן תוך 3 דקות</span>
+              <span className="demo-chip"><ICheck/> קוד פתוח, שלכם לגמרי</span>
             </div>
           </div>
         </div>
