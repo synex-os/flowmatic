@@ -77,7 +77,7 @@ export default function Home() {
                       : 'שני המסלולים'
     const roleLabel = role || 'לא צוין'
 
-    const message = `רשימת המתנה לקורס\nמסלול: ${courseLabel}\nתפקיד: ${roleLabel}\nאימייל: ${email}\nטלפון: ${phone || 'לא צוין'}`
+    const message = `הרשמה לשיעור ראשון חינם\nמסלול: ${courseLabel}\nתפקיד: ${roleLabel}\nאימייל: ${email}\nטלפון: ${phone || 'לא צוין'}`
 
     fetch('https://api.clawflow.flowmatic.co.il/hosting/contact', {
       method: 'POST',
@@ -85,7 +85,7 @@ export default function Home() {
       body: JSON.stringify({
         name,
         phone: phone || email,
-        type: `קורס — ${courseLabel}`,
+        type: `שיעור ראשון חינם — ${courseLabel}`,
         message
       })
     }).then(r => r.json()).then(() => {
@@ -98,7 +98,7 @@ export default function Home() {
         body: JSON.stringify({ email })
       }).catch(() => {})
     }).catch(() => {
-      btn.disabled = false; btn.textContent = 'שמרו לי מקום ←'
+      btn.disabled = false; btn.textContent = 'קבלו גישה חינם ←'
       alert('שגיאה בשליחה, נסו שוב')
     })
   }
@@ -284,9 +284,11 @@ export default function Home() {
   ]
 
   const faqs = [
-    { q: 'אנחנו לא אנשים טכניים. באמת נסתדר?', a: 'כן — מסלול בעלי העסקים נבנה בדיוק בשבילכם. לא תכתבו שורת קוד אחת. אם אתם יודעים לשלוח מייל ולגלוש באינטרנט — אתם תסתדרו. נתקעתם? יש HAAS — אני עוזר אישית במחיר הוגן.' },
+    { q: 'זה קורס שיווק?', a: 'לא. זה קורס שמלמד אתכם להשתמש בפלטפורמה שבנינו — שהיא זו שעושה את השיווק בפועל. אתם הופכים למנהלים של צוות 9 סוכני AI מקצועיים שמבצעים את כל העבודה. לא לומדים לכתוב פוסטים בעצמכם — לומדים לאשר את מה שהסוכן כתב, לכוון את הכיוון, ולנהל את הצוות.' },
+    { q: 'אנחנו לא אנשים טכניים. באמת נסתדר?', a: 'כן — מסלול בעלי העסקים נבנה בדיוק בשבילכם. לא תכתבו שורת קוד אחת. אם אתם יודעים לשלוח מייל ולגלוש באינטרנט — אתם תסתדרו.' },
     { q: 'האם הקורס כולל גישה ל-ClawFlow?', a: 'לא — הקורס והפלטפורמה הם מוצרים נפרדים. הקורס מלמד אתכם לשלוט ב-ClawFlow. תוכניות הפלטפורמה מתחילות מ-₪79 לחודש, עם 7 ימי ניסיון חינם.' },
-    { q: 'מתי הקורס יוצא?', a: 'הקורס בכתיבה ממש עכשיו. כל מי שברשימת ההמתנה יקבל הודעה במייל ברגע שהוא יוצא — ויזכה ב-48 שעות קדימות ובהנחת השקה למצטרפים מוקדמים.' },
+    { q: 'איך נראה השיעור הראשון החינמי?', a: 'הוא שיעור מלא, לא טריילר. אחרי שנרשמתם, קישור לפלטפורמת הקורס והשיעור הראשון יגיעו למייל שלכם תוך דקות. תוכלו לצפות בו, לנווט בפלטפורמה, ולראות בדיוק איך נראית חוויית הלמידה לפני שמחליטים לרכוש את המסלול המלא.' },
+    { q: 'הקורס כולו מוכן? או שיש שיעורים עתידיים?', a: 'שיעורי המבוא מוכנים. תוכן הקורס מתרחב כל הזמן — בעולם AI שמשתנה חודש-חודש, אין טעם להקפיא גרסה. כבוגרים של המסלול תקבלו את כל העדכונים חינם, לכל החיים.' },
     { q: 'קניתי את מסלול בעלי העסקים ועכשיו אני רוצה את המסלול המקצועי. מה קורה?', a: 'משלמים רק את ההפרש — ₪1,300. לא משלמים פעמיים על תוכן שכבר ראיתם.' },
     { q: 'יש החזר כספי?', a: 'כן — 14 יום לפי חוק הגנת הצרכן. אם זה לא בשבילכם, אנחנו מחזירים בלי שאלות.' },
     { q: 'הקורס בעברית?', a: 'הכל בעברית — וידאו, טקסטים, תרגילים. גם הפלטפורמה עצמה עברית (ויש מעבר לאנגלית בלחיצה). הסוכנים מבינים עברית טבעית ולא מתרגמים מאנגלית.' },
@@ -327,22 +329,21 @@ export default function Home() {
         .kicker-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
         @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
 
-        /* ── HERO (centered, airy) ────────────────── */
-        .hero{padding:92px 0 84px;}
+        /* ── HERO (centered, airy — compacted for first-screen fit) */
+        .hero{padding:56px 0 56px;}
         .hero-centered{max-width:820px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
-        .hero-centered .kicker-pill{margin-bottom:22px;}
+        .hero-centered .kicker-pill{margin-bottom:18px;}
         .hero-centered h1{
-          font-size:clamp(2.4rem,5.2vw,4rem);
-          font-weight:900;line-height:1.05;letter-spacing:-2.5px;
-          color:var(--ink);margin-bottom:22px;max-width:820px;
+          font-size:clamp(2.2rem,4.6vw,3.4rem);
+          font-weight:900;line-height:1.06;letter-spacing:-2px;
+          color:var(--ink);margin-bottom:18px;max-width:820px;
         }
-        .hero-centered h1 .line2{display:block;color:var(--accent);margin-top:10px;font-size:0.9em;letter-spacing:-1.8px;font-weight:800;}
+        .hero-centered h1 .line2{display:block;color:var(--accent);margin-top:8px;font-size:0.88em;letter-spacing:-1.4px;font-weight:800;}
         .hero-centered .hero-lead{
-          font-size:1.1rem;color:var(--ink-2);line-height:1.8;
-          max-width:680px;margin:0 auto 34px;text-align:center;
+          font-size:1.02rem;color:var(--ink-2);line-height:1.7;
+          max-width:680px;margin:0 auto 24px;text-align:center;
         }
-        .hero-centered .btn-main{padding:14px 32px;font-size:1rem;margin-bottom:28px;}
-        .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:40px;}
+        .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px;}
         .hero-badge{font-size:0.82rem;font-weight:500;color:var(--ink-2);background:#fff;border:1px solid var(--border);padding:6px 14px;border-radius:18px;display:inline-flex;align-items:center;gap:7px;}
         .hero-badge strong{color:var(--accent);font-weight:700;}
         .hero-badge svg{color:var(--ink-3);}
@@ -469,9 +470,10 @@ export default function Home() {
         .mod-body li{font-size:0.88rem;color:var(--ink-2);padding-right:18px;position:relative;line-height:1.6;}
         .mod-body li::before{content:"•";position:absolute;right:0;color:var(--accent);font-weight:700;}
 
-        .why-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:36px 32px;}
-        .why-card blockquote{font-size:1.1rem;line-height:1.75;color:var(--ink-2);border-right:3px solid var(--accent);padding-right:18px;margin-bottom:18px;}
-        .why-card cite{font-size:0.88rem;color:var(--ink-3);font-style:normal;display:block;}
+        /* Why-symbolic standalone */
+        .why-standalone{max-width:720px;margin:0 auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:44px 40px;}
+        .why-quote{font-size:1.15rem;line-height:1.75;color:var(--ink-2);margin-bottom:18px;font-style:italic;}
+        .why-cite{font-size:0.9rem;color:var(--ink-3);font-style:normal;display:block;font-weight:500;}
 
         .about-grid{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start;}
         .about-avatar{width:200px;height:200px;border-radius:var(--r-lg);background:var(--bg-3);border:1px solid var(--border);display:grid;place-items:center;font-size:54px;color:var(--ink-3);overflow:hidden;}
@@ -545,7 +547,7 @@ export default function Home() {
           <div className="hero-centered">
             <div className="kicker-pill">
               <span className="kicker-pill-dot"></span>
-              קורס דיגיטלי חדש · 2026
+              לא עוד סתם קורס
             </div>
 
             <h1>
@@ -554,14 +556,10 @@ export default function Home() {
             </h1>
 
             <p className="hero-lead">
-              הקורס הראשון בישראל שמלמד אתכם לנהל את כל מחזור השיווק והקידום עם סוכני בינה מלאכותית,
-              על <Tip wide text="פלטפורמה מקצועית שבנינו מאפס — נפרשת על VPS פרטי שלכם והופכת לנכס שלכם לכל דבר. מבוססת על הכלים הכי טובים בקוד פתוח בשוק, מאומנת עמוק על עברית ועל השוק הישראלי, ומותאמת למקסימום אופטימיזציה של עלויות Token. פשוט — הדבר הכי טוב שאפשר לבנות היום."><strong>הפלטפורמה המקצועית שלנו</strong></Tip> המבוססת על OpenClaw.
-              לא תיאוריה, לא מצגות — הדרכה צעד-אחר-צעד על פתרון שלם שמחכה לכם מוכן.
+              ב-8 שנים של שיווק וקידום דיגיטלי, עם ההכשרה של הטובים בתחום, בניתי את מה שתמיד חיפשתי:
+              <Tip wide text="פלטפורמה מקצועית שבנינו מאפס — נפרשת על VPS פרטי שלכם והופכת לנכס שלכם לכל דבר. מבוססת על הכלים הכי טובים בקוד פתוח בשוק, מאומנת עמוק על עברית ועל השוק הישראלי, ומותאמת למקסימום אופטימיזציה של עלויות Token. פשוט — הדבר הכי טוב שאפשר לבנות היום."><strong> הפלטפורמה המקצועית שלנו </strong></Tip>
+              שמעסיקה בעבורכם <strong>צוות של 9 מקצועני AI</strong> שמקדמים את העסק שלכם ברמה הגבוהה ביותר. הקורס מלמד אתכם איך לנהל את הצוות — לא איך לעשות שיווק בעצמכם.
             </p>
-
-            <a href="#courses" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('courses') }}>
-              הציגו לי את המסלולים ←
-            </a>
 
             <div className="hero-badges">
               <span className="hero-badge"><IStore/> בעלי עסקים — <strong>₪199</strong></span>
@@ -591,10 +589,10 @@ export default function Home() {
       <section className="demo-section" id="demo">
         <div className="wrap">
           <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 40px' }}>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>הדגמה חיה</div>
-            <h2>הכירו את הפלטפורמה ב-90 שניות</h2>
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>סרטון היכרות</div>
+            <h2>כמה מילים על המסלולים</h2>
             <p className="sub" style={{ margin: '0 auto' }}>
-              סרגיי מציג את המערכת, את הסוכנים, ומסביר למה זה לא עוד קורס AI — אלא הכלים שבאמת משנים את המשחק.
+              סרגיי מציג בקצרה את שני המסלולים — מה ההבדל ביניהם, למי כל אחד מתאים, ומה בדיוק מקבלים בכל אחד.
             </p>
           </div>
           <div className="demo-frame reveal">
@@ -757,7 +755,7 @@ export default function Home() {
                 <li>קריאת דוחות ROAS בשקלים וקבלת החלטות מבוססות נתונים</li>
                 <li>שגרה יומית של 15 דקות לשליטה מלאה</li>
               </ul>
-              <button className="plan-cta outline" onClick={() => pickCourse('owners')}>שמרו לי מקום במסלול הזה ←</button>
+              <button className="plan-cta outline" onClick={() => pickCourse('owners')}>התחילו חינם עם המסלול הזה ←</button>
             </div>
 
             <div className="plan-card featured">
@@ -780,7 +778,7 @@ export default function Home() {
                 <li>קבוצת טלגרם סגורה לבוגרים + מפגשי Q&A חודשיים</li>
                 <li>שדרגתם ממסלול בעלי העסקים? משלמים רק ₪1,300 הפרש</li>
               </ul>
-              <button className="plan-cta" onClick={() => pickCourse('pros')}>שמרו לי מקום במסלול הזה ←</button>
+              <button className="plan-cta" onClick={() => pickCourse('pros')}>התחילו חינם עם המסלול הזה ←</button>
             </div>
           </div>
         </div>
@@ -850,47 +848,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* HAAS + WHY SYMBOLIC */}
-      <section className="has-section" id="has">
+      {/* WHY SYMBOLIC — standalone compact */}
+      <section className="section" id="why">
         <div className="wrap">
-          <div className="has-inner">
-            <div className="has-text reveal">
-              <div className="eyebrow">נתקעתם? יש בן אדם</div>
-              <h2>אף אחד לא נשאר לבד — Human as a Service</h2>
-              <p>
-                זה הכי גדול. אנחנו לא מוכרים לכם קורס ונעלמים. אם תתקעו בהקמה,
-                באינטגרציה עם Google, או בבעיה עם סוכן — תשלחו לי הודעה. אני עונה אישית.
-              </p>
-              <p>
-                בלי מנוי חודשי. בלי מחירון נוקשה. לפי מקרה — ותמיד הוגן.
-                לבוגרי המסלול המקצועי יש גם תמיכה עדיפה בקבוצת הטלגרם הסגורה.
-              </p>
-              <div className="has-steps">
-                <div className="has-step">
-                  <div className="has-step-num">1</div>
-                  <div className="has-step-text"><strong>שולחים הודעה</strong> — מספרים מה הבעיה, מה ניסיתם</div>
-                </div>
-                <div className="has-step">
-                  <div className="has-step-num">2</div>
-                  <div className="has-step-text"><strong>מקבלים הצעה</strong> — היקף, זמן ועלות הוגנת</div>
-                </div>
-                <div className="has-step">
-                  <div className="has-step-num">3</div>
-                  <div className="has-step-text"><strong>מחליטים</strong> — אפס לחץ, אפס התחייבות</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="why-card reveal">
-              <div className="eyebrow">למה סימבולי</div>
-              <h2 style={{ fontSize: '1.4rem', marginBottom: 16 }}>למה ₪199? למה ₪1,499?</h2>
-              <blockquote>
-                "יכולתי לגבות ₪4,000 על המסלול המקצועי. קורסים פחות מפורטים עולים ככה.
-                אבל המטרה שלי אחרת — אני רוצה שכל בעל עסק בישראל יוכל להתחיל. הכסף שלי מגיע מהפלטפורמה,
-                לא מהקורס. הקורס הוא הגשר."
-              </blockquote>
-              <cite>— סרגיי גופמן, מייסד Flowmatic</cite>
-            </div>
+          <div className="why-standalone reveal">
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>למה המחיר סימבולי</div>
+            <h2 style={{ textAlign: 'center', marginBottom: 22 }}>למה ₪199? למה ₪1,499?</h2>
+            <blockquote className="why-quote">
+              "יכולתי לגבות ₪4,000 על המסלול המקצועי. קורסים פחות מפורטים עולים ככה.
+              אבל המטרה שלי אחרת — אני רוצה שכל בעל עסק בישראל יוכל להתחיל. הכסף שלי מגיע מהפלטפורמה,
+              לא מהקורס. הקורס הוא הגשר."
+            </blockquote>
+            <cite className="why-cite">— סרגיי גופמן, מייסד Flowmatic</cite>
           </div>
         </div>
       </section>
@@ -920,9 +889,7 @@ export default function Home() {
                 ניהלתי תקציבי פרסום ממומן, עבדתי יד-ביד עם מעצבי UX/UI. ראיתי את המקצוע משני הצדדים.
               </p>
               <p>
-                כשה-AI הגיע לחיינו, הבנתי שמגיע משהו הרבה יותר גדול מ"כתבו לי מייל ב-ChatGPT".
-                בניתי את ClawFlow — פלטפורמה שמאפשרת לכל אחד לנהל מחזור שיווק שלם בעצמו.
-                הקורס הזה הוא מה שהייתי רוצה לקבל לפני 8 שנים.
+                כשה-AI הגיע לחיינו, הבנתי שיש כאן הזדמנות אחרת לגמרי. לא ללמד אנשים שיווק — אלא <strong>לבנות את הצוות ש-SMBs תמיד רצו להעסיק</strong>. ככה נולדה הפלטפורמה שלנו: 9 סוכני AI מקצועיים, מאומנים עמוקות על השוק הישראלי, מוכנים לעבודה. <strong>הקורס הזה לא מלמד אתכם שיווק — הוא מלמד אתכם איך לנהל את הצוות הזה.</strong>
               </p>
               <div className="about-stats">
                 <div className="about-stat">
@@ -943,44 +910,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WAITLIST */}
+      {/* FREE FIRST LESSON REGISTRATION */}
       <section className="has-section" id="waitlist">
         <div className="wrap">
           <div className="has-inner">
             <div className="has-text reveal">
-              <div className="eyebrow">רשימת המתנה</div>
-              <h2>הקורס בכתיבה. הצטרפו לרשימה — תהיו ראשונים להיכנס.</h2>
+              <div className="eyebrow">גישה חינם</div>
+              <h2>תתחילו בחינם — שיעור ראשון מלא, בלי תשלום.</h2>
               <p>
-                אני כותב את הקורס עכשיו — מודול אחרי מודול, סרטון אחרי סרטון.
-                בגלל שעולם ה-AI משתנה כל חודש, אני לא רוצה להוציא משהו חצי מבושל.
+                אנחנו נותנים לכם גישה לפלטפורמת הקורס <strong>חינם</strong>, יחד עם שיעור ראשון מלא —
+                כדי שתוכלו לבדוק בעצמכם את האיכות, הפורמט וקצב הלמידה לפני שתחליטו אם לרכוש מסלול מלא.
               </p>
-              <p>
-                <strong>מה מקבלים מצטרפים מוקדמים:</strong>
-              </p>
+              <p><strong>מה תקבלו מיד אחרי ההרשמה:</strong></p>
               <div className="has-steps">
                 <div className="has-step">
                   <div className="has-step-num">1</div>
-                  <div className="has-step-text"><strong>התראה מוקדמת</strong> — 48 שעות לפני שהקורס יוצא לקהל הרחב</div>
+                  <div className="has-step-text"><strong>גישה מלאה לפלטפורמת הקורס</strong> — תוכלו לראות איך הכל בנוי ולנווט בחופשיות</div>
                 </div>
                 <div className="has-step">
                   <div className="has-step-num">2</div>
-                  <div className="has-step-text"><strong>הנחת השקה</strong> — בפעם הראשונה שהקורס עולה, למצטרפים מוקדם בלבד</div>
+                  <div className="has-step-text"><strong>שיעור ראשון מלא, חינם</strong> — מתוך המסלול שבחרתם, בדיוק כמו התלמידים המשלמים</div>
                 </div>
                 <div className="has-step">
                   <div className="has-step-num">3</div>
-                  <div className="has-step-text"><strong>עדכונים שקופים</strong> — נעדכן אתכם לאורך הדרך באיזה שלב אנחנו, מה כבר מוכן</div>
+                  <div className="has-step-text"><strong>טעימה אמיתית מהאיכות</strong> — להעריך את הפורמט, השפה והקצב לפני שמחליטים</div>
                 </div>
                 <div className="has-step">
                   <div className="has-step-num">4</div>
-                  <div className="has-step-text"><strong>השפעה על התוכן</strong> — נשאל אתכם מה הכי חשוב ללמד ראשון</div>
+                  <div className="has-step-text"><strong>אהבתם? רוכשים את המסלול המלא</strong> — לא אהבתם? לא שילמתם שקל.</div>
                 </div>
               </div>
             </div>
 
             <div className="wl-card reveal">
-              <div className="eyebrow">הצטרפות לרשימת המתנה</div>
-              <h2 style={{ fontSize: '1.4rem', marginBottom: 10 }}>שמרו לי מקום</h2>
-              <p>בחרו את המסלול שמתאים לכם. אנחנו נשלח עדכון כשיוצא — בלי ספאם, הבטחה.</p>
+              <div className="eyebrow">הרשמה מיידית</div>
+              <h2 style={{ fontSize: '1.4rem', marginBottom: 10 }}>התחילו חינם עם השיעור הראשון</h2>
+              <p>איזה מסלול מעניין אתכם? השיעור הראשון יישלח למייל תוך דקות.</p>
 
               <div className="wl-pick">
                 <button className={`wl-pick-btn ${coursePick === 'owners' ? 'active' : ''}`} onClick={() => setCoursePick('owners')}>
@@ -1013,10 +978,10 @@ export default function Home() {
               </select>
 
               <div id="wl-success" style={{ display: 'none', background: 'rgba(42,122,75,0.15)', border: '1px solid rgba(42,122,75,0.4)', borderRadius: 8, padding: 14, textAlign: 'center', color: '#6EE7A7', fontWeight: 600, marginBottom: 10 }}>
-                ✓ נרשמתם! תקבלו הודעה במייל ברגע שהקורס מוכן.
+                ✓ נרשמתם! קישור לפלטפורמת הקורס והשיעור הראשון נשלחו למייל שלכם.
               </div>
-              <button className="wl-submit" id="wl-submit" onClick={submitWaitlist}>שמרו לי מקום ←</button>
-              <p className="wl-micro">בלי ספאם · ביטול בכל עת · עדיפות למצטרפים מוקדם</p>
+              <button className="wl-submit" id="wl-submit" onClick={submitWaitlist}>קבלו גישה חינם ←</button>
+              <p className="wl-micro">בלי תשלום · בלי כרטיס אשראי · גישה מיידית למייל</p>
             </div>
           </div>
         </div>
@@ -1043,7 +1008,7 @@ export default function Home() {
 
           <div className="reveal" style={{ textAlign: 'center', marginTop: 48 }}>
             <a href="#waitlist" className="btn-main" onClick={(e) => { e.preventDefault(); scrollTo('waitlist') }}>
-              הצטרפו לרשימת המתנה ←
+              קבלו גישה חינם עכשיו ←
             </a>
           </div>
         </div>
