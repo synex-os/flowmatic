@@ -267,13 +267,6 @@ export default function Home() {
       'White-label — להציג את הפלטפורמה כאילו היא שלכם',
       'תוכנית השותפים של ClawFlow — הכנסה נוספת מהפניות',
       'Reporting Framework — דוחות מוכנים ומעוצבים ללקוחות'
-    ]},
-    { id: 'p12', title: 'Case Study חי — פרויקט שהגיע למעל מיליון משתמשים', duration: '~90 דק׳', points: [
-      'פרויקט אמיתי מההתחלה ועד הסוף — לא תיאוריה, לא הדגמה',
-      'ההיפותזה הראשונית — מה חשבנו שיעבוד, ומה באמת התברר',
-      'הטעויות של החודש הראשון — והיו הרבה. גלויות, בלי סינון',
-      'מה בסוף עבד, ולמה — עם המספרים המלאים',
-      'נתונים אמיתיים, גרפים, KPIs — הכל על השולחן'
     ]}
   ]
 
@@ -1184,7 +1177,7 @@ export default function Home() {
             </li>
             <li className="drawer-feature">
               <div className="drawer-feature-ico"><IBrain/></div>
-              <div className="drawer-feature-txt"><strong>מאומנת עמוק על עברית ועל השוק הישראלי</strong> — לא תרגום, לא adaptation. מדברת בעברית טבעית כמו ישראלי.</div>
+              <div className="drawer-feature-txt"><strong>OpenClaw — המנוע שלנו לסוכני AI</strong> — פרויקט קוד פתוח שאנחנו מפתחים ומתחזקים. ליבת הפלטפורמה, עם עדכונים ושדרוגים באופן שוטף — ואתם זוכים בהם ברגע שהם יוצאים.</div>
             </li>
             <li className="drawer-feature">
               <div className="drawer-feature-ico"><ICoins/></div>
