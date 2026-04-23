@@ -43,6 +43,7 @@ export default function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalIntent, setModalIntent] = useState<'trial' | 'buy'>('trial')
+  const [videoOpened, setVideoOpened] = useState(false)
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -730,16 +731,43 @@ export default function Home() {
             <h2>סרטון היכרות</h2>
           </div>
           <div className="demo-frame reveal">
-            <video
-              className="intro-video"
-              controls
-              playsInline
-              preload="metadata"
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16, background: '#000', boxShadow: '0 10px 40px rgba(0,0,0,0.15)' }}
+            <div
+              className="video-box"
+              onClick={(e) => {
+                if (videoOpened) return
+                const v = e.currentTarget.querySelector('video') as HTMLVideoElement | null
+                if (!v) return
+                const req = v.requestFullscreen || (v as any).webkitEnterFullscreen || (v as any).webkitRequestFullscreen
+                if (req) {
+                  try { req.call(v) } catch { /* fullscreen may be blocked — fall through to inline play */ }
+                }
+                v.play().catch(() => { })
+                setVideoOpened(true)
+              }}
+              role="button"
+              tabIndex={0}
             >
-              <source src="/video.mp4" type="video/mp4" />
-              הדפדפן שלכם לא תומך בהצגת וידאו.
-            </video>
+              <video
+                className="intro-video"
+                playsInline
+                preload="metadata"
+                controls={videoOpened}
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#000', zIndex: 1 }}
+              >
+                <source src="/video.mp4" type="video/mp4" />
+                הדפדפן שלכם לא תומך בהצגת וידאו.
+              </video>
+              {!videoOpened && (
+                <>
+                  <div className="video-play" style={{ zIndex: 2, pointerEvents: 'none' }}>
+                    <div className="video-play-btn">
+                      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                  </div>
+                  <div className="video-label" style={{ zIndex: 2, pointerEvents: 'none' }}>▶ לחצו לצפייה במסך מלא</div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </section>
