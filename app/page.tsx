@@ -694,9 +694,9 @@ export default function Home() {
             </h1>
 
             <p className="hero-lead">
-              פשוט רציתי שלכל אחד שרוצה תהיה סוכנות שיווק AI מקצועית משלו — כזו שהוא מנהל, ולא להפך. אז בניתי את{' '}
+              פשוט רציתי שלכל אחד שרוצה יהיה צוות שיווק AI מקצועי משלו. אז בניתי את{' '}
               <button className="platform-btn" onClick={() => setDrawerOpen(true)}>הפלטפורמה המקצועית שלנו</button>{' '}
-              שמעסיקה בעבורכם <strong>צוות של 10 מקצועני AI</strong> שמקדמים את העסק שלכם ברמה הגבוהה ביותר. הקורס מלמד אתכם איך לנהל את הצוות — לא איך לעשות שיווק בעצמכם.
+              שמעסיקה בעבורכם <strong>צוות של 10 מקצועני AI</strong> שמקדמים את העסק שלכם ברמה הגבוהה ביותר. שני מסלולים — אחד לבעלי עסקים שרוצים לנהל את הצוות, שני למשווקים מקצועיים שרוצים להבין ולבנות עד הסוף.
             </p>
 
             <div className="hero-badges">
@@ -735,73 +735,11 @@ export default function Home() {
               controls
               playsInline
               preload="metadata"
-              poster="/intro-poster.jpg"
               style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16, background: '#000', boxShadow: '0 10px 40px rgba(0,0,0,0.15)' }}
             >
-              <source src="/intro.mp4" type="video/mp4" />
+              <source src="/video.mp4" type="video/mp4" />
               הדפדפן שלכם לא תומך בהצגת וידאו.
             </video>
-          </div>
-        </div>
-      </section>
-
-      {/* STACK GRID WITH TOOLTIPS */}
-      <section className="section">
-        <div className="wrap">
-          <div className="sh reveal">
-            <div className="eyebrow">הטכנולוגיה שברקע</div>
-            <h2>כל הכלים שמפעילים את המערכת — מוסברים.</h2>
-            <p className="sub">אל תפחדו מהשמות. רחפו עם העכבר על כל אחד ותראו הסבר בעברית פשוטה. במסלול בעלי העסקים לא צריכים להתעסק בזה — במסלול המקצועי תשלטו בכולם.</p>
-          </div>
-          <div className="stack-grid reveal">
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="תוכנת קוד פתוח לסוכני AI — המנוע שלנו. זו התשתית שמאפשרת ליצור סוכנים חכמים שמבצעים משימות."><strong>OpenClaw</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל הבינה המלאכותית של Anthropic — אחד החזקים בעולם. במיוחד טוב בעברית. זה ה'מוח' של הסוכן."><strong>Claude AI</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מנתב חכם בין מודלי AI שונים. שולח כל משימה למודל הכי מתאים — וחוסך עד 90% בעלויות."><strong>LiteLLM</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל AI שרץ מקומי על השרת שלכם — בלי תלות באינטרנט. טוב למשימות פשוטות ולפרטיות."><strong>Ollama</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת זיכרון חכמה — הסוכן שולף מהזיכרון שלו רק את המידע הרלוונטי בזמן אמת, ללא צורך לקרוא הכל כל פעם."><strong>Mem0 + Qdrant</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי שסורק אתרי אינטרנט במקומכם — למשל, סריקת אתר מתחרה כדי להבין את האסטרטגיה שלו."><strong>Crawl4AI</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שמחלץ מידע מאתרים בצורה מסודרת — למשל, רשימת מוצרים או מחירים מאתר של מתחרה."><strong>Firecrawl</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שנותן נתונים מגוגל — מיקומים, מילות מפתח, כמה אנשים מחפשים מה, ואיך המתחרים מדורגים."><strong>DataForSEO</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="Gmail + Calendar + Drive + Sheets. הסוכן מתחבר לחשבון שלכם וקורא מיילים, קובע פגישות ומנהל קבצים."><strong>Google Workspace</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום הממומן של גוגל. הסוכן מקים ומנהל קמפיינים אוטומטית — קהלי יעד, תקציבים, מודעות."><strong>Google Ads</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום של פייסבוק ואינסטגרם. הסוכן יוצר קמפיינים, יצירתיים ומקדם אותם אוטומטית."><strong>Meta Ads</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="WhatsApp Business — חשבון עסקי של וואטסאפ. מאפשר לשלוח הודעות ללקוחות, ולנהל תשובות אוטומטיות."><strong>WhatsApp Business</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="הפרופיל העסקי שלכם בגוגל מפות ובחיפוש. הסוכן מעלה פוסטים, מגיב לביקורות ומתחזק נוכחות."><strong>Google Business</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי אוטומציות פתוח — מחבר בין אפליקציות ומאפשר ליצור זרימות עבודה מורכבות. כמו Zapier אבל פתוח."><strong>Activepieces</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מסגרת לניהול צוותי סוכנים מרובים שעובדים ביחד על משימה מורכבת. משתמשים בה למשימות מתקדמות."><strong>CrewAI</strong></Tip></div>
-            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שכבת הגנה שמונעת התקפות על הסוכן — כמו שמישהו ינסה 'להטעות' אותו לעשות משהו לא רצוי."><strong>LLM Guard</strong></Tip></div>
-          </div>
-        </div>
-      </section>
-
-      {/* YOU DO — after stack, before modules */}
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="wrap">
-          <div className="youdo-inner reveal">
-            <div className="eyebrow">ומה אתם עושים?</div>
-            <h2>הרבה פחות ממה שחשבתם.</h2>
-            <p className="youdo-sub">
-              שיווק מקצועי בלי להיות "עסוקים כל הזמן". הסוכנים עובדים ברקע — אתם קובעים כיוון ומאשרים.
-              15 דקות ביום זה כל מה שצריך לשליטה מלאה.
-            </p>
-
-            <div className="youdo-grid">
-              <div className="youdo-card">
-                <div className="youdo-icon"><ICheck/></div>
-                <div className="youdo-title">מאשרים</div>
-                <div className="youdo-text">הסוכן מכין — אתם מאשרים. תוכן, קמפיינים, מסרים. הכל עובר אישור אנושי לפני פרסום. V או ✕ — זהו.</div>
-              </div>
-              <div className="youdo-card">
-                <div className="youdo-icon"><IBook/></div>
-                <div className="youdo-title">קוראים דוחות</div>
-                <div className="youdo-text">כל בוקר מחכה לכם <strong>Daily Brief</strong> — סיכום של מה קרה אתמול, מה היום ומה דורש תשומת לב. 5 דקות.</div>
-              </div>
-              <div className="youdo-card">
-                <div className="youdo-icon"><ICompass/></div>
-                <div className="youdo-title">מחליטים על הכיוון</div>
-                <div className="youdo-text">אתם עדיין הבוסים. הסוכנים מבצעים — אתם קובעים מטרות חודשיות והכיוון הכללי. הם מחכים להוראות שלכם.</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -840,16 +778,16 @@ export default function Home() {
                 <li>מנוהל ב<strong>שגרה יומית של 15 דקות</strong> בלבד</li>
               </ul>
               <div style={{
-                fontSize: '0.82rem',
-                color: 'var(--ink-3)',
-                padding: '11px 14px',
+                fontSize: '0.95rem',
+                color: 'var(--ink-2)',
+                padding: '14px 16px',
                 background: 'var(--accent-bg)',
                 borderRadius: 10,
-                margin: '4px 0 14px',
-                lineHeight: 1.6,
+                margin: '6px 0 14px',
+                lineHeight: 1.7,
                 border: '1px solid var(--border)',
               }}>
-                <strong style={{ color: 'var(--ink-2)' }}>נתקעתם או רוצים יד מכוונת?</strong>{' '}
+                <strong style={{ color: 'var(--ink)' }}>נתקעתם או רוצים יד מכוונת?</strong>{' '}
                 HAAS — <em>Human as a Service</em>: ליווי אישי מקצועי על ידי המייסד, מעבר לקורס.{' '}
                 <a href="/contact" style={{ color: 'var(--accent)', fontWeight: 600, whiteSpace: 'nowrap' }}>דברו איתנו ←</a>
               </div>
@@ -862,7 +800,7 @@ export default function Home() {
               <div className="plan-name">משווקים מקצועיים</div>
               <div className="plan-title">AI Marketing Mastery</div>
               <div className="plan-desc">
-                הרחבה טבעית של המדריך ההפעלה — אבל יותר סטודיו מאשר קורס. מתחילים מאותו מקום: מרימים את הפלטפורמה, מפעילים את הסוכנים ומקבלים ערך אמיתי מהיום הראשון. ומשם צוללים יחד לכל פינה במערכת — דרך הגדרה של עסק חדש אמיתי בזמן אמת. אנליטיקה, אלגוריתמים של מנועי חיפוש ורשתות חברתיות, מודלים של יצירת מדיה, ארכיטקטורת OpenClaw, אופטימיזציית טוקנים, Activepieces והכלים החיצוניים. לא כיתת לימוד — סטודיו. מנסים, שוברים, מתקנים, בונים.
+                הרחבה טבעית של המדריך ההפעלה — יותר סטודיו מאשר קורס. מתחילים באותה התקנה, ומשם צוללים לכל פינה במערכת: מחקר בזמן אמת, אלגוריתמים, מודלי מדיה, OpenClaw, Activepieces והכלים החיצוניים. לא כיתת לימוד — מנסים, שוברים, מתקנים, בונים.
               </div>
               <div className="plan-price">₪1,499<small>חד-פעמי · נעילת מחיר</small></div>
               <div className="plan-meta">סטודיו חי · מודולים חדשים באופן שוטף · גישה לכל החיים · טלגרם ייעודי</div>
@@ -881,16 +819,16 @@ export default function Home() {
                 <li><strong>קבוצת טלגרם ייעודית</strong> — טכנולוגיות חדשות, מוצרים רלוונטיים, רעיונות טריים — מה עובד ומה לא</li>
               </ul>
               <div className="plan-upgrade-note" style={{
-                fontSize: '0.82rem',
-                color: 'var(--ink-3)',
-                padding: '11px 14px',
+                fontSize: '0.95rem',
+                color: 'var(--ink-2)',
+                padding: '14px 16px',
                 background: 'var(--accent-bg)',
                 borderRadius: 10,
-                margin: '4px 0 14px',
-                lineHeight: 1.6,
+                margin: '6px 0 14px',
+                lineHeight: 1.7,
                 border: '1px solid var(--border)',
               }}>
-                <strong style={{ color: 'var(--ink-2)' }}>הסטודיו מתפתח מודול אחר מודול.</strong>{' '}
+                <strong style={{ color: 'var(--ink)' }}>הסטודיו מתפתח מודול אחר מודול.</strong>{' '}
                 הוא לא "ייגמר" — כי כל יום יוצא משהו חדש. המחיר נוצר ביחס לתוכן ויעלה עם ההתפתחות שלו.
                 רוכשים עכשיו = נועלים את המחיר הנמוך ביותר.{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>שדרגתם מ-₪199? משלמים רק ₪1,300 הפרש.</span>
@@ -1007,6 +945,67 @@ export default function Home() {
                 </div>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* STACK GRID WITH TOOLTIPS */}
+      <section className="section">
+        <div className="wrap">
+          <div className="sh reveal">
+            <div className="eyebrow">הטכנולוגיה שברקע</div>
+            <h2>כל הכלים שמפעילים את המערכת — מוסברים.</h2>
+            <p className="sub">אל תפחדו מהשמות. רחפו עם העכבר על כל אחד ותראו הסבר בעברית פשוטה. במסלול בעלי העסקים לא צריכים להתעסק בזה — במסלול המקצועי תשלטו בכולם.</p>
+          </div>
+          <div className="stack-grid reveal">
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="תוכנת קוד פתוח לסוכני AI — המנוע שלנו. זו התשתית שמאפשרת ליצור סוכנים חכמים שמבצעים משימות."><strong>OpenClaw</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל הבינה המלאכותית של Anthropic — אחד החזקים בעולם. במיוחד טוב בעברית. זה ה'מוח' של הסוכן."><strong>Claude AI</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מנתב חכם בין מודלי AI שונים. שולח כל משימה למודל הכי מתאים — וחוסך עד 90% בעלויות."><strong>LiteLLM</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מודל AI שרץ מקומי על השרת שלכם — בלי תלות באינטרנט. טוב למשימות פשוטות ולפרטיות."><strong>Ollama</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת זיכרון חכמה — הסוכן שולף מהזיכרון שלו רק את המידע הרלוונטי בזמן אמת, ללא צורך לקרוא הכל כל פעם."><strong>Mem0 + Qdrant</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי שסורק אתרי אינטרנט במקומכם — למשל, סריקת אתר מתחרה כדי להבין את האסטרטגיה שלו."><strong>Crawl4AI</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שמחלץ מידע מאתרים בצורה מסודרת — למשל, רשימת מוצרים או מחירים מאתר של מתחרה."><strong>Firecrawl</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שירות שנותן נתונים מגוגל — מיקומים, מילות מפתח, כמה אנשים מחפשים מה, ואיך המתחרים מדורגים."><strong>DataForSEO</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="Gmail + Calendar + Drive + Sheets. הסוכן מתחבר לחשבון שלכם וקורא מיילים, קובע פגישות ומנהל קבצים."><strong>Google Workspace</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום הממומן של גוגל. הסוכן מקים ומנהל קמפיינים אוטומטית — קהלי יעד, תקציבים, מודעות."><strong>Google Ads</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מערכת הפרסום של פייסבוק ואינסטגרם. הסוכן יוצר קמפיינים, יצירתיים ומקדם אותם אוטומטית."><strong>Meta Ads</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="WhatsApp Business — חשבון עסקי של וואטסאפ. מאפשר לשלוח הודעות ללקוחות, ולנהל תשובות אוטומטיות."><strong>WhatsApp Business</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="הפרופיל העסקי שלכם בגוגל מפות ובחיפוש. הסוכן מעלה פוסטים, מגיב לביקורות ומתחזק נוכחות."><strong>Google Business</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="כלי אוטומציות פתוח — מחבר בין אפליקציות ומאפשר ליצור זרימות עבודה מורכבות. כמו Zapier אבל פתוח."><strong>Activepieces</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="מסגרת לניהול צוותי סוכנים מרובים שעובדים ביחד על משימה מורכבת. משתמשים בה למשימות מתקדמות."><strong>CrewAI</strong></Tip></div>
+            <div className="stack-item"><span className="stack-item-dot"></span><Tip text="שכבת הגנה שמונעת התקפות על הסוכן — כמו שמישהו ינסה 'להטעות' אותו לעשות משהו לא רצוי."><strong>LLM Guard</strong></Tip></div>
+          </div>
+        </div>
+      </section>
+
+      {/* YOU DO — after modules, before why */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="youdo-inner reveal">
+            <div className="eyebrow">ומה אתם עושים?</div>
+            <h2>הרבה פחות ממה שחשבתם.</h2>
+            <p className="youdo-sub">
+              שיווק מקצועי בלי להיות "עסוקים כל הזמן". הסוכנים עובדים ברקע — אתם קובעים כיוון ומאשרים.
+              15 דקות ביום זה כל מה שצריך לשליטה מלאה.
+            </p>
+
+            <div className="youdo-grid">
+              <div className="youdo-card">
+                <div className="youdo-icon"><ICheck/></div>
+                <div className="youdo-title">מאשרים</div>
+                <div className="youdo-text">הסוכן מכין — אתם מאשרים. תוכן, קמפיינים, מסרים. הכל עובר אישור אנושי לפני פרסום. V או ✕ — זהו.</div>
+              </div>
+              <div className="youdo-card">
+                <div className="youdo-icon"><IBook/></div>
+                <div className="youdo-title">קוראים דוחות</div>
+                <div className="youdo-text">כל בוקר מחכה לכם <strong>Daily Brief</strong> — סיכום של מה קרה אתמול, מה היום ומה דורש תשומת לב. 5 דקות.</div>
+              </div>
+              <div className="youdo-card">
+                <div className="youdo-icon"><ICompass/></div>
+                <div className="youdo-title">מחליטים על הכיוון</div>
+                <div className="youdo-text">אתם עדיין הבוסים. הסוכנים מבצעים — אתם קובעים מטרות חודשיות והכיוון הכללי. הם מחכים להוראות שלכם.</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
