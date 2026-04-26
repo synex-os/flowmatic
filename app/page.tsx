@@ -272,10 +272,9 @@ export default function Home() {
   ]
 
   const faqs = [
-    { q: 'זה קורס שיווק?', a: 'לא. זה קורס שמלמד אתכם להשתמש בפלטפורמה שבנינו — שהיא זו שעושה את השיווק בפועל. אתם הופכים למנהלים של צוות 10 סוכני AI מקצועיים שמבצעים את כל העבודה. לא לומדים לכתוב פוסטים בעצמכם — לומדים לאשר את מה שהסוכן כתב, לכוון את הכיוון, ולנהל את הצוות.' },
+    { q: 'זה קורס שיווק?', a: 'כן ולא — וההבדל מהותי. מסלול בעלי העסקים הוא קורס תפעולי: לומדים לנהל את הפלטפורמה ואת צוות הסוכנים שמבצע את השיווק בפועל. לא כותבים פוסטים בעצמכם — מאשרים, מכוונים, מנהלים את הצוות. לעומת זאת, המסלול המקצועי הוא קורס שיווק לכל דבר: נכנסים לאסטרטגיה, פסיכולוגיית צרכן, אופטימיזציית קמפיינים, SEO, AEO וניתוח נתונים — במקביל לצד הטכני של הפלטפורמה. בקצרה: רוצים להפעיל — מסלול בעלי העסקים. רוצים גם להבין שיווק לעומק — המסלול המקצועי.' },
     { q: 'אנחנו לא אנשים טכניים. באמת נסתדר?', a: 'כן — מסלול בעלי העסקים נבנה בדיוק בשבילכם. לא תכתבו שורת קוד אחת. אם אתם יודעים לשלוח מייל ולגלוש באינטרנט — אתם תסתדרו.' },
     { q: 'האם הקורס כולל גישה ל-ClawFlow?', a: 'לא — הקורס והפלטפורמה הם מוצרים נפרדים. הקורס מלמד אתכם לשלוט ב-ClawFlow. תוכניות הפלטפורמה מתחילות מ-₪79 לחודש, עם 7 ימי ניסיון חינם.' },
-    { q: 'איך נראה השיעור הראשון החינמי?', a: 'הוא שיעור מלא, לא טריילר. אחרי שנרשמתם, קישור לפלטפורמת הקורס והשיעור הראשון יגיעו למייל שלכם תוך דקות. תוכלו לצפות בו, לנווט בפלטפורמה, ולראות בדיוק איך נראית חוויית הלמידה לפני שמחליטים לרכוש את המסלול המלא.' },
     { q: 'הקורס כולו מוכן? או שיש שיעורים עתידיים?', a: 'מסלול בעלי העסקים מוכן במלואו — ~2.5 שעות, 6 מודולים, ערב אחד של הפעלה. המסלול המקצועי נכתב בזמן אמת: מודולים יוצאים בקביעות, ואני מתחייב למינימום סרטון חדש בשבוע. הסיבה פשוטה — בעולם AI שמשתנה חודש-חודש, אין טעם להקפיא גרסה. רוכשי המסלול המקצועי נכנסים עכשיו לבסיס (כולל כל מודולי בעלי העסקים), מפעילים את הפלטפורמה מהיום הראשון, וצוללים לעומק ככל שהמודולים יוצאים. כל העדכונים חינם, לכל החיים.' },
     { q: 'קניתי את מסלול בעלי העסקים ועכשיו אני רוצה את המסלול המקצועי. מה קורה?', a: 'משלמים רק את ההפרש — ₪1,300. לא משלמים פעמיים על תוכן שכבר ראיתם.' },
     { q: 'מה זה HAAS?', a: 'HAAS = Human as a Service. שירות ליווי אישי מקצועי על ידי המייסד — מעבר לקורס. זה למי שרוצה שמישהו יתלווה אליו באופן אישי: מאימות שההגדרות נכונות, דרך ייעוץ אסטרטגי שוטף, ועד לקיחת אחריות מלאה על ניהול הסוכנים שלכם. הקורס נותן לכם ידע וכלים — HAAS נותן לכם אותי בשטח, לצידכם. זה לא חובה, זה שם למי שרוצה.' },
@@ -457,7 +456,7 @@ export default function Home() {
         .mod-price-badge{font-size:0.88rem;font-weight:700;color:var(--accent);background:var(--accent-bg);padding:4px 12px;border-radius:14px;}
         .mod-meta{font-size:0.85rem;color:var(--ink-3);}
         .mod-list{display:flex;flex-direction:column;gap:8px;}
-        .mod-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color 0.18s;}
+        .mod-item{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color 0.18s;position:relative;}
         .mod-item:hover{border-color:var(--border-h);}
         .mod-item.open{border-color:var(--ink);}
         .mod-btn{width:100%;text-align:right;padding:16px 22px;display:flex;align-items:center;gap:16px;background:transparent;}
@@ -689,9 +688,9 @@ export default function Home() {
             </h1>
 
             <p className="hero-lead">
-              פשוט רציתי שלכל אחד שרוצה יהיה צוות שיווק AI מקצועי משלו. אז בניתי את{' '}
+              בנינו את{' '}
               <button className="platform-btn" onClick={() => setDrawerOpen(true)}>הפלטפורמה המקצועית שלנו</button>{' '}
-              שמעסיקה בעבורכם <strong>צוות של 10 מקצועני AI</strong> שמקדמים את העסק שלכם ברמה הגבוהה ביותר. שני מסלולים — אחד לבעלי עסקים שרוצים לנהל את הצוות, שני למשווקים מקצועיים שרוצים להבין ולבנות עד הסוף.
+              כדי להעמיד לרשות כל עסק <strong>צוות של 10 מקצועני AI</strong> לשיווק וקידום ברמה הגבוהה ביותר. שני מסלולי הכשרה: לבעלי עסקים המנהלים את הצוות, ולמשווקים מקצועיים הרוצים להעמיק ולבנות לעומק.
             </p>
 
             <div className="hero-badges">
@@ -882,26 +881,31 @@ export default function Home() {
                   </button>
                   <div className="mod-body">
                     <ul>{m.points.map((p, j) => <li key={j}>{p}</li>)}</ul>
-                    {m.id === 'o1' && (
-                      <button
-                        onClick={() => openTrialFor('owners')}
-                        style={{
-                          marginTop: 14,
-                          padding: '12px 20px',
-                          background: 'var(--accent)',
-                          color: '#fff',
-                          border: 'none',
-                          borderRadius: 10,
-                          fontWeight: 700,
-                          fontSize: '0.92rem',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(212,98,10,0.22)',
-                        }}
-                      >
-                        צפו בשיעור ללא תשלום ←
-                      </button>
-                    )}
                   </div>
+                  {m.id === 'o1' && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); openTrialFor('owners') }}
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: 60,
+                        transform: 'translateY(-50%)',
+                        padding: '9px 16px',
+                        background: 'var(--accent)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 8,
+                        fontWeight: 700,
+                        fontSize: '0.82rem',
+                        cursor: 'pointer',
+                        boxShadow: '0 3px 10px rgba(212,98,10,0.22)',
+                        zIndex: 2,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      צפו ללא תשלום ←
+                    </button>
+                  )}
                 </div>
               )
             })}
