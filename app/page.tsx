@@ -772,9 +772,6 @@ export default function Home() {
           <div className="sh reveal" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' }}>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>שני מסלולים · שני קהלים · אותה שליטה</div>
             <h2>בחרו את המסלול שלכם</h2>
-            <p className="sub" style={{ margin: '0 auto' }}>
-              שני המסלולים הם קורסים מלאים — כל אחד לקהל שלו. בוחרים לפי מי אתם, לא לפי "הרצינות".
-            </p>
           </div>
 
           <div className="plans-grid reveal">
@@ -811,7 +808,7 @@ export default function Home() {
               }}>
                 <strong style={{ color: 'var(--ink)' }}>נתקעתם או רוצים יד מכוונת?</strong>{' '}
                 HAAS — <em>Human as a Service</em>: ליווי אישי מקצועי על ידי המייסד, מעבר לקורס.{' '}
-                <a href="/contact" style={{ color: 'var(--accent)', fontWeight: 600, whiteSpace: 'nowrap' }}>דברו איתנו ←</a>
+                <a href="https://clawflow.flowmatic.co.il/auto-pilot" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontWeight: 600, whiteSpace: 'nowrap' }}>דברו איתנו ←</a>
               </div>
               <button className="plan-cta outline" onClick={() => openTrialFor('owners')}>נסו שיעור ראשון חינם — לוודא שזה מתאים ←</button>
             </div>
@@ -885,6 +882,25 @@ export default function Home() {
                   </button>
                   <div className="mod-body">
                     <ul>{m.points.map((p, j) => <li key={j}>{p}</li>)}</ul>
+                    {m.id === 'o1' && (
+                      <button
+                        onClick={() => openTrialFor('owners')}
+                        style={{
+                          marginTop: 14,
+                          padding: '12px 20px',
+                          background: 'var(--accent)',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: 10,
+                          fontWeight: 700,
+                          fontSize: '0.92rem',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 12px rgba(212,98,10,0.22)',
+                        }}
+                      >
+                        צפו בשיעור ללא תשלום ←
+                      </button>
+                    )}
                   </div>
                 </div>
               )
@@ -1192,6 +1208,26 @@ export default function Home() {
           <div className="drawer-outro">
             פשוט — <strong>הדבר הכי טוב</strong> שאפשר לבנות בתחום הזה היום.
           </div>
+          <a
+            href="https://clawflow.flowmatic.co.il/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'block',
+              marginTop: 22,
+              padding: '14px 20px',
+              background: 'var(--accent)',
+              color: '#fff',
+              borderRadius: 12,
+              textAlign: 'center',
+              fontWeight: 700,
+              fontSize: '0.98rem',
+              textDecoration: 'none',
+              boxShadow: '0 4px 14px rgba(212,98,10,0.25)',
+            }}
+          >
+            לפלטפורמה ←
+          </a>
         </aside>
       </div>
 
