@@ -109,7 +109,7 @@ export default function Home() {
         body: JSON.stringify({ email })
       }).catch(() => {})
     }).catch(() => {
-      btn.disabled = false; btn.textContent = modalIntent === 'trial' ? 'קבלו גישה חינם ←' : 'שלחו בקשת רכישה ←'
+      btn.disabled = false; btn.textContent = modalIntent === 'trial' ? 'לקבל גישה ←' : 'שלחו בקשת רכישה ←'
       alert('שגיאה בשליחה, נסו שוב')
     })
   }
@@ -806,7 +806,7 @@ export default function Home() {
                 HAAS — <em>Human as a Service</em>: ליווי אישי מקצועי על ידי המייסד, מעבר לקורס.{' '}
                 <a href="https://clawflow.flowmatic.co.il/auto-pilot" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontWeight: 600, whiteSpace: 'nowrap' }}>דברו איתנו ←</a>
               </div>
-              <button className="plan-cta outline" onClick={() => openTrialFor('owners')}>נסו שיעור ראשון חינם — לוודא שזה מתאים ←</button>
+              <a className="plan-cta outline" href="https://platform.flowmatic.co.il/login?next=/courses/owners" target="_blank" rel="noopener noreferrer">נסו שיעור ראשון חינם — לוודא שזה מתאים ←</a>
             </div>
 
             <div className="plan-card featured">
@@ -848,7 +848,7 @@ export default function Home() {
                 רוכשים עכשיו = נועלים את המחיר הנמוך ביותר.{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>שדרגתם מ-₪199? משלמים רק ₪1,300 הפרש.</span>
               </div>
-              <button className="plan-cta" onClick={() => openTrialFor('pros')}>נסו שיעור ראשון חינם — לוודא שזה מתאים ←</button>
+              <a className="plan-cta" href="https://platform.flowmatic.co.il/login?next=/courses/pros" target="_blank" rel="noopener noreferrer">נסו שיעור ראשון חינם — לוודא שזה מתאים ←</a>
             </div>
           </div>
         </div>
@@ -880,8 +880,11 @@ export default function Home() {
                     <ul>{m.points.map((p, j) => <li key={j}>{p}</li>)}</ul>
                   </div>
                   {m.id === 'o1' && (
-                    <button
-                      onClick={(e) => { e.stopPropagation(); openTrialFor('owners') }}
+                    <a
+                      href="https://platform.flowmatic.co.il/login?next=/courses/owners"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       style={{
                         position: 'absolute',
                         top: '50%',
@@ -897,10 +900,11 @@ export default function Home() {
                         cursor: 'pointer',
                         zIndex: 2,
                         whiteSpace: 'nowrap',
+                        textDecoration: 'none',
                       }}
                     >
                       צפו ללא תשלום ←
-                    </button>
+                    </a>
                   )}
                 </div>
               )
@@ -1121,25 +1125,25 @@ export default function Home() {
             </p>
 
             <div className="buy-buttons">
-              <button className="buy-btn" onClick={() => openBuyFor('owners')}>
+              <a className="buy-btn" href="https://platform.flowmatic.co.il/login?next=/courses/owners" target="_blank" rel="noopener noreferrer">
                 <div className="buy-btn-icon"><IStore/></div>
                 <span className="buy-btn-name">בעלי עסקים</span>
                 <span className="buy-btn-title">ניהול עצמאי של שיווק AI</span>
                 <span className="buy-btn-price">₪199</span>
                 <span className="buy-btn-cta">רכישה ←</span>
-              </button>
-              <button className="buy-btn featured" onClick={() => openBuyFor('pros')}>
+              </a>
+              <a className="buy-btn featured" href="https://platform.flowmatic.co.il/login?next=/courses/pros" target="_blank" rel="noopener noreferrer">
                 <div className="buy-btn-icon"><IRocket/></div>
                 <span className="buy-btn-name">משווקים מקצועיים</span>
                 <span className="buy-btn-title">AI Marketing Mastery</span>
                 <span className="buy-btn-price">₪1,499</span>
                 <span className="buy-btn-cta">רכישה ←</span>
-              </button>
+              </a>
             </div>
 
-            <button className="buy-trial-link" onClick={() => openTrialFor('owners')}>
+            <a className="buy-trial-link" href="https://platform.flowmatic.co.il/login?next=/courses/owners" target="_blank" rel="noopener noreferrer">
               עדיין לא בטוחים? נסו שיעור ראשון חינם →
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -1253,7 +1257,7 @@ export default function Home() {
             ✓ נרשמתם! {modalIntent === 'trial' ? 'הקישור נשלח למייל שלכם.' : 'ניצור קשר בהקדם.'}
           </div>
           <button className="wl-submit" id="md-submit" onClick={submitModal}>
-            {modalIntent === 'trial' ? 'קבלו גישה חינם ←' : 'שלחו בקשת רכישה ←'}
+            {modalIntent === 'trial' ? 'לקבל גישה ←' : 'שלחו בקשת רכישה ←'}
           </button>
           <p className="wl-micro">
             {modalIntent === 'trial' ? 'בלי תשלום · בלי כרטיס אשראי · גישה מיידית למייל' : 'נחזור אליכם תוך 24 שעות'}
