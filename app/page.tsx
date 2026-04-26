@@ -848,7 +848,7 @@ export default function Home() {
                 רוכשים עכשיו = נועלים את המחיר הנמוך ביותר.{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>שדרגתם מ-₪199? משלמים רק ₪1,300 הפרש.</span>
               </div>
-              <a className="plan-cta" href="https://platform.flowmatic.co.il/login?next=/courses/pros" target="_blank" rel="noopener noreferrer">נסו שיעור ראשון חינם — לוודא שזה מתאים ←</a>
+              <a className="plan-cta" href="https://platform.flowmatic.co.il/login?next=/courses/pros" target="_blank" rel="noopener noreferrer">צפו בסילבוס המלא ולנעילת המחיר ←</a>
             </div>
           </div>
         </div>
